@@ -41,6 +41,12 @@ public class MapCreator : MonoBehaviour
     public Text green_tar;
     public Text gray_tar;
 
+    public Image brown_box;
+    public Image red_box;
+    public Image blue_box;
+    public Image green_box;
+    public Image gray_box;
+
     public int brown_num;
     public int red_num;
     public int blue_num;
@@ -237,7 +243,31 @@ public class MapCreator : MonoBehaviour
                     }
             }
         }
-        Debug.Log(brown_num);
+        if (brown_num == 0)
+        {
+            brown_tar.gameObject.SetActive(false);
+            brown_box.gameObject.SetActive(false);
+        }
+        if (red_num == 0)
+        {
+            red_tar.gameObject.SetActive(false);
+            red_box.gameObject.SetActive(false);
+        }
+        if (blue_num == 0)
+        {
+            blue_tar.gameObject.SetActive(false);
+            blue_box.gameObject.SetActive(false);
+        }
+        if (green_num == 0)
+        {
+            green_tar.gameObject.SetActive(false);
+            green_box.gameObject.SetActive(false);
+        }
+        if (gray_num == 0)
+        {
+            gray_tar.gameObject.SetActive(false);
+            gray_box.gameObject.SetActive(false);
+        }
         UpdateTargetNum();
     }
 
