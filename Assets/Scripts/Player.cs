@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -33,11 +33,11 @@ public class Player : MonoBehaviour
         {
             dx++;
         }
-        else if(Input.GetKeyDown(KeyCode.UpArrow))
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             dy++;
         }
-        else if(Input.GetKeyDown(KeyCode.DownArrow))
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             dy--;
         }
@@ -68,6 +68,7 @@ public class Player : MonoBehaviour
         }
         if (isBox(nx, ny))
         {
+            Debug.Log(111);
             int nnx = nx + dx;
             int nny = ny + dy;
             if (isWall(nnx, nny) || isBox(nnx, nny))
@@ -76,25 +77,26 @@ public class Player : MonoBehaviour
             }
             GameObject inHandBox = getBox(nx, ny);
             inHandBox.transform.position = new Vector3(nnx, nny);
-            mapCreator.boxes.Remove(nx * 100 + ny);
-            mapCreator.boxes.Add(nnx * 100 + nny,inHandBox);
+            int box_color = mapCreator.boxes[ny * 100 + nx].Key;
+            mapCreator.boxes.Remove(ny * 100 + nx);
+            mapCreator.boxes.Add(nny * 100 + nnx, new KeyValuePair<int, GameObject>(box_color,inHandBox));
         }
 
         transform.position = new Vector3(x + dx, y + dy);
     }
 
-    bool isWall(int x,int y)
+    bool isWall(int x, int y)
     {
-        return mapCreator.walls.Contains(x * 100 + y);
+        return mapCreator.walls.Contains(y * 100 + x);
     }
 
-    bool isBox(int x,int y)
+    bool isBox(int x, int y)
     {
-        return mapCreator.boxes.ContainsKey(x * 100 + y);
+        return mapCreator.boxes.ContainsKey(y * 100 + x);
     }
 
-    GameObject getBox(int x,int y)
+    GameObject getBox(int x, int y)
     {
-        return mapCreator.boxes[x * 100 + y];
+        return mapCreator.boxes[y * 100 + x].Value;
     }
 }

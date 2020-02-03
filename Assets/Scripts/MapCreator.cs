@@ -5,6 +5,10 @@ using UnityEngine;
 public class MapCreator : MonoBehaviour
 {
     public string[] map;
+    public int[] player_position;
+    public string[] box_position;
+    public string[] target_position;
+
     public GameObject player;
     public GameObject wall;
     public GameObject box_brown;
@@ -20,9 +24,20 @@ public class MapCreator : MonoBehaviour
     public GameObject floor_stone;
     public GameObject floor_mud;
     public GameObject floor_ice;
+    public GameObject pit;
+    public GameObject pit_brown;
+    public GameObject pit_red;
+    public GameObject pit_blue;
+    public GameObject pit_green;
+    public GameObject pit_gray;
 
-    public Dictionary<int, GameObject> boxes = new Dictionary<int, GameObject>();
+    public Dictionary<int, KeyValuePair<int, GameObject>> boxes = new Dictionary<int, KeyValuePair<int, GameObject>>();
     public HashSet<int> walls = new HashSet<int>();
+    public HashSet<int> stones = new HashSet<int>();
+    public HashSet<int> ices = new HashSet<int>();
+    public HashSet<int> muds = new HashSet<int>();
+    public Dictionary<int, int> pits = new Dictionary<int, int>();
+
     public Dictionary<int, bool> targets_brown = new Dictionary<int, bool>();
     public Dictionary<int, bool> targets_red = new Dictionary<int, bool>();
     public Dictionary<int, bool> targets_blue = new Dictionary<int, bool>();
@@ -50,111 +65,154 @@ public class MapCreator : MonoBehaviour
         floor_stone.SetActive(false);
         floor_mud.SetActive(false);
         floor_ice.SetActive(false);
+        pit.SetActive(false);
+        pit_brown.SetActive(false);
+        pit_red.SetActive(false);
+        pit_blue.SetActive(false);
+        pit_green.SetActive(false);
+        pit_gray.SetActive(false);
+
+
+        GameObject newPlayer = Instantiate(player, new Vector3(player_position[0], player_position[1], 0), Quaternion.identity);
+        newPlayer.SetActive(true);
+
         for (int i = 0; i < map.Length; i++)
         {
             for(int j = 0; j < map[0].Length; j++)
             {
                 if (map[i][j] == 'W')
                 {
-                    GameObject newWall = Instantiate(wall, new Vector3(i + map_offset_X, j + map_offset_Y), Quaternion.identity);
+                    GameObject newWall = Instantiate(wall, new Vector3(j, i, 5), Quaternion.identity);
                     newWall.SetActive(true);
                     walls.Add(100 * i + j);
                 }
-                else if(map[i][j] == '0')
-                {
-                    GameObject newTarget = Instantiate(target_brown, new Vector3(i + map_offset_X, j + map_offset_Y, 1), Quaternion.identity);
-                    newTarget.SetActive(true);
-                    targets_brown.Add(100 * i + j, false);
-                }
-                else if (map[i][j] == '1')
-                {
-                    GameObject newTarget = Instantiate(target_red, new Vector3(i + map_offset_X, j + map_offset_Y, 1), Quaternion.identity);
-                    newTarget.SetActive(true);
-                    targets_red.Add(100 * i + j, false);
-                }
-                else if (map[i][j] == '2')
-                {
-                    GameObject newTarget = Instantiate(target_blue, new Vector3(i + map_offset_X, j + map_offset_Y, 1), Quaternion.identity);
-                    newTarget.SetActive(true);
-                    targets_blue.Add(100 * i + j, false);
-                }
-                else if (map[i][j] == '3')
-                {
-                    GameObject newTarget = Instantiate(target_green, new Vector3(i + map_offset_X, j + map_offset_Y, 1), Quaternion.identity);
-                    newTarget.SetActive(true);
-                    targets_green.Add(100 * i + j, false);
-                }
-                else if (map[i][j] == '4')
-                {
-                    GameObject newTarget = Instantiate(target_gray, new Vector3(i + map_offset_X, j + map_offset_Y, 1), Quaternion.identity);
-                    newTarget.SetActive(true);
-                    targets_gray.Add(100 * i + j, false);
-                }
                 else if (map[i][j] == 'P')
                 {
-                    GameObject newPlayer = Instantiate(player, new Vector3(i + map_offset_X, j + map_offset_Y), Quaternion.identity);
-                    newPlayer.SetActive(true);
-                }
-                else if (map[i][j] == '5')
-                {
-                    GameObject newBox = Instantiate(box_brown, new Vector3(i + map_offset_X, j + map_offset_Y), Quaternion.identity);
-                    newBox.SetActive(true);
-                    boxes.Add(100 * i + j, newBox);
-                }
-                else if (map[i][j] == '6')
-                {
-                    GameObject newBox = Instantiate(box_red, new Vector3(i + map_offset_X, j + map_offset_Y), Quaternion.identity);
-                    newBox.SetActive(true);
-                    boxes.Add(100 * i + j, newBox);
-                }
-                else if (map[i][j] == '7')
-                {
-                    GameObject newBox = Instantiate(box_blue, new Vector3(i + map_offset_X, j + map_offset_Y), Quaternion.identity);
-                    newBox.SetActive(true);
-                    boxes.Add(100 * i + j, newBox);
-                }
-                else if (map[i][j] == '8')
-                {
-                    GameObject newBox = Instantiate(box_green, new Vector3(i + map_offset_X, j + map_offset_Y), Quaternion.identity);
-                    newBox.SetActive(true);
-                    boxes.Add(100 * i + j, newBox);
-                }
-                else if (map[i][j] == '9')
-                {
-                    GameObject newBox = Instantiate(box_gray, new Vector3(i + map_offset_X, j + map_offset_Y), Quaternion.identity);
-                    newBox.SetActive(true);
-                    boxes.Add(100 * i + j, newBox);
-                }
-                //todo pits
-                else if (map[i][j] == 'T')
-                {
-                    GameObject newBox = Instantiate(box_gray, new Vector3(i + map_offset_X, j + map_offset_Y), Quaternion.identity);
-                    newBox.SetActive(true);
-                    boxes.Add(100 * i + j, newBox);
+                    GameObject newPit = Instantiate(pit, new Vector3(j, i, 5), Quaternion.identity);
+                    newPit.SetActive(true);
+                    pits.Add(100 * i + j,-1);
                 }
                 else if (map[i][j] == 'S')
                 {
-                    GameObject newFloor = Instantiate(floor_stone, new Vector3(i + map_offset_X, j + map_offset_Y,2), Quaternion.identity);
+                    GameObject newFloor = Instantiate(floor_stone, new Vector3(j, i, 5), Quaternion.identity);
+                    stones.Add(100 * i + j);
                     newFloor.SetActive(true);
                 }
                 else if (map[i][j] == 'I')
                 {
-                    GameObject newFloor = Instantiate(floor_ice, new Vector3(i + map_offset_X, j + map_offset_Y,2), Quaternion.identity);
+                    GameObject newFloor = Instantiate(floor_ice, new Vector3(j, i, 5), Quaternion.identity);
+                    ices.Add(100 * i + j);
                     newFloor.SetActive(true);
                 }
                 else if (map[i][j] == 'M')
                 {
-                    GameObject newFloor = Instantiate(floor_mud, new Vector3(i + map_offset_X, j + map_offset_Y,2), Quaternion.identity);
+                    GameObject newFloor = Instantiate(floor_mud, new Vector3(j, i, 5), Quaternion.identity);
+                    muds.Add(100 * i + j);
                     newFloor.SetActive(true);
-                }
-                else if(map[i][j]== '#')
-                {
-
                 }
                 else
                 {
                     Debug.Log("Item letter is not defined " + map[i][j]);
                 }
+            }
+        }
+
+        for(int i = 0; i < box_position.Length; i++)
+        {
+            string[] str_arr = box_position[i].Split(' ');
+            int x = int.Parse(str_arr[0]);
+            int y = int.Parse(str_arr[1]);
+            int color = int.Parse(str_arr[2]);
+            switch (color)
+            {
+                case 0:
+                    {
+                        GameObject newBox = Instantiate(box_brown, new Vector3(x, y, 0), Quaternion.identity);
+                        boxes.Add(100 * y + x,new KeyValuePair<int, GameObject>(color,newBox));
+                        newBox.SetActive(true);
+                        break;
+                    }
+                case 1:
+                    {
+                        GameObject newBox = Instantiate(box_red, new Vector3(x, y, 0), Quaternion.identity);
+                        boxes.Add(100 * y + x, new KeyValuePair<int, GameObject>(color, newBox));
+                        newBox.SetActive(true);
+                        break;
+                    }
+                case 2:
+                    {
+                        GameObject newBox = Instantiate(box_blue, new Vector3(x, y, 0), Quaternion.identity);
+                        boxes.Add(100 * y + x, new KeyValuePair<int, GameObject>(color, newBox));
+                        newBox.SetActive(true);
+                        break;
+                    }
+                case 3:
+                    {
+                        GameObject newBox = Instantiate(box_green, new Vector3(x, y, 0), Quaternion.identity);
+                        boxes.Add(100 * y + x, new KeyValuePair<int, GameObject>(color, newBox));
+                        newBox.SetActive(true);
+                        break;
+                    }
+                case 4:
+                    {
+                        GameObject newBox = Instantiate(box_gray, new Vector3(x, y, 0), Quaternion.identity);
+                        boxes.Add(100 * y + x, new KeyValuePair<int, GameObject>(color, newBox));
+                        newBox.SetActive(true);
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
+            }
+        }
+        for (int i = 0; i < target_position.Length; i++)
+        {
+            string[] str_arr = target_position[i].Split(' ');
+            int x = int.Parse(str_arr[0]);
+            int y = int.Parse(str_arr[1]);
+            int color = int.Parse(str_arr[2]);
+            switch (color)
+            {
+                case 0:
+                    {
+                        GameObject newTarget = Instantiate(target_brown, new Vector3(x, y, 3), Quaternion.identity);
+                        targets_brown.Add(100 * y + x, false);
+                        newTarget.SetActive(true);
+                        break;
+                    }
+                case 1:
+                    {
+                        GameObject newTarget = Instantiate(target_red, new Vector3(x, y, 0), Quaternion.identity);
+                        targets_red.Add(100 * y + x, false);
+                        newTarget.SetActive(true);
+                        break;
+                    }
+                case 2:
+                    {
+                        GameObject newTarget = Instantiate(target_blue, new Vector3(x, y, 0), Quaternion.identity);
+                        targets_blue.Add(100 * y + x, false);
+                        newTarget.SetActive(true);
+                        break;
+                    }
+                case 3:
+                    {
+                        GameObject newTarget = Instantiate(target_green, new Vector3(x, y, 0), Quaternion.identity);
+                        targets_green.Add(100 * y + x, false);
+                        newTarget.SetActive(true);
+                        break;
+                    }
+                case 4:
+                    {
+                        GameObject newTarget = Instantiate(target_gray, new Vector3(x, y, 0), Quaternion.identity);
+                        targets_gray.Add(100 * y + x, false);
+                        newTarget.SetActive(true);
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
             }
         }
     }
