@@ -68,7 +68,6 @@ public class Player : MonoBehaviour
         }
         if (isBox(nx, ny))
         {
-            Debug.Log(111);
             int nnx = nx + dx;
             int nny = ny + dy;
             if (isWall(nnx, nny) || isBox(nnx, nny))

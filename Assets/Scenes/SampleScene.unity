@@ -133,11 +133,23 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4601790551615109562}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &92473110 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1387369808171598092, guid: 8baef284b716342fba01ab27634846d0,
+    type: 3}
+  m_PrefabInstance: {fileID: 8200242915591195531}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &93386377 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1983550539454583888, guid: 503cacdf800fb4c5a85fa3082c8a8467,
     type: 3}
   m_PrefabInstance: {fileID: 3281505776900513711}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &278688531 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6681266500219566812, guid: 2e005023ec6004d1fa7a9765fc3e6208,
+    type: 3}
+  m_PrefabInstance: {fileID: 1146650633157311677}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &360700437 stripped
 GameObject:
@@ -150,6 +162,12 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8026056884186018052, guid: c819914a583294a218e6abd660697bbb,
     type: 3}
   m_PrefabInstance: {fileID: 3903387341484078526}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &477350497 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 120848813544128230, guid: 6be40522c0c564abaaf47d77ae3ac5b8,
+    type: 3}
+  m_PrefabInstance: {fileID: 7439821092255020768}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
@@ -270,23 +288,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map:
-  - WWWWWWWWW
-  - WP##WWWWW
-  - W550WWWWW
-  - W0##WWWWW
-  - W12WWWWWW
-  - W34WWWWWW
-  - WWWWWWWWW
-  - WWWIIIWWW
-  - WWWSSSWWW
-  - WWWMMMWWW
-  - WWWWWWWWW
-  - WWWWWWWWW
-  - WWW56789W
-  - WWWWWWWWW
+  - WWWWWWWWWWW
+  - WSSSSW#####
+  - WSSMMWWWWWW
+  - WIIIIWWWWWW
+  - WIIPPWWWWWW
+  - WWWWWWWWWWW
+  - WWWWWWWWWWW
+  - WWWWWWWWWWW
+  - WWWWWWWWWWW
   player_position: 0100000001000000
-  box_position: []
-  target_position: []
+  box_position:
+  - 2 1 3
+  - 3 3 2
+  target_position:
+  - 2 4 1
+  - 4 1 0
   player: {fileID: 1142175191}
   wall: {fileID: 360700437}
   box_brown: {fileID: 1556754685}
@@ -303,6 +320,11 @@ MonoBehaviour:
   floor_mud: {fileID: 9594380}
   floor_ice: {fileID: 838989400}
   pit: {fileID: 1446121780}
+  pit_brown: {fileID: 92473110}
+  pit_red: {fileID: 278688531}
+  pit_blue: {fileID: 1068907922}
+  pit_green: {fileID: 1141003915}
+  pit_gray: {fileID: 477350497}
 --- !u!4 &576685845
 Transform:
   m_ObjectHideFlags: 0
@@ -329,11 +351,23 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7279736037231170518}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1068907922 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3542822237213011709, guid: 27ce5b87b850f46bba00b50089db935b,
+    type: 3}
+  m_PrefabInstance: {fileID: 8210276024530396387}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1115601265 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4228047438483262067, guid: fc2bd2b66fc5a457cb22947ae531c32f,
     type: 3}
   m_PrefabInstance: {fileID: 6680915896491228958}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1141003915 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 495267244176762462, guid: 5b6add80ec0a845a7b2bf4f0dd2ca76a,
+    type: 3}
+  m_PrefabInstance: {fileID: 7475131781292179001}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1142175191 stripped
 GameObject:
@@ -511,7 +545,7 @@ PrefabInstance:
     - target: {fileID: 1089781571168915478, guid: f8434e538e37140faaee6fcde41c86c1,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1089781571168915483, guid: f8434e538e37140faaee6fcde41c86c1,
         type: 3}

@@ -110,6 +110,10 @@ public class MapCreator : MonoBehaviour
                     muds.Add(100 * i + j);
                     newFloor.SetActive(true);
                 }
+                else if (map[i][j] == '#')                
+                {
+                    continue;
+                }
                 else
                 {
                     Debug.Log("Item letter is not defined " + map[i][j]);
