@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\MapCreator.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
+    <None Include="Assets\Imports\kenney_fontpackage\License.txt" />
     <None Include="Assets\Imports\kenney_sokobanpack\Spritesheet\sokoban_spritesheet@2.xml" />
     <None Include="Assets\Imports\kenney_sokobanpack\Spritesheet\sokoban_spritesheet.xml" />
     <None Include="Assets\Imports\kenney_sokobanpack\License.txt" />

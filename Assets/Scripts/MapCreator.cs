@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MapCreator : MonoBehaviour
 {
+    public static MapCreator instance;
+
     public string[] map;
     public int[] player_position;
     public string[] box_position;
@@ -31,6 +34,23 @@ public class MapCreator : MonoBehaviour
     public GameObject pit_green;
     public GameObject pit_gray;
 
+    public Text player_step;
+    public Text brown_tar;
+    public Text red_tar;
+    public Text blue_tar;
+    public Text green_tar;
+    public Text gray_tar;
+
+    public int brown_num;
+    public int red_num;
+    public int blue_num;
+    public int green_num;
+    public int gray_num;
+    public int step;
+
+    public int map_offset_X = -8;
+    public int map_offset_Y = -4;
+
     public Dictionary<int, KeyValuePair<int, GameObject>> boxes = new Dictionary<int, KeyValuePair<int, GameObject>>();
     public HashSet<int> walls = new HashSet<int>();
     public HashSet<int> stones = new HashSet<int>();
@@ -44,36 +64,29 @@ public class MapCreator : MonoBehaviour
     public Dictionary<int, bool> targets_green = new Dictionary<int, bool>();
     public Dictionary<int, bool> targets_gray = new Dictionary<int, bool>();
     // Start is called before the first frame update
+
+    //private void Awake()
+    //{
+    //    if (instance == null)
+    //    {
+    //        instance = this;
+    //    }
+    //    else if (instance != this)
+    //    {
+    //        Destroy(gameObject);
+    //    }
+    //}
+
     void Start()
     {
-        int map_offset_X = 0;
-        int map_offset_Y = 0;
+        step = 0;
+        brown_num = 0;
+        red_num = 0;
+        blue_num = 0;
+        green_num = 0;
+        gray_num = 0;
 
-
-        player.SetActive(false);
-        wall.SetActive(false);
-        box_brown.SetActive(false);
-        box_red.SetActive(false);
-        box_blue.SetActive(false);
-        box_green.SetActive(false);
-        box_gray.SetActive(false);
-        target_brown.SetActive(false);
-        target_red.SetActive(false);
-        target_blue.SetActive(false);
-        target_green.SetActive(false);
-        target_gray.SetActive(false);
-        floor_stone.SetActive(false);
-        floor_mud.SetActive(false);
-        floor_ice.SetActive(false);
-        pit.SetActive(false);
-        pit_brown.SetActive(false);
-        pit_red.SetActive(false);
-        pit_blue.SetActive(false);
-        pit_green.SetActive(false);
-        pit_gray.SetActive(false);
-
-
-        GameObject newPlayer = Instantiate(player, new Vector3(player_position[0], player_position[1], 0), Quaternion.identity);
+        GameObject newPlayer = Instantiate(player, new Vector3(player_position[0]+ map_offset_X, player_position[1]+ map_offset_Y, 0), Quaternion.identity);
         newPlayer.SetActive(true);
 
         for (int i = 0; i < map.Length; i++)
@@ -82,31 +95,31 @@ public class MapCreator : MonoBehaviour
             {
                 if (map[i][j] == 'W')
                 {
-                    GameObject newWall = Instantiate(wall, new Vector3(j, i, 5), Quaternion.identity);
+                    GameObject newWall = Instantiate(wall, new Vector3(j+ map_offset_X, i+ map_offset_Y, 5), Quaternion.identity);
                     newWall.SetActive(true);
                     walls.Add(100 * i + j);
                 }
                 else if (map[i][j] == 'P')
                 {
-                    GameObject newPit = Instantiate(pit, new Vector3(j, i, 5), Quaternion.identity);
+                    GameObject newPit = Instantiate(pit, new Vector3(j+ map_offset_X, i+ map_offset_Y, 5), Quaternion.identity);
                     newPit.SetActive(true);
                     pits.Add(100 * i + j,-1);
                 }
                 else if (map[i][j] == 'S')
                 {
-                    GameObject newFloor = Instantiate(floor_stone, new Vector3(j, i, 5), Quaternion.identity);
+                    GameObject newFloor = Instantiate(floor_stone, new Vector3(j+ map_offset_X, i+ map_offset_Y, 5), Quaternion.identity);
                     stones.Add(100 * i + j);
                     newFloor.SetActive(true);
                 }
                 else if (map[i][j] == 'I')
                 {
-                    GameObject newFloor = Instantiate(floor_ice, new Vector3(j, i, 5), Quaternion.identity);
+                    GameObject newFloor = Instantiate(floor_ice, new Vector3(j+ map_offset_X, i+ map_offset_Y, 5), Quaternion.identity);
                     ices.Add(100 * i + j);
                     newFloor.SetActive(true);
                 }
                 else if (map[i][j] == 'M')
                 {
-                    GameObject newFloor = Instantiate(floor_mud, new Vector3(j, i, 5), Quaternion.identity);
+                    GameObject newFloor = Instantiate(floor_mud, new Vector3(j+ map_offset_X, i+ map_offset_Y, 5), Quaternion.identity);
                     muds.Add(100 * i + j);
                     newFloor.SetActive(true);
                 }
@@ -131,35 +144,35 @@ public class MapCreator : MonoBehaviour
             {
                 case 0:
                     {
-                        GameObject newBox = Instantiate(box_brown, new Vector3(x, y, 0), Quaternion.identity);
+                        GameObject newBox = Instantiate(box_brown, new Vector3(x+ map_offset_X, y+ map_offset_Y, 0), Quaternion.identity);
                         boxes.Add(100 * y + x,new KeyValuePair<int, GameObject>(color,newBox));
                         newBox.SetActive(true);
                         break;
                     }
                 case 1:
                     {
-                        GameObject newBox = Instantiate(box_red, new Vector3(x, y, 0), Quaternion.identity);
+                        GameObject newBox = Instantiate(box_red, new Vector3(x+ map_offset_X, y+ map_offset_Y, 0), Quaternion.identity);
                         boxes.Add(100 * y + x, new KeyValuePair<int, GameObject>(color, newBox));
                         newBox.SetActive(true);
                         break;
                     }
                 case 2:
                     {
-                        GameObject newBox = Instantiate(box_blue, new Vector3(x, y, 0), Quaternion.identity);
+                        GameObject newBox = Instantiate(box_blue, new Vector3(x+ map_offset_X, y+ map_offset_Y, 0), Quaternion.identity);
                         boxes.Add(100 * y + x, new KeyValuePair<int, GameObject>(color, newBox));
                         newBox.SetActive(true);
                         break;
                     }
                 case 3:
                     {
-                        GameObject newBox = Instantiate(box_green, new Vector3(x, y, 0), Quaternion.identity);
+                        GameObject newBox = Instantiate(box_green, new Vector3(x+ map_offset_X, y+ map_offset_Y, 0), Quaternion.identity);
                         boxes.Add(100 * y + x, new KeyValuePair<int, GameObject>(color, newBox));
                         newBox.SetActive(true);
                         break;
                     }
                 case 4:
                     {
-                        GameObject newBox = Instantiate(box_gray, new Vector3(x, y, 0), Quaternion.identity);
+                        GameObject newBox = Instantiate(box_gray, new Vector3(x+ map_offset_X, y+ map_offset_Y, 0), Quaternion.identity);
                         boxes.Add(100 * y + x, new KeyValuePair<int, GameObject>(color, newBox));
                         newBox.SetActive(true);
                         break;
@@ -180,37 +193,42 @@ public class MapCreator : MonoBehaviour
             {
                 case 0:
                     {
-                        GameObject newTarget = Instantiate(target_brown, new Vector3(x, y, 3), Quaternion.identity);
+                        GameObject newTarget = Instantiate(target_brown, new Vector3(x+ map_offset_X, y+ map_offset_Y, 3), Quaternion.identity);
                         targets_brown.Add(100 * y + x, false);
                         newTarget.SetActive(true);
+                        brown_num++;
                         break;
                     }
                 case 1:
                     {
-                        GameObject newTarget = Instantiate(target_red, new Vector3(x, y, 0), Quaternion.identity);
+                        GameObject newTarget = Instantiate(target_red, new Vector3(x+ map_offset_X, y+ map_offset_Y, 3), Quaternion.identity);
                         targets_red.Add(100 * y + x, false);
                         newTarget.SetActive(true);
+                        red_num++;
                         break;
                     }
                 case 2:
                     {
-                        GameObject newTarget = Instantiate(target_blue, new Vector3(x, y, 0), Quaternion.identity);
+                        GameObject newTarget = Instantiate(target_blue, new Vector3(x+ map_offset_X, y+ map_offset_Y, 3), Quaternion.identity);
                         targets_blue.Add(100 * y + x, false);
                         newTarget.SetActive(true);
+                        blue_num++;
                         break;
                     }
                 case 3:
                     {
-                        GameObject newTarget = Instantiate(target_green, new Vector3(x, y, 0), Quaternion.identity);
+                        GameObject newTarget = Instantiate(target_green, new Vector3(x+ map_offset_X, y+ map_offset_Y, 3), Quaternion.identity);
                         targets_green.Add(100 * y + x, false);
                         newTarget.SetActive(true);
+                        green_num++;
                         break;
                     }
                 case 4:
                     {
-                        GameObject newTarget = Instantiate(target_gray, new Vector3(x, y, 0), Quaternion.identity);
+                        GameObject newTarget = Instantiate(target_gray, new Vector3(x+ map_offset_X, y+ map_offset_Y, 3), Quaternion.identity);
                         targets_gray.Add(100 * y + x, false);
                         newTarget.SetActive(true);
+                        gray_num++;
                         break;
                     }
                 default:
@@ -219,11 +237,27 @@ public class MapCreator : MonoBehaviour
                     }
             }
         }
+        Debug.Log(brown_num);
+        UpdateTargetNum();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void UpdateTargetNum()
+    {
+        brown_tar.text = (100+brown_num).ToString().Substring(1);
+        red_tar.text = (100 + red_num).ToString().Substring(1);
+        blue_tar.text = (100 + blue_num).ToString().Substring(1);
+        green_tar.text = (100 + green_num).ToString().Substring(1);
+        gray_tar.text = (100 + gray_num).ToString().Substring(1);
+    }
+
+    public void UpdateStepNum()
+    {
+        player_step.text = (1000+step).ToString().Substring(1);
     }
 }

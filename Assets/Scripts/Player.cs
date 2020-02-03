@@ -56,8 +56,8 @@ public class Player : MonoBehaviour
         animator.SetFloat("deltaY", y_dir);
         animator.SetFloat("deltaX", x_dir);
 
-        int x = (int)transform.position.x;
-        int y = (int)transform.position.y;
+        int x = (int)transform.position.x- mapCreator.map_offset_X;
+        int y = (int)transform.position.y-mapCreator.map_offset_Y;
 
         int nx = dx + x;
         int ny = dy + y;
@@ -66,6 +66,13 @@ public class Player : MonoBehaviour
         {
             return;
         }
+
+        if (dx != 0 || dy != 0)
+        {
+            mapCreator.step++;
+            mapCreator.UpdateStepNum();
+        }
+
         if (isBox(nx, ny))
         {
             int nnx = nx + dx;
@@ -75,13 +82,13 @@ public class Player : MonoBehaviour
                 return;
             }
             GameObject inHandBox = getBox(nx, ny);
-            inHandBox.transform.position = new Vector3(nnx, nny);
+            inHandBox.transform.position = new Vector3(nnx+ mapCreator.map_offset_X, nny+mapCreator.map_offset_Y);
             int box_color = mapCreator.boxes[ny * 100 + nx].Key;
             mapCreator.boxes.Remove(ny * 100 + nx);
             mapCreator.boxes.Add(nny * 100 + nnx, new KeyValuePair<int, GameObject>(box_color,inHandBox));
         }
 
-        transform.position = new Vector3(x + dx, y + dy);
+        transform.position = new Vector3(x + dx+ mapCreator.map_offset_X, y + dy+ mapCreator.map_offset_Y);
     }
 
     bool isWall(int x, int y)
