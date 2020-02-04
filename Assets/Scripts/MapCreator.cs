@@ -5,7 +5,10 @@ using UnityEngine.UI;
 
 public class MapCreator : MonoBehaviour
 {
-    public static MapCreator instance;
+    //public static MapCreator instance;
+    GameController gameController;
+
+    public int level;
 
     public string[] map;
     public int[] player_position;
@@ -71,17 +74,11 @@ public class MapCreator : MonoBehaviour
     public Dictionary<int, bool> targets_gray = new Dictionary<int, bool>();
     // Start is called before the first frame update
 
-    //private void Awake()
-    //{
-    //    if (instance == null)
-    //    {
-    //        instance = this;
-    //    }
-    //    else if (instance != this)
-    //    {
-    //        Destroy(gameObject);
-    //    }
-    //}
+    private void Awake()
+    {
+        gameController = FindObjectOfType<GameController>();
+        Debug.Log(gameController.cur_level);
+    }
 
     void Start()
     {

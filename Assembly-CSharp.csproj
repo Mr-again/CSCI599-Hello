@@ -63,6 +63,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\EntranceController.cs" />
+    <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\MapCreator.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <None Include="Assets\Imports\kenney_fontpackage\License.txt" />
