@@ -65,7 +65,8 @@ public class MapCreator : MonoBehaviour
     public HashSet<int> stones = new HashSet<int>();
     public HashSet<int> ices = new HashSet<int>();
     public HashSet<int> muds = new HashSet<int>();
-    public Dictionary<int, int> pits = new Dictionary<int, int>();
+    public Dictionary<int, GameObject> pits = new Dictionary<int, GameObject>();
+    public Dictionary<int, GameObject> covered_pits = new Dictionary<int, GameObject>();
 
     public Dictionary<int, bool> targets_brown = new Dictionary<int, bool>();
     public Dictionary<int, bool> targets_red = new Dictionary<int, bool>();
@@ -74,11 +75,11 @@ public class MapCreator : MonoBehaviour
     public Dictionary<int, bool> targets_gray = new Dictionary<int, bool>();
     // Start is called before the first frame update
 
-    //private void Awake()
-    //{
-    //    gameController = FindObjectOfType<GameController>();
-    //    Debug.Log(gameController.cur_level);
-    //}
+    private void Awake()
+    {
+        //gameController = FindObjectOfType<GameController>();
+        //Debug.Log(gameController.cur_level);
+    }
 
     void Start()
     {
@@ -106,7 +107,7 @@ public class MapCreator : MonoBehaviour
                 {
                     GameObject newPit = Instantiate(pit, new Vector3(j+ map_offset_X, i+ map_offset_Y, 5), Quaternion.identity);
                     newPit.SetActive(true);
-                    pits.Add(100 * i + j,-1);
+                    pits.Add(100 * i + j, newPit);
                 }
                 else if (map[i][j] == 'S')
                 {
@@ -240,30 +241,63 @@ public class MapCreator : MonoBehaviour
                     }
             }
         }
+        Vector3[] box_position_in_scene = {new Vector3(-55, 90, 0), new Vector3(40, 90, 0),
+            new Vector3(-55, 0, 0), new Vector3(40, 0, 0), new Vector3(-55, -90, 0) };
+        int cnt = 0;
         if (brown_num == 0)
         {
             brown_tar.gameObject.SetActive(false);
             brown_box.gameObject.SetActive(false);
+        }
+        else
+        {
+            brown_tar.rectTransform.localPosition = new Vector3(box_position_in_scene[cnt].x + 1.5f, box_position_in_scene[cnt].y + 2.0f, 0);
+            brown_box.rectTransform.localPosition = box_position_in_scene[cnt];
+            cnt++;
         }
         if (red_num == 0)
         {
             red_tar.gameObject.SetActive(false);
             red_box.gameObject.SetActive(false);
         }
+        else
+        {
+            red_tar.rectTransform.localPosition = new Vector3(box_position_in_scene[cnt].x + 1.5f, box_position_in_scene[cnt].y + 2.0f, 0);
+            red_box.rectTransform.localPosition = box_position_in_scene[cnt];
+            cnt++;
+        }
         if (blue_num == 0)
         {
             blue_tar.gameObject.SetActive(false);
             blue_box.gameObject.SetActive(false);
+        }
+        else
+        {
+            blue_tar.rectTransform.localPosition = new Vector3(box_position_in_scene[cnt].x + 1.5f, box_position_in_scene[cnt].y + 2.0f, 0);
+            blue_box.rectTransform.localPosition = box_position_in_scene[cnt];
+            cnt++;
         }
         if (green_num == 0)
         {
             green_tar.gameObject.SetActive(false);
             green_box.gameObject.SetActive(false);
         }
+        else
+        {
+            green_tar.rectTransform.localPosition = new Vector3(box_position_in_scene[cnt].x + 1.5f, box_position_in_scene[cnt].y + 2.0f, 0);
+            green_box.rectTransform.localPosition = box_position_in_scene[cnt];
+            cnt++;
+        }
         if (gray_num == 0)
         {
             gray_tar.gameObject.SetActive(false);
             gray_box.gameObject.SetActive(false);
+        }
+        else
+        {
+            gray_tar.rectTransform.localPosition = new Vector3(box_position_in_scene[cnt].x + 1.5f, box_position_in_scene[cnt].y + 2.0f, 0);
+            gray_box.rectTransform.localPosition = box_position_in_scene[cnt];
+            cnt++;
         }
         UpdateTargetNum();
     }
@@ -286,5 +320,10 @@ public class MapCreator : MonoBehaviour
     public void UpdateStepNum()
     {
         player_step.text = (1000+step).ToString().Substring(1);
+    }
+
+    public void UpdateBoxNum()
+    {
+        player_step.text = (100 + step).ToString().Substring(1);
     }
 }

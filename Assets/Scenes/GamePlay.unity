@@ -636,6 +636,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15e4ef5461cc342c9bd49d159a62999e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level: 0
   map:
   - WWWWWWWWWWWW
   - WSSSSW#####W
@@ -644,15 +645,17 @@ MonoBehaviour:
   - WIIPPWWWWWWW
   - WWWWWWWWWWWW
   - WWWWWWWWWWWW
-  - WWWWWWWWWWWW
+  - WSSSSSSSSSSW
   - WWWWWWWWWWWW
   player_position: 0100000001000000
   box_position:
-  - 2 1 3
+  - 2 2 3
   - 3 3 2
   target_position:
   - 2 4 4
   - 4 1 0
+  - 3 7 1
+  - 4 7 2
   player: {fileID: 1089781571168915483, guid: f8434e538e37140faaee6fcde41c86c1, type: 3}
   wall: {fileID: 5256801442344684041, guid: e40b3ea390f7148ad817306e5f8529be, type: 3}
   box_brown: {fileID: 3673366117402321736, guid: 20b33ecef1ee545238fa916208971477,
