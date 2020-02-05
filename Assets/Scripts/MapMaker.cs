@@ -48,6 +48,20 @@ public class MapMaker : MonoBehaviour
 
     public string select_elem_name;
 
+    public string[] map = new string[] {
+        "############",
+        "############",
+        "############",
+        "############",
+        "############",
+        "############",
+        "############",
+        "############",
+        "############",};
+    public int[] player_position = new int[2];
+    public string[] box_position;
+    public string[] target_position;
+    
     public Dictionary<int, KeyValuePair<int, GameObject>> boxes = new Dictionary<int, KeyValuePair<int, GameObject>>();
     public HashSet<int> walls = new HashSet<int>();
     public HashSet<int> stones = new HashSet<int>();
@@ -114,6 +128,7 @@ public class MapMaker : MonoBehaviour
         select_elem_name = selected_element.name;
     }
 
+
     public void GenerateAndStoreMapElement(string elem_name, int pos_x,int pos_y)
     {
         int store_x = pos_x + offset_x;
@@ -125,6 +140,8 @@ public class MapMaker : MonoBehaviour
                 {
                     GameObject newPlayer = Instantiate(player_obj, new Vector3(pos_x, pos_y, 0), Quaternion.identity);
                     newPlayer.SetActive(true);
+                    player_position[0] = store_x;
+                    player_position[1] = store_y;
                     break;
                 }
             case "Wall":
