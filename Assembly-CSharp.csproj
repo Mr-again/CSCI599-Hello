@@ -72,6 +72,7 @@
     <None Include="Assets\Imports\kenney_sokobanpack\Spritesheet\sokoban_spritesheet@2.xml" />
     <None Include="Assets\Imports\kenney_sokobanpack\Spritesheet\sokoban_spritesheet.xml" />
     <None Include="Assets\Imports\kenney_sokobanpack\License.txt" />
+    <None Include="Assets\Imports\kenney_rpgaudio\License.txt" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>/Users/johnny.zeng/UnityProject/CSCI599-Hello/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

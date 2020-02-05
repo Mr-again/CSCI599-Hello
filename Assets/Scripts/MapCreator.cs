@@ -74,11 +74,11 @@ public class MapCreator : MonoBehaviour
     public Dictionary<int, bool> targets_gray = new Dictionary<int, bool>();
     // Start is called before the first frame update
 
-    private void Awake()
-    {
-        gameController = FindObjectOfType<GameController>();
-        Debug.Log(gameController.cur_level);
-    }
+    //private void Awake()
+    //{
+    //    gameController = FindObjectOfType<GameController>();
+    //    Debug.Log(gameController.cur_level);
+    //}
 
     void Start()
     {

@@ -41,6 +41,10 @@ public class Player : MonoBehaviour
         {
             dy--;
         }
+        //else if(Input.GetMouseButton(0))
+        //{
+        //    Debug.Log(Input.mousePosition);
+        //}
 
         if (dx != 0 || dy != 0)
         {
