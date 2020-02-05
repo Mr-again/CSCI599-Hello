@@ -633,6 +633,7 @@ MonoBehaviour:
   stone_floor: {fileID: 1992605104}
   mud_floor: {fileID: 1868196204}
   ice_floor: {fileID: 2008171338}
+  player: {fileID: 1700383034}
   player_obj: {fileID: 1089781571168915483, guid: f8434e538e37140faaee6fcde41c86c1,
     type: 3}
   wall_obj: {fileID: 5256801442344684041, guid: e40b3ea390f7148ad817306e5f8529be,

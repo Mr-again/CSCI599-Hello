@@ -21,6 +21,7 @@ public class MapMaker : MonoBehaviour
     public Button stone_floor;
     public Button mud_floor;
     public Button ice_floor;
+    public Button player;
 
     public GameObject player_obj;
     public GameObject wall_obj;
@@ -79,6 +80,9 @@ public class MapMaker : MonoBehaviour
         stone_floor.onClick.AddListener(() => { OnClickElement(); });
         mud_floor.onClick.AddListener(() => { OnClickElement(); });
         ice_floor.onClick.AddListener(() => { OnClickElement(); });
+        player.onClick.AddListener(() => { OnClickElement(); });
+
+        select_elem_name = "Wall";
     }
 
     // Update is called once per frame
@@ -99,7 +103,6 @@ public class MapMaker : MonoBehaviour
                 {
                     GenerateAndStoreMapElement(select_elem_name, mouse_x, mouse_y);
                 }
-
             }
             
         }
