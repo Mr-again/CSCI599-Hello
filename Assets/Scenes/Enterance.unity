@@ -558,6 +558,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1349863445}
+  - component: {fileID: 1349863446}
   m_Layer: 0
   m_Name: MysqlController
   m_TagString: Untagged
@@ -579,6 +580,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1349863446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349863444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d38053c6fed646a3a9ab6a17d512129, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mysqlconnectionString: Server=127.0.0.1;Database=test;Uid=root;Pwd=000000;
 --- !u!1 &1539103582
 GameObject:
   m_ObjectHideFlags: 0

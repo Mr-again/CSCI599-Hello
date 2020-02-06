@@ -1,34 +1,27 @@
 ﻿<Properties StartupConfiguration="{BE0DF280-CCAE-5B17-485C-E62795E7CE9D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Player.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MysqlController.cs">
     <Files>
-      <File FileName="Assets/Scripts/EntranceController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/GameController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/MapCreator.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/MapMaker.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/MysqlController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Player.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/EntranceController.cs" Line="5" Column="35" />
+      <File FileName="Assets/Scripts/MysqlController.cs" Line="11" Column="96" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="CSCI599-Hello" expanded="True">
             <Node name="Assets" expanded="True">
-              <Node name="Imports" expanded="True" />
               <Node name="Scripts" expanded="True">
-                <Node name="Player.cs" selected="True" />
+                <Node name="MysqlController.cs" selected="True" />
               </Node>
             </Node>
           </Node>
         </State>
       </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
-      </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="ba75a193-5922-474c-a091-59df0c3b0ca1" />
+  <Debugger.DebugSourceFolders />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="1ec9d11c-404e-4fb9-bc3a-431cfa1a5d85" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
