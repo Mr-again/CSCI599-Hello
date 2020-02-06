@@ -93,6 +93,10 @@ public class Player : MonoBehaviour
         }
         else if(isBox(x1, y1))
         {
+            if(isMud(x1, y1))
+            {
+                return;
+            }
             if(isWall(x2, y2))
             {
                 return;
@@ -297,6 +301,12 @@ public class Player : MonoBehaviour
     {
         return mapCreator.ices.Contains(y * 100 + x);
     }
+
+    bool isMud(int x, int y)
+    {
+        return mapCreator.muds.Contains(y * 100 + x);
+    }
+
     GameObject getBox(int x, int y)
     {
         return mapCreator.boxes[y * 100 + x].Value;
