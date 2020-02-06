@@ -3,7 +3,7 @@
     <Files>
       <File FileName="Assets/Scripts/Player.cs" Line="182" Column="6" />
       <File FileName="Assets/Scripts/MapMaker.cs" Line="61" Column="44" />
-      <File FileName="Assets/Scripts/MapCreator.cs" Line="13" Column="1" />
+      <File FileName="Assets/Scripts/MapCreator.cs" />
       <File FileName="../../../../Applications/Unity/Hub/Editor/2019.3.0f6/Unity.app/Contents/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/EventSystem/EventSystem.cs" />
       <File FileName="Assets/Scripts/EntranceController.cs" />
       <File FileName="Assets/Scripts/GameController.cs" />
@@ -12,11 +12,7 @@
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="CSCI599-Hello" expanded="True">
-            <Node name="Assets" expanded="True">
-              <Node name="Scripts" expanded="True">
-                <Node name="MapMaker.cs" selected="True" />
-              </Node>
-            </Node>
+            <Node name="Assets" expanded="True" />
           </Node>
         </State>
       </Pad>
@@ -24,7 +20,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="1608952c-2238-446a-a601-42f1a5b6469c" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="ba75a193-5922-474c-a091-59df0c3b0ca1" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
