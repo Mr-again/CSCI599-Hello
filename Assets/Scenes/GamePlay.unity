@@ -643,19 +643,17 @@ MonoBehaviour:
   - WSSMMWWWWWWW
   - WIIIIWWWWWWW
   - WIIPPWWWWWWW
-  - WWWWWWWWWWWW
-  - WWWWWWWWWWWW
+  - WIWWWWWWWWWW
+  - WIWWWWWWWWWW
   - WSSSSSSSSSSW
   - WWWWWWWWWWWW
   player_position: 0100000001000000
   box_position:
-  - 2 2 3
-  - 3 3 2
+  - 2 3 4
+  - 4 2 0
   target_position:
   - 2 4 4
   - 4 1 0
-  - 3 7 1
-  - 4 7 2
   player: {fileID: 1089781571168915483, guid: f8434e538e37140faaee6fcde41c86c1, type: 3}
   wall: {fileID: 5256801442344684041, guid: e40b3ea390f7148ad817306e5f8529be, type: 3}
   box_brown: {fileID: 3673366117402321736, guid: 20b33ecef1ee545238fa916208971477,

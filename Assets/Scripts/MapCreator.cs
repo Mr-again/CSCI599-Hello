@@ -315,6 +315,11 @@ public class MapCreator : MonoBehaviour
         blue_tar.text = (100 + blue_num).ToString().Substring(1);
         green_tar.text = (100 + green_num).ToString().Substring(1);
         gray_tar.text = (100 + gray_num).ToString().Substring(1);
+        if(brown_num == 0 && red_num == 0 && blue_num == 0 && green_num == 0 && gray_num == 0)
+        {
+            Debug.Log("Win!");
+            //TODO: Add a dialog here to show all targets are reached.
+        }
     }
 
     public void UpdateStepNum()
