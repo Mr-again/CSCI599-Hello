@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
 
     //private GameObject[] boxes = new GameObject[5];
     //private Dictionary<int, bool>[] targets = new Dictionary<int, bool>[5];
-    private GameObject[] covered_pits = new GameObject[5];
+    public GameObject[] covered_pits = new GameObject[5];
 
     private void Awake()
     {

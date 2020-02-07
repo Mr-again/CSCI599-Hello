@@ -665,7 +665,30 @@ MonoBehaviour:
   floor_ice_obj: {fileID: 3322309542364607158, guid: 4dedcd15c4dc347f088373d00ea60c8d,
     type: 3}
   pit_obj: {fileID: 8183475871341268, guid: 80cfe7280d07b4bf2aba7e4e457e1371, type: 3}
+  pit_brown_obj: {fileID: 1387369808171598092, guid: 8baef284b716342fba01ab27634846d0,
+    type: 3}
+  pit_red_obj: {fileID: 6681266500219566812, guid: 2e005023ec6004d1fa7a9765fc3e6208,
+    type: 3}
+  pit_blue_obj: {fileID: 3542822237213011709, guid: 27ce5b87b850f46bba00b50089db935b,
+    type: 3}
+  pit_green_obj: {fileID: 495267244176762462, guid: 5b6add80ec0a845a7b2bf4f0dd2ca76a,
+    type: 3}
+  pit_gray_obj: {fileID: 120848813544128230, guid: 6be40522c0c564abaaf47d77ae3ac5b8,
+    type: 3}
   select_elem_name: 
+  map:
+  - '############'
+  - '############'
+  - '############'
+  - '############'
+  - '############'
+  - '############'
+  - '############'
+  - '############'
+  - '############'
+  player_position: 9cffffff9cffffff
+  box_position: []
+  target_position: []
 --- !u!4 &637857483
 Transform:
   m_ObjectHideFlags: 0
