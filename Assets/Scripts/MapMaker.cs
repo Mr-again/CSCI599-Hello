@@ -312,7 +312,7 @@ public class MapMaker : MonoBehaviour
             if (is_player_exist)
             {
                 Debug.Log("Some player exist");
-                existed_player_obj.SetActive(false);
+                Destroy(existed_player_obj);
             }
             //TODO: Need to solve the problem of player null object.
             GameObject newPlayer = Instantiate(player_obj, new Vector3(pos_x, pos_y, 0), Quaternion.identity);
@@ -346,14 +346,14 @@ public class MapMaker : MonoBehaviour
             case 20:
                 {
                     GameObject new_box = Instantiate(element, new Vector3(pos_x, pos_y, 0), Quaternion.identity);
-                    new_box.SetActive(true);
+                    Destroy(new_box);
                     boxes.Add(store_y * 100 + store_x, new_box);
                     break;
                 }
             case 21:
                 {
                     GameObject old_box = boxes[store_y * 100 + store_x];
-                    old_box.SetActive(false);
+                    Destroy(old_box);
                     boxes.Remove(store_y * 100 + store_x);
                     GameObject new_box = Instantiate(element, new Vector3(pos_x, pos_y, 0), Quaternion.identity);
                     new_box.SetActive(true);
@@ -370,7 +370,7 @@ public class MapMaker : MonoBehaviour
             case 23:
                 {
                     GameObject old_box = boxes[store_y * 100 + store_x];
-                    old_box.SetActive(false);
+                    Destroy(old_box);
                     boxes.Remove(store_y * 100 + store_x);
                     GameObject new_box = Instantiate(element, new Vector3(pos_x, pos_y, 0), Quaternion.identity);
                     new_box.SetActive(true);
@@ -404,7 +404,7 @@ public class MapMaker : MonoBehaviour
             case 38:
                 {
                     GameObject old_target = targets[store_y * 100 + store_x];
-                    old_target.SetActive(false);
+                    Destroy(old_target);
                     targets.Remove(store_y * 100 + store_x);
                     GameObject new_target = Instantiate(element, new Vector3(pos_x, pos_y, 3), Quaternion.identity);
                     new_target.SetActive(true);
@@ -414,7 +414,7 @@ public class MapMaker : MonoBehaviour
             case 39:
                 {
                     GameObject old_target = targets[store_y * 100 + store_x];
-                    old_target.SetActive(false);
+                    Destroy(old_target);
                     targets.Remove(store_y * 100 + store_x);
                     GameObject new_target = Instantiate(element, new Vector3(pos_x, pos_y, 3), Quaternion.identity);
                     new_target.SetActive(true);
@@ -436,7 +436,7 @@ public class MapMaker : MonoBehaviour
             case 68:
                 {
                     GameObject old_layer0 = layer0[store_y * 100 + store_x];
-                    old_layer0.SetActive(false);
+                    Destroy(old_layer0);
                     layer0.Remove(store_y * 100 + store_x);
                     GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
                     new_obj.SetActive(true);
@@ -446,10 +446,10 @@ public class MapMaker : MonoBehaviour
             case 69:
                 {
                     GameObject old_layer0 = layer0[store_y * 100 + store_x];
-                    old_layer0.SetActive(false);
+                    Destroy(old_layer0);
                     layer0.Remove(store_y * 100 + store_x);
                     GameObject old_box = boxes[store_y * 100 + store_x];
-                    old_box.SetActive(false);
+                    Destroy(old_box);
                     boxes.Remove(store_y * 100 + store_x);
                     
                     GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
@@ -460,10 +460,10 @@ public class MapMaker : MonoBehaviour
             case 70:
                 {
                     GameObject old_layer0 = layer0[store_y * 100 + store_x];
-                    old_layer0.SetActive(false);
+                    Destroy(old_layer0);
                     layer0.Remove(store_y * 100 + store_x);
                     GameObject old_target = targets[store_y * 100 + store_x];
-                    old_target.SetActive(false);
+                    Destroy(old_target);
                     targets.Remove(store_y * 100 + store_x);
 
                     GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
@@ -474,13 +474,13 @@ public class MapMaker : MonoBehaviour
             case 71:
                 {
                     GameObject old_layer0 = layer0[store_y * 100 + store_x];
-                    old_layer0.SetActive(false);
+                    Destroy(old_layer0);
                     layer0.Remove(store_y * 100 + store_x);
                     GameObject old_target = targets[store_y * 100 + store_x];
-                    old_target.SetActive(false);
+                    Destroy(old_target);
                     targets.Remove(store_y * 100 + store_x);
                     GameObject old_box = boxes[store_y * 100 + store_x];
-                    old_box.SetActive(false);
+                    Destroy(old_box);
                     boxes.Remove(store_y * 100 + store_x);
 
                     GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
@@ -491,7 +491,7 @@ public class MapMaker : MonoBehaviour
             case 72:
                 {
                     GameObject old_holder = holder[store_y * 100 + store_x];
-                    old_holder.SetActive(false);
+                    Destroy(old_holder);
                     holder.Remove(store_y * 100 + store_x);
                     GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
                     new_obj.SetActive(true);
@@ -508,7 +508,7 @@ public class MapMaker : MonoBehaviour
             case 132:
                 {
                     GameObject old_layer0 = layer0[store_y * 100 + store_x];
-                    old_layer0.SetActive(false);
+                    Destroy(old_layer0);
                     layer0.Remove(store_y * 100 + store_x);
                     GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
                     new_obj.SetActive(true);
@@ -518,10 +518,10 @@ public class MapMaker : MonoBehaviour
             case 133:
                 {
                     GameObject old_layer0 = layer0[store_y * 100 + store_x];
-                    old_layer0.SetActive(false);
+                    Destroy(old_layer0);
                     layer0.Remove(store_y * 100 + store_x);
                     GameObject old_box = boxes[store_y * 100 + store_x];
-                    old_box.SetActive(false);
+                    Destroy(old_box);
                     boxes.Remove(store_y * 100 + store_x);
                     
                     GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
@@ -532,10 +532,10 @@ public class MapMaker : MonoBehaviour
             case 134:
                 {
                     GameObject old_layer0 = layer0[store_y * 100 + store_x];
-                    old_layer0.SetActive(false);
+                    Destroy(old_layer0);
                     layer0.Remove(store_y * 100 + store_x);
                     GameObject old_target = targets[store_y * 100 + store_x];
-                    old_target.SetActive(false);
+                    Destroy(old_target);
                     targets.Remove(store_y * 100 + store_x);
 
                     GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
@@ -546,13 +546,13 @@ public class MapMaker : MonoBehaviour
             case 135:
                 {
                     GameObject old_layer0 = layer0[store_y * 100 + store_x];
-                    old_layer0.SetActive(false);
+                    Destroy(old_layer0);
                     layer0.Remove(store_y * 100 + store_x);
                     GameObject old_target = targets[store_y * 100 + store_x];
-                    old_target.SetActive(false);
+                    Destroy(old_target);
                     targets.Remove(store_y * 100 + store_x);
                     GameObject old_box = boxes[store_y * 100 + store_x];
-                    old_box.SetActive(false);
+                    Destroy(old_box);
                     boxes.Remove(store_y * 100 + store_x);
 
                     GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
@@ -563,7 +563,7 @@ public class MapMaker : MonoBehaviour
             case 136:
                 {
                     GameObject old_holder = holder[store_y * 100 + store_x];
-                    old_holder.SetActive(false);
+                    Destroy(old_holder);
                     holder.Remove(store_y * 100 + store_x);
                     GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
                     new_obj.SetActive(true);
