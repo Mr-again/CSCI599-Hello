@@ -8,7 +8,7 @@ using MySql.Data;
 
 public class MysqlController : MonoBehaviour
 {
-    public string mysqlconnectionString = "Server=127.0.0.1;Database=test;Uid=root;Pwd=00000000;";
+    public string mysqlconnectionString = "Server=127.0.0.1;Database=test;User=root;Password=00000000;charset=utf8;";
 
     // Start is called before the first frame update
     void Start()

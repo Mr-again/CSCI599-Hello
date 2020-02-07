@@ -1,8 +1,8 @@
 ﻿<Properties StartupConfiguration="{BE0DF280-CCAE-5B17-485C-E62795E7CE9D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MysqlController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/EntranceController.cs">
     <Files>
       <File FileName="Assets/Scripts/EntranceController.cs" Line="5" Column="35" />
-      <File FileName="Assets/Scripts/MysqlController.cs" Line="11" Column="96" />
+      <File FileName="Assets/Scripts/MysqlController.cs" Line="27" Column="52" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -10,7 +10,7 @@
           <Node name="CSCI599-Hello" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
-                <Node name="MysqlController.cs" selected="True" />
+                <Node name="EntranceController.cs" selected="True" />
               </Node>
             </Node>
           </Node>

@@ -592,7 +592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d38053c6fed646a3a9ab6a17d512129, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mysqlconnectionString: Server=127.0.0.1;Database=test;Uid=root;Pwd=000000;
+  mysqlconnectionString: Server=127.0.0.1;Database=test;User=root;Password=00000000;charset=utf8;
 --- !u!1 &1539103582
 GameObject:
   m_ObjectHideFlags: 0
