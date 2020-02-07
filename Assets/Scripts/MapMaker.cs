@@ -118,7 +118,9 @@ public class MapMaker : MonoBehaviour
         player.onClick.AddListener(() => { OnClickElement(); });
 
         select_elem_name = "Wall";
-        
+        selected_element = wall_obj;
+
+
     }
 
     // Update is called once per frame
@@ -281,6 +283,11 @@ public class MapMaker : MonoBehaviour
         return targets.ContainsKey(100 * y + x);
     }
 
+    public bool isPlayer(int x, int y)
+    {
+        return player_position[0] == x && player_position[1] == y;
+    }
+
     public void GenerateAndStoreMapElement(string elem_name, GameObject element, int pos_x, int pos_y)
     {
         int store_x = pos_x + offset_x;
@@ -297,6 +304,7 @@ public class MapMaker : MonoBehaviour
         bool old_obj_is_layer0 = isLayer0(store_x, store_y);
         bool old_obj_is_box = isBox(store_x, store_y);
         bool old_obj_is_target = isTarget(store_x, store_y);
+        bool old_obj_is_player = isPlayer(store_x, store_y);
 
         if (elem_name == "Player")
         {
@@ -308,13 +316,17 @@ public class MapMaker : MonoBehaviour
             {
                 return;
             }
+            if (!old_obj_is_layer0)
+            {
+                Debug.Log("There must be a floor before putting " + elem_name);
+                return;
+            }
             
             if (is_player_exist)
             {
                 Debug.Log("Some player exist");
                 Destroy(existed_player_obj);
             }
-            //TODO: Need to solve the problem of player null object.
             GameObject newPlayer = Instantiate(player_obj, new Vector3(pos_x, pos_y, 0), Quaternion.identity);
             newPlayer.SetActive(true);
             player_position[0] = store_x;
@@ -322,6 +334,14 @@ public class MapMaker : MonoBehaviour
             is_player_exist = true;
             existed_player_obj = newPlayer;
             return;
+        }
+        else if (new_obj_is_holder)
+        {
+            if (old_obj_is_player)
+            {
+                Debug.Log("Cannot put " + elem_name + " on player!");
+                return;
+            }
         }
 
 
