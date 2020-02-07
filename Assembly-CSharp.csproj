@@ -75,31 +75,31 @@
     <None Include="Assets\Imports\kenney_sokobanpack\License.txt" />
     <None Include="Assets\Imports\kenney_rpgaudio\License.txt" />
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>/Users/chenyiming/Documents/CSCI599/CSCI599-Hello/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>/Users/johnny.zeng/UnityProject/CSCI599-Hello/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-      <HintPath>/Users/chenyiming/Documents/CSCI599/CSCI599-Hello/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+      <HintPath>/Users/johnny.zeng/UnityProject/CSCI599-Hello/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>/Users/chenyiming/Documents/CSCI599/CSCI599-Hello/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>/Users/johnny.zeng/UnityProject/CSCI599-Hello/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>/Users/chenyiming/Documents/CSCI599/CSCI599-Hello/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>/Users/johnny.zeng/UnityProject/CSCI599-Hello/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>/Users/chenyiming/Documents/CSCI599/CSCI599-Hello/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>/Users/johnny.zeng/UnityProject/CSCI599-Hello/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>/Users/chenyiming/Documents/CSCI599/CSCI599-Hello/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>/Users/johnny.zeng/UnityProject/CSCI599-Hello/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>/Users/chenyiming/Documents/CSCI599/CSCI599-Hello/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>/Users/johnny.zeng/UnityProject/CSCI599-Hello/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>/Users/chenyiming/Documents/CSCI599/CSCI599-Hello/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>/Users/johnny.zeng/UnityProject/CSCI599-Hello/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>/Users/chenyiming/Documents/CSCI599/CSCI599-Hello/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>/Users/johnny.zeng/UnityProject/CSCI599-Hello/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>/Applications/Unity/Hub/Editor/2019.3.0f6/Unity.app/Contents/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -279,7 +279,7 @@
       <HintPath>/Applications/Unity/Hub/Editor/2019.3.0f6/Unity.app/Contents/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data">
-      <HintPath>/Users/chenyiming/Documents/CSCI599/CSCI599-Hello/Assets/Plugins/MySql.Data.dll</HintPath>
+      <HintPath>/Users/johnny.zeng/UnityProject/CSCI599-Hello/Assets/Plugins/MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>/Applications/Unity/Hub/Editor/2019.3.0f6/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

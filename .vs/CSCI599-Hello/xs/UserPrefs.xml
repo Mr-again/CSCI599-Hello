@@ -2,7 +2,7 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MapMaker.cs">
     <Files>
       <File FileName="Assets/Scripts/MapMaker.cs" Line="424" Column="21" />
-      <File FileName="Assets/Scripts/Player.cs" Line="22" Column="32" />
+      <File FileName="Assets/Scripts/Player.cs" />
       <File FileName="Assets/Scripts/MapCreator.cs" />
     </Files>
     <Pads>
@@ -23,7 +23,7 @@
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <Debugger.DebugSourceFolders />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="dc0e96fc-1d0c-4781-bff1-a2a819d8e87f" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="4ee8abc8-c733-4dd8-a822-7d5a2ec29088" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
