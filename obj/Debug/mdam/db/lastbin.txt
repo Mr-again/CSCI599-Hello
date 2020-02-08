@@ -1,1 +1,0 @@
-/Applications/Visual Studio.app/Contents/Resources/lib/monodevelop/bin
