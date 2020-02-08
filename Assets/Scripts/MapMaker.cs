@@ -366,7 +366,7 @@ public class MapMaker : MonoBehaviour
             case 20:
                 {
                     GameObject new_box = Instantiate(element, new Vector3(pos_x, pos_y, 0), Quaternion.identity);
-                    Destroy(new_box);
+                    new_box.SetActive(true);
                     boxes.Add(store_y * 100 + store_x, new_box);
                     break;
                 }

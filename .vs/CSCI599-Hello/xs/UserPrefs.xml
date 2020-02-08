@@ -1,20 +1,25 @@
 ﻿<Properties StartupConfiguration="{BE0DF280-CCAE-5B17-485C-E62795E7CE9D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MapMaker.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument=".gitignore">
     <Files>
-      <File FileName="Assets/Scripts/MapMaker.cs" Line="331" Column="39" />
-      <File FileName="Assets/Scripts/Player.cs" />
-      <File FileName="Assets/Scripts/MapCreator.cs" />
+      <File FileName="Assets/Scripts/MapMaker.cs" Line="369" Column="45" />
+      <File FileName="Assets/Scripts/Player.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/MapCreator.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/EntranceController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/MysqlController.cs" Line="26" Column="39" />
+      <File FileName="Assets/Scripts/GameController.cs" Line="8" Column="5" />
+      <File FileName=".gitignore" Line="62" Column="29" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="CSCI599-Hello" expanded="True">
-            <Node name="Assets" expanded="True">
-              <Node name="Scripts" expanded="True">
-                <Node name="MapMaker.cs" selected="True" />
+          <Node name="CSCI599-Hello" expanded="True" selected="True">
+            <Node name="Solution Items" expanded="True" />
+            <Node name="Assets" expanded="True" />
+            <Node name="Packages" expanded="True">
+              <Node name="Dapper.2.0.30" expanded="True">
+                <Node name="lib" expanded="True" />
               </Node>
             </Node>
-            <Node name="Packages" expanded="True" />
           </Node>
         </State>
       </Pad>
@@ -23,7 +28,7 @@
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <Debugger.DebugSourceFolders />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="ec24052d-bac0-44c9-8813-022caa5b725b" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="4ee8abc8-c733-4dd8-a822-7d5a2ec29088" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
