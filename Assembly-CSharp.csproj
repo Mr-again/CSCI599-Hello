@@ -278,11 +278,11 @@
     <Reference Include="UnityEngine.XRModule">
       <HintPath>/Applications/Unity/Hub/Editor/2019.3.0f6/Unity.app/Contents/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data">
-      <HintPath>/Users/johnny.zeng/UnityProject/CSCI599-Hello/Assets/Plugins/MySql.Data.dll</HintPath>
-    </Reference>
     <Reference Include="Dapper">
       <HintPath>/Users/johnny.zeng/UnityProject/CSCI599-Hello/Assets/Plugins/Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data">
+      <HintPath>/Users/johnny.zeng/UnityProject/CSCI599-Hello/Assets/Plugins/MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>/Applications/Unity/Hub/Editor/2019.3.0f6/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
