@@ -54,6 +54,7 @@ public class MapMaker : MonoBehaviour
 
     public string select_elem_name;
 
+    //TODO: here need to return serveral arrays of map data
     public string[] map = new string[] {
         "############",
         "############",
@@ -68,25 +69,24 @@ public class MapMaker : MonoBehaviour
     public string[] box_position;
     public string[] target_position;
     
-    //public Dictionary<int, KeyValuePair<int, GameObject>> boxes = new Dictionary<int, KeyValuePair<int, GameObject>>();
-    public HashSet<int> walls = new HashSet<int>();
-    public HashSet<int> stones = new HashSet<int>();
-    public HashSet<int> ices = new HashSet<int>();
-    public HashSet<int> muds = new HashSet<int>();
     
+    
+    //public Dictionary<int, GameObject> pits = new Dictionary<int, GameObject>();
+    //public Dictionary<int, GameObject> covered_pits = new Dictionary<int, GameObject>();
+
+    //public Dictionary<int, bool> targets_brown = new Dictionary<int, bool>();
+    //public Dictionary<int, bool> targets_red = new Dictionary<int, bool>();
+    //public Dictionary<int, bool> targets_blue = new Dictionary<int, bool>();
+    //public Dictionary<int, bool> targets_green = new Dictionary<int, bool>();
+    //public Dictionary<int, bool> targets_gray = new Dictionary<int, bool>();
+
+    
+    // the walls
+    public Dictionary<int, GameObject> walls = new Dictionary<int, GameObject>();
+
+    // the pits
     public Dictionary<int, GameObject> pits = new Dictionary<int, GameObject>();
-    public Dictionary<int, GameObject> covered_pits = new Dictionary<int, GameObject>();
 
-    public Dictionary<int, bool> targets_brown = new Dictionary<int, bool>();
-    public Dictionary<int, bool> targets_red = new Dictionary<int, bool>();
-    public Dictionary<int, bool> targets_blue = new Dictionary<int, bool>();
-    public Dictionary<int, bool> targets_green = new Dictionary<int, bool>();
-    public Dictionary<int, bool> targets_gray = new Dictionary<int, bool>();
-
-    
-    // the holder includes walls, pits
-    public Dictionary<int, GameObject> holder = new Dictionary<int, GameObject>();
-    
     // the layer0 includes stones, ices, muds
     public Dictionary<int, GameObject> layer0 = new Dictionary<int, GameObject>();
     
@@ -240,15 +240,24 @@ public class MapMaker : MonoBehaviour
         }
     }
 
-
-    public bool isHolder(string elem_name)
+    public bool isWall(string elem_name)
     {
-        return (elem_name == "Wall" || elem_name == "Pit");
+        return (elem_name == "Wall");
     }
 
-    public bool isHolder(int x, int y)
+    public bool isWall(int x, int y)
     {
-        return holder.ContainsKey(100 * y + x);
+        return walls.ContainsKey(100 * y + x);
+    }
+
+    public bool isPit(string elem_name)
+    {
+        return (elem_name == "Pit");
+    }
+
+    public bool isPit(int x, int y)
+    {
+        return pits.ContainsKey(100 * y + x);
     }
 
     public bool isLayer0(string elem_name)
@@ -294,13 +303,14 @@ public class MapMaker : MonoBehaviour
         int store_y = pos_y + offset_y;
 
 
-        
-        bool new_obj_is_holder = isHolder(elem_name);
+        bool new_obj_is_wall = isWall(elem_name);
+        bool new_obj_is_pit = isPit(elem_name);
         bool new_obj_is_layer0 = isLayer0(elem_name);
         bool new_obj_is_box = isBox(elem_name);
         bool new_obj_is_target = isTarget(elem_name);
 
-        bool old_obj_is_holder = isHolder(store_x, store_y);
+        bool old_obj_is_wall = isWall(store_x, store_y);
+        bool old_obj_is_pit = isPit(store_x, store_y);
         bool old_obj_is_layer0 = isLayer0(store_x, store_y);
         bool old_obj_is_box = isBox(store_x, store_y);
         bool old_obj_is_target = isTarget(store_x, store_y);
@@ -308,14 +318,11 @@ public class MapMaker : MonoBehaviour
 
         if (elem_name == "Player")
         {
-            if (old_obj_is_holder)
+            if (old_obj_is_pit || old_obj_is_wall || old_obj_is_box)
             {
                 return;
             }
-            if(old_obj_is_box)
-            {
-                return;
-            }
+            
             if (!old_obj_is_layer0)
             {
                 Debug.Log("There must be a floor before putting " + elem_name);
@@ -335,7 +342,7 @@ public class MapMaker : MonoBehaviour
             existed_player_obj = newPlayer;
             return;
         }
-        else if (new_obj_is_holder)
+        else if (new_obj_is_wall || new_obj_is_pit || new_obj_is_box)
         {
             if (old_obj_is_player)
             {
@@ -347,61 +354,20 @@ public class MapMaker : MonoBehaviour
 
 
 
-        int kind = Convert.ToInt32(new_obj_is_holder) * 128
-            + Convert.ToInt32(new_obj_is_layer0) * 64
-            + Convert.ToInt32(new_obj_is_target) * 32
-            + Convert.ToInt32(new_obj_is_box) * 16
-            + Convert.ToInt32(old_obj_is_holder) * 8
+        int kind = Convert.ToInt32(new_obj_is_wall) * 512
+            + Convert.ToInt32(new_obj_is_pit) * 256
+            + Convert.ToInt32(new_obj_is_layer0) * 128
+            + Convert.ToInt32(new_obj_is_target) * 64
+            + Convert.ToInt32(new_obj_is_box) * 32
+            + Convert.ToInt32(old_obj_is_wall) * 16
+            + Convert.ToInt32(old_obj_is_pit) * 8
             + Convert.ToInt32(old_obj_is_layer0) * 4
             + Convert.ToInt32(old_obj_is_target) * 2
             + Convert.ToInt32(old_obj_is_box) * 1;
 
+        // z-value: wall - 0, pit - 5, box - 0, tar - 3, floor - 5
         switch (kind)
         {
-            case 16:
-                {
-                    Debug.Log("There must be a floor before putting " + elem_name);
-                    break;
-                }
-            case 20:
-                {
-                    GameObject new_box = Instantiate(element, new Vector3(pos_x, pos_y, 0), Quaternion.identity);
-                    new_box.SetActive(true);
-                    boxes.Add(store_y * 100 + store_x, new_box);
-                    break;
-                }
-            case 21:
-                {
-                    GameObject old_box = boxes[store_y * 100 + store_x];
-                    Destroy(old_box);
-                    boxes.Remove(store_y * 100 + store_x);
-                    GameObject new_box = Instantiate(element, new Vector3(pos_x, pos_y, 0), Quaternion.identity);
-                    new_box.SetActive(true);
-                    boxes.Add(store_y * 100 + store_x, new_box);
-                    break;
-                }
-            case 22:
-                {
-                    GameObject new_box = Instantiate(element, new Vector3(pos_x, pos_y, 0), Quaternion.identity);
-                    new_box.SetActive(true);
-                    boxes.Add(store_y * 100 + store_x, new_box);
-                    break;
-                }
-            case 23:
-                {
-                    GameObject old_box = boxes[store_y * 100 + store_x];
-                    Destroy(old_box);
-                    boxes.Remove(store_y * 100 + store_x);
-                    GameObject new_box = Instantiate(element, new Vector3(pos_x, pos_y, 0), Quaternion.identity);
-                    new_box.SetActive(true);
-                    boxes.Add(store_y * 100 + store_x, new_box);
-                    break;
-                }
-            case 24:
-                {
-                    Debug.Log(elem_name + " cannot be put on walls or pits.");
-                    break;
-                }
             case 32:
                 {
                     Debug.Log("There must be a floor before putting " + elem_name);
@@ -409,30 +375,74 @@ public class MapMaker : MonoBehaviour
                 }
             case 36:
                 {
-                    GameObject new_target = Instantiate(element, new Vector3(pos_x, pos_y, 3), Quaternion.identity);
-                    new_target.SetActive(true);
-                    targets.Add(store_y * 100 + store_x, new_target);
+                    GameObject new_box = Instantiate(element, new Vector3(pos_x, pos_y, 0), Quaternion.identity);
+                    new_box.SetActive(true);
+                    boxes.Add(store_y * 100 + store_x, new_box);
                     break;
                 }
             case 37:
                 {
-                    GameObject new_target = Instantiate(element, new Vector3(pos_x, pos_y, 3), Quaternion.identity);
-                    new_target.SetActive(true);
-                    targets.Add(store_y * 100 + store_x, new_target);
+                    GameObject old_box = boxes[store_y * 100 + store_x];
+                    Destroy(old_box);
+                    boxes.Remove(store_y * 100 + store_x);
+                    GameObject new_box = Instantiate(element, new Vector3(pos_x, pos_y, 0), Quaternion.identity);
+                    new_box.SetActive(true);
+                    boxes.Add(store_y * 100 + store_x, new_box);
                     break;
                 }
             case 38:
                 {
-                    GameObject old_target = targets[store_y * 100 + store_x];
-                    Destroy(old_target);
-                    targets.Remove(store_y * 100 + store_x);
-                    GameObject new_target = Instantiate(element, new Vector3(pos_x, pos_y, 3), Quaternion.identity);
-                    new_target.SetActive(true);
-                    targets.Add(store_y * 100 + store_x, new_target);
+                    GameObject new_box = Instantiate(element, new Vector3(pos_x, pos_y, 0), Quaternion.identity);
+                    new_box.SetActive(true);
+                    boxes.Add(store_y * 100 + store_x, new_box);
                     break;
                 }
             case 39:
                 {
+                    GameObject old_box = boxes[store_y * 100 + store_x];
+                    Destroy(old_box);
+                    boxes.Remove(store_y * 100 + store_x);
+                    GameObject new_box = Instantiate(element, new Vector3(pos_x, pos_y, 0), Quaternion.identity);
+                    new_box.SetActive(true);
+                    boxes.Add(store_y * 100 + store_x, new_box);
+                    break;
+                }
+            case 40:
+                {
+                    Debug.Log(elem_name + " cannot be put on pits.");
+                    break;
+                }
+            case 52:
+                {
+                    GameObject old_wall = walls[store_y * 100 + store_x];
+                    Destroy(old_wall);
+                    walls.Remove(store_y * 100 + store_x);
+                    GameObject new_box = Instantiate(element, new Vector3(pos_x, pos_y, 0), Quaternion.identity);
+                    new_box.SetActive(true);
+                    boxes.Add(store_y * 100 + store_x, new_box);
+                    break;
+                }
+            case 64:
+                {
+                    Debug.Log("There must be a floor before putting " + elem_name);
+                    break;
+                }
+            case 68:
+                {
+                    GameObject new_target = Instantiate(element, new Vector3(pos_x, pos_y, 3), Quaternion.identity);
+                    new_target.SetActive(true);
+                    targets.Add(store_y * 100 + store_x, new_target);
+                    break;
+                }
+            case 69:
+                {
+                    GameObject new_target = Instantiate(element, new Vector3(pos_x, pos_y, 3), Quaternion.identity);
+                    new_target.SetActive(true);
+                    targets.Add(store_y * 100 + store_x, new_target);
+                    break;
+                }
+            case 70:
+                {
                     GameObject old_target = targets[store_y * 100 + store_x];
                     Destroy(old_target);
                     targets.Remove(store_y * 100 + store_x);
@@ -441,88 +451,36 @@ public class MapMaker : MonoBehaviour
                     targets.Add(store_y * 100 + store_x, new_target);
                     break;
                 }
-            case 40:
-                {
-                    Debug.Log(elem_name + " cannot be put on walls or pits.");
-                    break;
-                }
-            case 64:
-                {
-                    GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
-                    new_obj.SetActive(true);
-                    layer0.Add(store_y * 100 + store_x, new_obj);
-                    break;
-                }
-            case 68:
-                {
-                    GameObject old_layer0 = layer0[store_y * 100 + store_x];
-                    Destroy(old_layer0);
-                    layer0.Remove(store_y * 100 + store_x);
-                    GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
-                    new_obj.SetActive(true);
-                    layer0.Add(store_y * 100 + store_x, new_obj);
-                    break;
-                }
-            case 69:
-                {
-                    GameObject old_layer0 = layer0[store_y * 100 + store_x];
-                    Destroy(old_layer0);
-                    layer0.Remove(store_y * 100 + store_x);
-                    GameObject old_box = boxes[store_y * 100 + store_x];
-                    Destroy(old_box);
-                    boxes.Remove(store_y * 100 + store_x);
-                    
-                    GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
-                    new_obj.SetActive(true);
-                    layer0.Add(store_y * 100 + store_x, new_obj);
-                    break;
-                }
-            case 70:
-                {
-                    GameObject old_layer0 = layer0[store_y * 100 + store_x];
-                    Destroy(old_layer0);
-                    layer0.Remove(store_y * 100 + store_x);
-                    GameObject old_target = targets[store_y * 100 + store_x];
-                    Destroy(old_target);
-                    targets.Remove(store_y * 100 + store_x);
-
-                    GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
-                    new_obj.SetActive(true);
-                    layer0.Add(store_y * 100 + store_x, new_obj);
-                    break;
-                }
             case 71:
                 {
-                    GameObject old_layer0 = layer0[store_y * 100 + store_x];
-                    Destroy(old_layer0);
-                    layer0.Remove(store_y * 100 + store_x);
                     GameObject old_target = targets[store_y * 100 + store_x];
                     Destroy(old_target);
                     targets.Remove(store_y * 100 + store_x);
-                    GameObject old_box = boxes[store_y * 100 + store_x];
-                    Destroy(old_box);
-                    boxes.Remove(store_y * 100 + store_x);
-
-                    GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
-                    new_obj.SetActive(true);
-                    layer0.Add(store_y * 100 + store_x, new_obj);
+                    GameObject new_target = Instantiate(element, new Vector3(pos_x, pos_y, 3), Quaternion.identity);
+                    new_target.SetActive(true);
+                    targets.Add(store_y * 100 + store_x, new_target);
                     break;
                 }
             case 72:
                 {
-                    GameObject old_holder = holder[store_y * 100 + store_x];
-                    Destroy(old_holder);
-                    holder.Remove(store_y * 100 + store_x);
-                    GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
-                    new_obj.SetActive(true);
-                    layer0.Add(store_y * 100 + store_x, new_obj);
+                    Debug.Log(elem_name + " cannot be put on pits.");
+                    break;
+                }
+            case 84:
+                {
+                    GameObject old_wall = walls[store_y * 100 + store_x];
+                    Destroy(old_wall);
+                    walls.Remove(store_y * 100 + store_x);
+                    GameObject new_target = Instantiate(element, new Vector3(pos_x, pos_y, 3), Quaternion.identity);
+                    new_target.SetActive(true);
+                    targets.Add(store_y * 100 + store_x, new_target);
                     break;
                 }
             case 128:
                 {
                     GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
                     new_obj.SetActive(true);
-                    holder.Add(store_y * 100 + store_x, new_obj);
+                    layer0.Add(store_y * 100 + store_x, new_obj);
                     break;
                 }
             case 132:
@@ -532,7 +490,7 @@ public class MapMaker : MonoBehaviour
                     layer0.Remove(store_y * 100 + store_x);
                     GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
                     new_obj.SetActive(true);
-                    holder.Add(store_y * 100 + store_x, new_obj);
+                    layer0.Add(store_y * 100 + store_x, new_obj);
                     break;
                 }
             case 133:
@@ -546,7 +504,7 @@ public class MapMaker : MonoBehaviour
                     
                     GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
                     new_obj.SetActive(true);
-                    holder.Add(store_y * 100 + store_x, new_obj);
+                    layer0.Add(store_y * 100 + store_x, new_obj);
                     break;
                 }
             case 134:
@@ -560,7 +518,7 @@ public class MapMaker : MonoBehaviour
 
                     GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
                     new_obj.SetActive(true);
-                    holder.Add(store_y * 100 + store_x, new_obj);
+                    layer0.Add(store_y * 100 + store_x, new_obj);
                     break;
                 }
             case 135:
@@ -577,17 +535,179 @@ public class MapMaker : MonoBehaviour
 
                     GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
                     new_obj.SetActive(true);
-                    holder.Add(store_y * 100 + store_x, new_obj);
+                    layer0.Add(store_y * 100 + store_x, new_obj);
                     break;
                 }
             case 136:
                 {
-                    GameObject old_holder = holder[store_y * 100 + store_x];
-                    Destroy(old_holder);
-                    holder.Remove(store_y * 100 + store_x);
+                    GameObject old_pit = pits[store_y * 100 + store_x];
+                    Destroy(old_pit);
+                    pits.Remove(store_y * 100 + store_x);
                     GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
                     new_obj.SetActive(true);
-                    holder.Add(store_y * 100 + store_x, new_obj);
+                    layer0.Add(store_y * 100 + store_x, new_obj);
+                    break;
+                }
+            case 148:
+                {
+                    GameObject old_layer0 = layer0[store_y * 100 + store_x];
+                    Destroy(old_layer0);
+                    layer0.Remove(store_y * 100 + store_x);
+                    GameObject old_wall = walls[store_y * 100 + store_x];
+                    Destroy(old_wall);
+                    walls.Remove(store_y * 100 + store_x);
+
+                    GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
+                    new_obj.SetActive(true);
+                    layer0.Add(store_y * 100 + store_x, new_obj);
+                    break;
+                }
+            case 256:
+                {
+                    GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
+                    new_obj.SetActive(true);
+                    pits.Add(store_y * 100 + store_x, new_obj);
+                    break;
+                }
+            case 260:
+                {
+                    GameObject old_layer0 = layer0[store_y * 100 + store_x];
+                    Destroy(old_layer0);
+                    layer0.Remove(store_y * 100 + store_x);
+                    GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
+                    new_obj.SetActive(true);
+                    pits.Add(store_y * 100 + store_x, new_obj);
+                    break;
+                }
+            case 261:
+                {
+                    GameObject old_layer0 = layer0[store_y * 100 + store_x];
+                    Destroy(old_layer0);
+                    layer0.Remove(store_y * 100 + store_x);
+                    GameObject old_box = boxes[store_y * 100 + store_x];
+                    Destroy(old_box);
+                    boxes.Remove(store_y * 100 + store_x);
+                    
+                    GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
+                    new_obj.SetActive(true);
+                    pits.Add(store_y * 100 + store_x, new_obj);
+                    break;
+                }
+            case 262:
+                {
+                    GameObject old_layer0 = layer0[store_y * 100 + store_x];
+                    Destroy(old_layer0);
+                    layer0.Remove(store_y * 100 + store_x);
+                    GameObject old_target = targets[store_y * 100 + store_x];
+                    Destroy(old_target);
+                    targets.Remove(store_y * 100 + store_x);
+
+                    GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
+                    new_obj.SetActive(true);
+                    pits.Add(store_y * 100 + store_x, new_obj);
+                    break;
+                }
+            case 263:
+                {
+                    GameObject old_layer0 = layer0[store_y * 100 + store_x];
+                    Destroy(old_layer0);
+                    layer0.Remove(store_y * 100 + store_x);
+                    GameObject old_target = targets[store_y * 100 + store_x];
+                    Destroy(old_target);
+                    targets.Remove(store_y * 100 + store_x);
+                    GameObject old_box = boxes[store_y * 100 + store_x];
+                    Destroy(old_box);
+                    boxes.Remove(store_y * 100 + store_x);
+
+                    GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
+                    new_obj.SetActive(true);
+                    pits.Add(store_y * 100 + store_x, new_obj);
+                    break;
+                }
+            case 264:
+                {
+                    GameObject old_pit = pits[store_y * 100 + store_x];
+                    Destroy(old_pit);
+                    pits.Remove(store_y * 100 + store_x);
+                    GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
+                    new_obj.SetActive(true);
+                    pits.Add(store_y * 100 + store_x, new_obj);
+                    break;
+                }
+            case 276:
+                {
+                    GameObject old_layer0 = layer0[store_y * 100 + store_x];
+                    Destroy(old_layer0);
+                    layer0.Remove(store_y * 100 + store_x);
+                    GameObject old_wall = walls[store_y * 100 + store_x];
+                    Destroy(old_wall);
+                    walls.Remove(store_y * 100 + store_x);
+
+                    GameObject new_obj = Instantiate(element, new Vector3(pos_x, pos_y, 5), Quaternion.identity);
+                    new_obj.SetActive(true);
+                    pits.Add(store_y * 100 + store_x, new_obj);
+                    break;
+                }
+            case 512:
+                {
+                    Debug.Log("There must be a floor before putting " + elem_name);
+                    break;
+                }
+            case 516:
+                {
+                    GameObject new_wall = Instantiate(element, new Vector3(pos_x, pos_y, 0), Quaternion.identity);
+                    new_wall.SetActive(true);
+                    walls.Add(store_y * 100 + store_x, new_wall);
+                    break;
+                }
+            case 517:
+                {
+                    GameObject old_box = boxes[store_y * 100 + store_x];
+                    Destroy(old_box);
+                    boxes.Remove(store_y * 100 + store_x);
+                    GameObject new_wall = Instantiate(element, new Vector3(pos_x, pos_y, 0), Quaternion.identity);
+                    new_wall.SetActive(true);
+                    walls.Add(store_y * 100 + store_x, new_wall);
+                    break;
+                }
+            case 518:
+                {
+                    GameObject old_target = targets[store_y * 100 + store_x];
+                    Destroy(old_target);
+                    targets.Remove(store_y * 100 + store_x);
+                    GameObject new_wall = Instantiate(element, new Vector3(pos_x, pos_y, 0), Quaternion.identity);
+                    new_wall.SetActive(true);
+                    walls.Add(store_y * 100 + store_x, new_wall);
+                    break;
+                }
+            case 519:
+                {
+                    GameObject old_box = boxes[store_y * 100 + store_x];
+                    Destroy(old_box);
+                    boxes.Remove(store_y * 100 + store_x);
+                    GameObject old_target = targets[store_y * 100 + store_x];
+                    Destroy(old_target);
+                    targets.Remove(store_y * 100 + store_x);
+
+                    GameObject new_wall = Instantiate(element, new Vector3(pos_x, pos_y, 0), Quaternion.identity);
+                    new_wall.SetActive(true);
+                    walls.Add(store_y * 100 + store_x, new_wall);
+                    break;
+                }
+            case 520:
+                {
+                    Debug.Log(elem_name + " cannot be put on pits.");
+                    break;
+                }
+            case 532:
+                {
+                    GameObject old_wall = walls[store_y * 100 + store_x];
+                    Destroy(old_wall);
+                    walls.Remove(store_y * 100 + store_x);
+
+                    GameObject new_wall = Instantiate(element, new Vector3(pos_x, pos_y, 0), Quaternion.identity);
+                    new_wall.SetActive(true);
+                    walls.Add(store_y * 100 + store_x, new_wall);
                     break;
                 }
             default:
