@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,12 +11,30 @@ public class Player : MonoBehaviour
     private int y_dir = 0;
 
 
+    private float fingerActionSensitivity = Screen.width * 0.05f;
+
+    private float fingerBeginX;
+    private float fingerBeginY;
+    private float fingerCurrentX;
+    private float fingerCurrentY;
+    private float fingerSegmentX;
+    private float fingerSegmentY;
+    
+    private int fingerTouchState;
+    
+    private int FINGER_STATE_NULL = 0;
+    private int FINGER_STATE_TOUCH = 1;
+    private int FINGER_STATE_ADD = 2;
+
+
     //private GameObject[] boxes = new GameObject[5];
     //private Dictionary<int, bool>[] targets = new Dictionary<int, bool>[5];
     public GameObject[] covered_pits = new GameObject[5];
 
     private void Awake()
     {
+        //Debug.Log(SystemInfo.deviceType);
+
         mapCreator = FindObjectOfType<MapCreator>();
         animator = GetComponent<Animator>();
 
@@ -34,7 +53,15 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        fingerActionSensitivity = Screen.width * 0.05f;
+        fingerBeginX = 0;
+        fingerBeginY = 0;
+        fingerCurrentX = 0;
+        fingerCurrentY = 0;
+        fingerSegmentX = 0;
+        fingerSegmentY = 0;
 
+        fingerTouchState = FINGER_STATE_NULL;
     }
 
     // Update is called once per frame
@@ -42,21 +69,67 @@ public class Player : MonoBehaviour
     {
         int dx = 0;
         int dy = 0;
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (SystemInfo.deviceType==DeviceType.Desktop)
         {
-            dx--;
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                dx--;
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                dx++;
+            }
+            else if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                dy++;
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                dy--;
+            }
+        }else if (SystemInfo.deviceType == DeviceType.Handheld)
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+
+                if (fingerTouchState == FINGER_STATE_NULL)
+                {
+                    fingerTouchState = FINGER_STATE_TOUCH;
+                    fingerBeginX = Input.mousePosition.x;
+                    fingerBeginY = Input.mousePosition.y;
+                }
+
+            }
+
+            if (fingerTouchState == FINGER_STATE_TOUCH)
+            {
+                fingerCurrentX = Input.mousePosition.x;
+                fingerCurrentY = Input.mousePosition.y;
+                fingerSegmentX = fingerCurrentX - fingerBeginX;
+                fingerSegmentY = fingerCurrentY - fingerBeginY;
+
+            }
+
+
+            if (fingerTouchState == FINGER_STATE_TOUCH)
+            {
+                float fingerDistance = fingerSegmentX * fingerSegmentX + fingerSegmentY * fingerSegmentY;
+
+                if (fingerDistance > (fingerActionSensitivity * fingerActionSensitivity))
+                {
+                    toAddFingerAction(ref dx,ref dy);
+                }
+            }
+
+            if (Input.GetKeyUp(KeyCode.Mouse0))
+            {
+                fingerTouchState = FINGER_STATE_NULL;
+            }
+
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        else
         {
-            dx++;
-        }
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            dy++;
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            dy--;
+            Console.Error.WriteLine("Wrong Device Type");
         }
         //else if(Input.GetMouseButton(0))
         //{
@@ -276,6 +349,50 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(x1 + mapCreator.map_offset_X, y1 + mapCreator.map_offset_Y);
         }
     }
+
+    private void toAddFingerAction(ref int dx,ref int dy)
+    {
+
+        fingerTouchState = FINGER_STATE_ADD;
+
+        if (Mathf.Abs(fingerSegmentX) > Mathf.Abs(fingerSegmentY))
+        {
+            fingerSegmentY = 0;
+        }
+        else
+        {
+            fingerSegmentX = 0;
+        }
+
+        if (fingerSegmentX == 0)
+        {
+            if (fingerSegmentY > 0)
+            {
+                //Debug.Log("up");
+                dy++;
+            }
+            else
+            {
+                //Debug.Log("down");
+                dy--;
+            }
+        }
+        else if (fingerSegmentY == 0)
+        {
+            if (fingerSegmentX > 0)
+            {
+                //Debug.Log("right");
+                dx++;
+            }
+            else
+            {
+                //Debug.Log("left");
+                dx--;
+            }
+        }
+
+    }
+
 
     bool isWall(int x, int y)
     {
