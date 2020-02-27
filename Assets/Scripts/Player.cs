@@ -189,7 +189,7 @@ public class Player : MonoBehaviour
                 inHandPit.SetActive(false);
                 mapCreator.pits.Remove(y2 * 100 + x2);
                 GameObject newPit = Instantiate(covered_pits[box_color],
-                                new Vector3(x2 + mapCreator.map_offset_X, y2 + mapCreator.map_offset_Y, 5), Quaternion.identity);
+                                new Vector3(x2 + mapCreator.map_offset_X, y2 + mapCreator.map_offset_Y, 3), Quaternion.identity);
                 newPit.SetActive(true);
                 mapCreator.covered_pits.Add(100 * y2 + x2, newPit);
 
@@ -352,7 +352,7 @@ public class Player : MonoBehaviour
         //check win
         if (win_check == 1)
         {
-            //Debug.Log("win");
+            Debug.Log("win");
             mapCreator.win_panel.SetActive(true);
             int final_step = mapCreator.step;
         }
@@ -404,7 +404,7 @@ public class Player : MonoBehaviour
 
     bool isWall(int x, int y)
     {
-        return mapCreator.walls.Contains(y * 100 + x);
+        return mapCreator.walls.ContainsKey(y * 100 + x);
     }
 
     bool isBox(int x, int y)
@@ -424,12 +424,12 @@ public class Player : MonoBehaviour
 
     bool isIce(int x, int y)
     {
-        return mapCreator.ices.Contains(y * 100 + x);
+        return mapCreator.ices.ContainsKey(y * 100 + x);
     }
 
     bool isMud(int x, int y)
     {
-        return mapCreator.muds.Contains(y * 100 + x);
+        return mapCreator.muds.ContainsKey(y * 100 + x);
     }
 
     GameObject getBox(int x, int y)

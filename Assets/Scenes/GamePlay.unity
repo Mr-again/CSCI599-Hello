@@ -716,16 +716,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 0
-  map:
-  - WWWWWWWWWWWW
-  - WSSSSWSSSSSW
-  - WSSSSWWWWWWW
-  - WIIIIWWWWWWW
-  - WIIPPWWWWWWW
-  - WIWWWWWWWWWW
-  - WIWWWWWWWWWW
-  - WSIIIIIIISSW
-  - WWWWWWWWWWWW
   player_position: 0100000001000000
   box_position:
   - 2 3 4

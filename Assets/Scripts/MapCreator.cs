@@ -10,10 +10,34 @@ public class MapCreator : MonoBehaviour
 
     public int level;
 
-    public string[] map;
-    public int[] player_position;
-    public string[] box_position;
-    public string[] target_position;
+    //public string[] map;
+    private string[] wall_position
+        = { "0 0", "1 0", "2 0", "3 0", "4 0", "5 0", "6 0", "7 0", "8 0", "9 0",
+            "10 0", "11 0", "0 1", "11 1", "0 2", "8 2", "9 2", "10 2", "11 2", "0 3",
+            "5 3", "6 3", "7 3", "8 3", "9 3", "10 3", "11 3", "0 4", "5 4", "6 4",
+            "7 4", "8 4", "9 4", "10 4", "11 4", "0 5", "2 5", "3 5", "4 5", "5 5",
+            "6 5", "7 5", "8 5", "9 5", "10 5", "11 5", "0 6", "2 6", "3 6", "4 6",
+            "5 6", "6 6", "7 6", "8 6", "9 6", "10 6", "11 6", "0 7", "11 7", "0 8",
+            "1 8", "2 8", "3 8", "4 8", "5 8", "6 8", "7 8", "8 8", "9 8", "10 8",
+            "11 8" };
+    private string[] stone_position
+        = { "0 0", "1 0", "2 0", "3 0", "4 0", "5 0", "6 0", "7 0", "8 0", "9 0",
+            "10 0", "11 0", "0 1", "1 1", "2 1", "3 1", "4 1", "5 1", "6 1", "7 1",
+            "8 1", "9 1", "10 1", "11 1", "0 2", "1 2", "2 2", "3 2", "4 2", "5 2",
+            "6 2", "7 2", "8 2", "9 2", "10 2", "11 2", "0 3", "1 3", "5 3", "6 3",
+            "7 3", "8 3", "9 3", "10 3", "11 3", "0 4", "1 4", "5 4", "6 4", "7 4",
+            "8 4", "9 4", "10 4", "11 4", "0 5", "1 5", "2 5", "3 5", "4 5", "5 5",
+            "6 5", "7 5", "8 5", "9 5", "10 5", "11 5", "0 6", "2 6", "3 6", "4 6",
+            "5 6", "6 6", "7 6", "8 6", "9 6", "10 6", "11 6", "0 7", "1 7", "9 7",
+            "10 7", "11 7", "0 8", "1 8", "2 8", "3 8", "4 8", "5 8", "6 8", "7 8",
+            "8 8", "9 8", "10 8", "11 8" };
+    private string[] ice_position
+        = { "2 3", "3 3", "4 3", "2 4", "1 6", "2 7", "3 7", "4 7", "5 7", "6 7", "7 7", "8 7" };
+    private string[] mud_position = { };
+    private string[] pit_position = { "3 4", "4 4" };
+    private int[] player_position = { 1, 1 };
+    private string[] box_position = { "2 3 4", "4 2 0" };
+    private string[] target_position = { "2 4 4", "4 1 0" };
 
     public GameObject win_panel;
 
@@ -63,18 +87,24 @@ public class MapCreator : MonoBehaviour
     public int map_offset_Y = -4;
 
     public Dictionary<int, KeyValuePair<int, GameObject>> boxes = new Dictionary<int, KeyValuePair<int, GameObject>>();
-    public HashSet<int> walls = new HashSet<int>();
-    public HashSet<int> stones = new HashSet<int>();
-    public HashSet<int> ices = new HashSet<int>();
-    public HashSet<int> muds = new HashSet<int>();
+    //public HashSet<int> walls = new HashSet<int>();
+    public Dictionary<int, GameObject> walls = new Dictionary<int, GameObject>();
+
+    //public HashSet<int> stones = new HashSet<int>();
+    //public HashSet<int> ices = new HashSet<int>();
+    //public HashSet<int> muds = new HashSet<int>();
+    public Dictionary<int, GameObject> stones = new Dictionary<int, GameObject>();
+    public Dictionary<int, GameObject> ices = new Dictionary<int, GameObject>();
+    public Dictionary<int, GameObject> muds = new Dictionary<int, GameObject>();
+
     public Dictionary<int, GameObject> pits = new Dictionary<int, GameObject>();
     public Dictionary<int, GameObject> covered_pits = new Dictionary<int, GameObject>();
 
-    public Dictionary<int, bool> targets_brown = new Dictionary<int, bool>();
-    public Dictionary<int, bool> targets_red = new Dictionary<int, bool>();
-    public Dictionary<int, bool> targets_blue = new Dictionary<int, bool>();
-    public Dictionary<int, bool> targets_green = new Dictionary<int, bool>();
-    public Dictionary<int, bool> targets_gray = new Dictionary<int, bool>();
+    public Dictionary<int, GameObject> targets_brown = new Dictionary<int, GameObject>();
+    public Dictionary<int, GameObject> targets_red = new Dictionary<int, GameObject>();
+    public Dictionary<int, GameObject> targets_blue = new Dictionary<int, GameObject>();
+    public Dictionary<int, GameObject> targets_green = new Dictionary<int, GameObject>();
+    public Dictionary<int, GameObject> targets_gray = new Dictionary<int, GameObject>();
     // Start is called before the first frame update
 
     private void Awake()
@@ -95,52 +125,56 @@ public class MapCreator : MonoBehaviour
         GameObject newPlayer = Instantiate(player, new Vector3(player_position[0]+ map_offset_X, player_position[1]+ map_offset_Y, 0), Quaternion.identity);
         newPlayer.SetActive(true);
 
-        for (int i = 0; i < map.Length; i++)
+        for (int i = 0; i < wall_position.Length; i++)
         {
-            for(int j = 0; j < map[0].Length; j++)
-            {
-                if (map[i][j] == 'W')
-                {
-                    GameObject newWall = Instantiate(wall, new Vector3(j+ map_offset_X, i+ map_offset_Y, 5), Quaternion.identity);
-                    newWall.SetActive(true);
-                    walls.Add(100 * i + j);
-                }
-                else if (map[i][j] == 'P')
-                {
-                    GameObject newPit = Instantiate(pit, new Vector3(j+ map_offset_X, i+ map_offset_Y, 5), Quaternion.identity);
-                    newPit.SetActive(true);
-                    pits.Add(100 * i + j, newPit);
-                }
-                else if (map[i][j] == 'S')
-                {
-                    GameObject newFloor = Instantiate(floor_stone, new Vector3(j+ map_offset_X, i+ map_offset_Y, 5), Quaternion.identity);
-                    stones.Add(100 * i + j);
-                    newFloor.SetActive(true);
-                }
-                else if (map[i][j] == 'I')
-                {
-                    GameObject newFloor = Instantiate(floor_ice, new Vector3(j+ map_offset_X, i+ map_offset_Y, 5), Quaternion.identity);
-                    ices.Add(100 * i + j);
-                    newFloor.SetActive(true);
-                }
-                else if (map[i][j] == 'M')
-                {
-                    GameObject newFloor = Instantiate(floor_mud, new Vector3(j+ map_offset_X, i+ map_offset_Y, 5), Quaternion.identity);
-                    muds.Add(100 * i + j);
-                    newFloor.SetActive(true);
-                }
-                else if (map[i][j] == '#')                
-                {
-                    continue;
-                }
-                else
-                {
-                    Debug.Log("Item letter is not defined " + map[i][j]);
-                }
-            }
+            string[] str_arr = wall_position[i].Split(' ');
+            int x = int.Parse(str_arr[0]);
+            int y = int.Parse(str_arr[1]);
+            GameObject newWall = Instantiate(wall, new Vector3(x + map_offset_X, y + map_offset_Y, 0), Quaternion.identity);
+            walls.Add(100 * y + x, newWall);
+            newWall.SetActive(true);
+        }
+        for (int i = 0; i < pit_position.Length; i++)
+        {
+            string[] str_arr = pit_position[i].Split(' ');
+            int x = int.Parse(str_arr[0]);
+            int y = int.Parse(str_arr[1]);
+            GameObject newPit = Instantiate(pit, new Vector3(x + map_offset_X, y + map_offset_Y, 5), Quaternion.identity);
+            pits.Add(100 * y + x, newPit);
+            newPit.SetActive(true);
         }
 
-        for(int i = 0; i < box_position.Length; i++)
+        for (int i = 0; i < stone_position.Length; i++)
+        {
+            string[] str_arr = stone_position[i].Split(' ');
+            int x = int.Parse(str_arr[0]);
+            int y = int.Parse(str_arr[1]);
+            GameObject newStone = Instantiate(floor_stone, new Vector3(x + map_offset_X, y + map_offset_Y, 5), Quaternion.identity);
+            stones.Add(100 * y + x, newStone);
+            newStone.SetActive(true);
+        }
+
+        for (int i = 0; i < ice_position.Length; i++)
+        {
+            string[] str_arr = ice_position[i].Split(' ');
+            int x = int.Parse(str_arr[0]);
+            int y = int.Parse(str_arr[1]);
+            GameObject newIce = Instantiate(floor_ice, new Vector3(x + map_offset_X, y + map_offset_Y, 5), Quaternion.identity);
+            ices.Add(100 * y + x, newIce);
+            newIce.SetActive(true);
+        }
+
+        for (int i = 0; i < mud_position.Length; i++)
+        {
+            string[] str_arr = mud_position[i].Split(' ');
+            int x = int.Parse(str_arr[0]);
+            int y = int.Parse(str_arr[1]);
+            GameObject newMud = Instantiate(floor_mud, new Vector3(x + map_offset_X, y + map_offset_Y, 5), Quaternion.identity);
+            muds.Add(100 * y + x, newMud);
+            newMud.SetActive(true);
+        }
+
+        for (int i = 0; i < box_position.Length; i++)
         {
             string[] str_arr = box_position[i].Split(' ');
             int x = int.Parse(str_arr[0]);
@@ -200,7 +234,7 @@ public class MapCreator : MonoBehaviour
                 case 0:
                     {
                         GameObject newTarget = Instantiate(target_brown, new Vector3(x+ map_offset_X, y+ map_offset_Y, 3), Quaternion.identity);
-                        targets_brown.Add(100 * y + x, false);
+                        targets_brown.Add(100 * y + x, newTarget);
                         newTarget.SetActive(true);
                         brown_num++;
                         break;
@@ -208,7 +242,7 @@ public class MapCreator : MonoBehaviour
                 case 1:
                     {
                         GameObject newTarget = Instantiate(target_red, new Vector3(x+ map_offset_X, y+ map_offset_Y, 3), Quaternion.identity);
-                        targets_red.Add(100 * y + x, false);
+                        targets_red.Add(100 * y + x, newTarget);
                         newTarget.SetActive(true);
                         red_num++;
                         break;
@@ -216,7 +250,7 @@ public class MapCreator : MonoBehaviour
                 case 2:
                     {
                         GameObject newTarget = Instantiate(target_blue, new Vector3(x+ map_offset_X, y+ map_offset_Y, 3), Quaternion.identity);
-                        targets_blue.Add(100 * y + x, false);
+                        targets_blue.Add(100 * y + x, newTarget);
                         newTarget.SetActive(true);
                         blue_num++;
                         break;
@@ -224,7 +258,7 @@ public class MapCreator : MonoBehaviour
                 case 3:
                     {
                         GameObject newTarget = Instantiate(target_green, new Vector3(x+ map_offset_X, y+ map_offset_Y, 3), Quaternion.identity);
-                        targets_green.Add(100 * y + x, false);
+                        targets_green.Add(100 * y + x, newTarget);
                         newTarget.SetActive(true);
                         green_num++;
                         break;
@@ -232,7 +266,7 @@ public class MapCreator : MonoBehaviour
                 case 4:
                     {
                         GameObject newTarget = Instantiate(target_gray, new Vector3(x+ map_offset_X, y+ map_offset_Y, 3), Quaternion.identity);
-                        targets_gray.Add(100 * y + x, false);
+                        targets_gray.Add(100 * y + x, newTarget);
                         newTarget.SetActive(true);
                         gray_num++;
                         break;
@@ -312,7 +346,7 @@ public class MapCreator : MonoBehaviour
 
     public int UpdateTargetNum()
     {
-        brown_tar.text = (100+brown_num).ToString().Substring(1);
+        brown_tar.text = (100 + brown_num).ToString().Substring(1);
         red_tar.text = (100 + red_num).ToString().Substring(1);
         blue_tar.text = (100 + blue_num).ToString().Substring(1);
         green_tar.text = (100 + green_num).ToString().Substring(1);
