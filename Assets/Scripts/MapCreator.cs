@@ -15,6 +15,8 @@ public class MapCreator : MonoBehaviour
     public string[] box_position;
     public string[] target_position;
 
+    public GameObject win_panel;
+
     public GameObject player;
     public GameObject wall;
     public GameObject box_brown;
@@ -308,7 +310,7 @@ public class MapCreator : MonoBehaviour
         
     }
 
-    public void UpdateTargetNum()
+    public int UpdateTargetNum()
     {
         brown_tar.text = (100+brown_num).ToString().Substring(1);
         red_tar.text = (100 + red_num).ToString().Substring(1);
@@ -317,9 +319,10 @@ public class MapCreator : MonoBehaviour
         gray_tar.text = (100 + gray_num).ToString().Substring(1);
         if(brown_num == 0 && red_num == 0 && blue_num == 0 && green_num == 0 && gray_num == 0)
         {
-            Debug.Log("Win!");
-            //TODO: Add a dialog here to show all targets are reached.
+            //Debug.Log("Win!");
+            return 1;
         }
+        return 0;
     }
 
     public void UpdateStepNum()
