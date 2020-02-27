@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-
     public static GameController instance;
+
+    public DeviceType deviceType = SystemInfo.deviceType;
 
     public int top_level=0;
     public int cur_level = 0;
