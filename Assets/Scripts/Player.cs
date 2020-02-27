@@ -352,8 +352,9 @@ public class Player : MonoBehaviour
         //check win
         if (win_check == 1)
         {
-            Debug.Log("win");
+            //Debug.Log("win");
             mapCreator.win_panel.SetActive(true);
+            int final_step = mapCreator.step;
         }
     }
 
