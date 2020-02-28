@@ -463,6 +463,7 @@ GameObject:
   - component: {fileID: 406007476}
   - component: {fileID: 406007478}
   - component: {fileID: 406007477}
+  - component: {fileID: 406007479}
   m_Layer: 5
   m_Name: WinPanel
   m_TagString: Untagged
@@ -530,6 +531,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 406007475}
   m_CullTransparentMesh: 0
+--- !u!114 &406007479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406007475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d763dd4a11414da5b9643d28d7933c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  next_button: {fileID: 1997640290}
+  replay_button: {fileID: 1096346776}
+  return_button: {fileID: 832922805}
 --- !u!1 &473506934
 GameObject:
   m_ObjectHideFlags: 0
@@ -716,13 +732,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 0
-  player_position: 0100000001000000
-  box_position:
-  - 2 3 4
-  - 4 2 0
-  target_position:
-  - 2 4 4
-  - 4 1 0
   win_panel: {fileID: 406007475}
   player: {fileID: 1089781571168915483, guid: f8434e538e37140faaee6fcde41c86c1, type: 3}
   wall: {fileID: 5256801442344684041, guid: e40b3ea390f7148ad817306e5f8529be, type: 3}
@@ -1157,7 +1166,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Replay
 --- !u!222 &791291639
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1352,7 +1361,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Return
 --- !u!222 &957107831
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1502,7 +1511,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Next
 --- !u!222 &1056667637
 CanvasRenderer:
   m_ObjectHideFlags: 0
