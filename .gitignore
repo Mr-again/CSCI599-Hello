@@ -64,3 +64,4 @@ packages.config
 
 .DS_Store
 mono_*.json
+mono_*.blob
