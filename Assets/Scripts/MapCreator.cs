@@ -7,6 +7,7 @@ public class MapCreator : MonoBehaviour
 {
     //public static MapCreator instance;
     GameController gameController;
+    WinPanelController winPanelController;
 
     public int level;
 
@@ -81,7 +82,11 @@ public class MapCreator : MonoBehaviour
     public int blue_num;
     public int green_num;
     public int gray_num;
+
     public int step;
+    public int final_step;
+    public int star;
+    public int win;
 
     public int map_offset_X = -8;
     public int map_offset_Y = -4;
@@ -109,8 +114,10 @@ public class MapCreator : MonoBehaviour
 
     private void Awake()
     {
-        //gameController = FindObjectOfType<GameController>();
+        gameController = FindObjectOfType<GameController>();
         //Debug.Log(gameController.cur_level);
+
+        win = 0;
     }
 
     void Start()
@@ -351,9 +358,15 @@ public class MapCreator : MonoBehaviour
         blue_tar.text = (100 + blue_num).ToString().Substring(1);
         green_tar.text = (100 + green_num).ToString().Substring(1);
         gray_tar.text = (100 + gray_num).ToString().Substring(1);
-        if(brown_num == 0 && red_num == 0 && blue_num == 0 && green_num == 0 && gray_num == 0)
+        if(win == 0 && brown_num == 0 && red_num == 0 && blue_num == 0 && green_num == 0 && gray_num == 0)
         {
-            //Debug.Log("Win!");
+            win = 1;
+            win_panel.SetActive(true);
+            winPanelController = FindObjectOfType<WinPanelController>();
+            final_step = step;
+            //todo star
+            winPanelController.final_step = final_step;
+            winPanelController.star = star;
             return 1;
         }
         return 0;

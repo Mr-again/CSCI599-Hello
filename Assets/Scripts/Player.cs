@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     MapCreator mapCreator;
     private Animator animator;
+
     private int x_dir = 0;
     private int y_dir = 0;
 
@@ -24,7 +25,6 @@ public class Player : MonoBehaviour
     private int FINGER_STATE_NULL = 0;
     private int FINGER_STATE_TOUCH = 1;
     private int FINGER_STATE_ADD = 2;
-
 
     //private GameObject[] boxes = new GameObject[5];
     //private Dictionary<int, bool>[] targets = new Dictionary<int, bool>[5];
@@ -66,8 +66,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        int win_check = 0;
-
         int dx = 0;
         int dy = 0;
         if (SystemInfo.deviceType==DeviceType.Desktop)
@@ -204,7 +202,7 @@ public class Player : MonoBehaviour
                             if(mapCreator.targets_brown.ContainsKey(y1 * 100 + x1))
                             {
                                 mapCreator.brown_num++;
-                                win_check = mapCreator.UpdateTargetNum();
+                                mapCreator.UpdateTargetNum();
                             }
                             break;
                         }
@@ -213,7 +211,7 @@ public class Player : MonoBehaviour
                             if (mapCreator.targets_red.ContainsKey(y1 * 100 + x1))
                             {
                                 mapCreator.red_num++;
-                                win_check = mapCreator.UpdateTargetNum();
+                                mapCreator.UpdateTargetNum();
                             }
                             break;
                         }
@@ -222,7 +220,7 @@ public class Player : MonoBehaviour
                             if (mapCreator.targets_blue.ContainsKey(y1 * 100 + x1))
                             {
                                 mapCreator.blue_num++;
-                                win_check = mapCreator.UpdateTargetNum();
+                                mapCreator.UpdateTargetNum();
                             }
                             break;
                         }
@@ -231,7 +229,7 @@ public class Player : MonoBehaviour
                             if (mapCreator.targets_green.ContainsKey(y1 * 100 + x1))
                             {
                                 mapCreator.green_num++;
-                                win_check = mapCreator.UpdateTargetNum();
+                                mapCreator.UpdateTargetNum();
                             }
                             break;
                         }
@@ -240,7 +238,7 @@ public class Player : MonoBehaviour
                             if (mapCreator.targets_gray.ContainsKey(y1 * 100 + x1))
                             {
                                 mapCreator.gray_num++;
-                                win_check = mapCreator.UpdateTargetNum();
+                                mapCreator.UpdateTargetNum();
                             }
                             break;
                         }
@@ -269,7 +267,7 @@ public class Player : MonoBehaviour
                             if(mapCreator.targets_brown.ContainsKey(y2 * 100 + x2))
                             {
                                 mapCreator.brown_num--;
-                                win_check = mapCreator.UpdateTargetNum();
+                                mapCreator.UpdateTargetNum();
                             }
                             break;
                         }
@@ -278,7 +276,7 @@ public class Player : MonoBehaviour
                             if (mapCreator.targets_red.ContainsKey(y2 * 100 + x2))
                             {
                                 mapCreator.red_num--;
-                                win_check = mapCreator.UpdateTargetNum();
+                                mapCreator.UpdateTargetNum();
                             }
                             break;
                         }
@@ -287,7 +285,7 @@ public class Player : MonoBehaviour
                             if (mapCreator.targets_blue.ContainsKey(y2 * 100 + x2))
                             {
                                 mapCreator.blue_num--;
-                                win_check = mapCreator.UpdateTargetNum();
+                                mapCreator.UpdateTargetNum();
                             }
                             break;
                         }
@@ -296,7 +294,7 @@ public class Player : MonoBehaviour
                             if (mapCreator.targets_green.ContainsKey(y2 * 100 + x2))
                             {
                                 mapCreator.green_num--;
-                                win_check = mapCreator.UpdateTargetNum();
+                                mapCreator.UpdateTargetNum();
                             }
                             break;
                         }
@@ -305,7 +303,7 @@ public class Player : MonoBehaviour
                             if (mapCreator.targets_gray.ContainsKey(y2 * 100 + x2))
                             {
                                 mapCreator.gray_num--;
-                                win_check = mapCreator.UpdateTargetNum();
+                                mapCreator.UpdateTargetNum();
                             }
                             break;
                         }
@@ -348,13 +346,6 @@ public class Player : MonoBehaviour
             mapCreator.step++;
             mapCreator.UpdateStepNum();
             transform.position = new Vector3(x1 + mapCreator.map_offset_X, y1 + mapCreator.map_offset_Y);
-        }
-        //check win
-        if (win_check == 1)
-        {
-            Debug.Log("win");
-            mapCreator.win_panel.SetActive(true);
-            int final_step = mapCreator.step;
         }
     }
 
