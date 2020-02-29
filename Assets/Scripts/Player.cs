@@ -189,7 +189,10 @@ public class Player : MonoBehaviour
                                 
                         }
                     }
-                    
+                    makeRedBoxExpode(getBox(x1, y1));
+                    mapCreator.boxes.Remove(100 * y1 + x1);
+
+
                 }
                 return;
             }
@@ -462,6 +465,12 @@ public class Player : MonoBehaviour
     {
         //TODO: the feature of wall expode
         wall.SetActive(false);
+    }
+
+    void makeRedBoxExpode(GameObject red_box)
+    {
+        //TODO: the feature of red box expode
+        red_box.SetActive(false);
     }
 
 }
