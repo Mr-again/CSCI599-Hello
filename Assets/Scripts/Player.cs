@@ -171,6 +171,26 @@ public class Player : MonoBehaviour
             }
             if(isWall(x2, y2))
             {
+                string box_color = getBox(x1, y1).name.Split('_')[1].Split('(')[0];
+                Debug.Log(box_color);
+                if (box_color.Equals("Red"))
+                {
+                    int[] tmp_dx = { 1, 0, -1 };
+                    int[] tmp_dy = { 1, 0, -1 };
+                    for(int i = 0; i < 3; i++)
+                    {
+                        for(int j = 0; j < 3; j++)
+                        {
+                            if (isWall(x1 - tmp_dx[i], y1 - tmp_dy[j]))
+                            {
+                                makeWallExpode(getWall(x1 - tmp_dx[i], y1 - tmp_dy[j]));
+                                mapCreator.walls.Remove(100 * (y1 - tmp_dy[j]) + x1 - tmp_dx[i]);
+                            }
+                                
+                        }
+                    }
+                    
+                }
                 return;
             }
             else if(isBox(x2, y2))
@@ -433,5 +453,15 @@ public class Player : MonoBehaviour
         return mapCreator.pits[y * 100 + x];
     }
 
-    
+    GameObject getWall(int x, int y)
+    {
+        return mapCreator.walls[y * 100 + x];
+    }
+
+    void makeWallExpode(GameObject wall)
+    {
+        //TODO: the feature of wall expode
+        wall.SetActive(false);
+    }
+
 }
