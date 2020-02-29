@@ -463,14 +463,14 @@ public class Player : MonoBehaviour
 
     void makeWallExpode(GameObject wall)
     {
-        //TODO: the feature of wall expode
-        wall.SetActive(false);
+        wall.GetComponent<Wall>().Explode();
     }
 
     void makeRedBoxExpode(GameObject red_box)
     {
         //TODO: the feature of red box expode
-        red_box.SetActive(false);
+        //red_box.SetActive(false);
+        red_box.GetComponent<RedBox>().Explode();
     }
 
 }

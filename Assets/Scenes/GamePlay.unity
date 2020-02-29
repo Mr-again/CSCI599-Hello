@@ -543,6 +543,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d763dd4a11414da5b9643d28d7933c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameController: {fileID: 0}
+  mapCreator: {fileID: 0}
   next_button: {fileID: 1997640290}
   replay_button: {fileID: 1096346776}
   return_button: {fileID: 832922805}
@@ -788,6 +790,9 @@ MonoBehaviour:
   green_num: 0
   gray_num: 0
   step: 0
+  final_step: 0
+  star: 0
+  win: 0
   map_offset_X: -8
   map_offset_Y: -4
 --- !u!4 &576685845
@@ -2126,6 +2131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   top_level: 0
   cur_level: 0
+  total_star: 0
   level_scores: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!4 &1511927207
 Transform:
