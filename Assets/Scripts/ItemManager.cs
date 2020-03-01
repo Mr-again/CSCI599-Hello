@@ -101,4 +101,3 @@ public class ItemManager : MonoBehaviour
         SceneManager.LoadScene("GamePlay");
     }
 }
-

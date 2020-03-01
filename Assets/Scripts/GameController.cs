@@ -11,11 +11,12 @@ public class GameController : MonoBehaviour
     public int top_level = 0;
     public int cur_level = 0;
     public int total_star = 0;
-    public int[] level_scores = new int[24];
+    public int[] level_scores; 
 
     // Start is called before the first frame update
     private void Awake()
     {
+        level_scores = new int[24];
         if (instance == null)
         {
             instance = this;
