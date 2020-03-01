@@ -317,6 +317,89 @@ public class Player : MonoBehaviour
                 mapCreator.step++;
                 mapCreator.UpdateStepNum();
                 transform.position = new Vector3(x1 + mapCreator.map_offset_X, y1 + mapCreator.map_offset_Y);
+                //determine if here box is on the target already
+                switch (box_color)
+                {
+                    case 0:
+                        {
+                            if (mapCreator.targets_brown.ContainsKey(y1 * 100 + x1))
+                            {
+                                mapCreator.brown_num++;
+                                mapCreator.UpdateTargetNum();
+                            }
+                            break;
+                        }
+                    case 1:
+                        {
+                            if (mapCreator.targets_red.ContainsKey(y1 * 100 + x1))
+                            {
+                                mapCreator.red_num++;
+                                mapCreator.UpdateTargetNum();
+                            }
+                            break;
+                        }
+                    case 2:
+                        {
+                            if (mapCreator.targets_blue.ContainsKey(y1 * 100 + x1))
+                            {
+                                mapCreator.blue_num++;
+                                mapCreator.UpdateTargetNum();
+                            }
+                            if (isStone(x1, y1))
+                            {
+                                GameObject x1_y1_stone = getStone(x1, y1);
+                                Destroy(x1_y1_stone);
+                                mapCreator.stones.Remove(100 * y1 + x1);
+                                GameObject new_x1_y1_ice = Instantiate(mapCreator.floor_ice,
+                                    new Vector3(x1 + mapCreator.map_offset_X, y1 + mapCreator.map_offset_Y, 5),
+                                    Quaternion.identity);
+                                new_x1_y1_ice.SetActive(true);
+                                mapCreator.ices.Add(100 * y1 + x1, new_x1_y1_ice);
+                            }
+                            else if (isMud(x1, y1))
+                            {
+                                GameObject x1_y1_mud = getMud(x1, y1);
+                                Destroy(x1_y1_mud);
+                                mapCreator.muds.Remove(100 * y1 + x1);
+                                GameObject new_x1_y1_ice = Instantiate(mapCreator.floor_ice,
+                                    new Vector3(x1 + mapCreator.map_offset_X, y1 + mapCreator.map_offset_Y, 5),
+                                    Quaternion.identity);
+                                new_x1_y1_ice.SetActive(true);
+                                mapCreator.ices.Add(100 * y1 + x1, new_x1_y1_ice);
+                            }
+                            else if (isIce(x1, y1))
+                            {
+                                // here is ice
+                            }
+                            else
+                            {
+                                Debug.Log("Here should only be stone or mud or ice!");
+                            }
+                            break;
+                        }
+                    case 3:
+                        {
+                            if (mapCreator.targets_green.ContainsKey(y1 * 100 + x1))
+                            {
+                                mapCreator.green_num++;
+                                mapCreator.UpdateTargetNum();
+                            }
+                            break;
+                        }
+                    case 4:
+                        {
+                            if (mapCreator.targets_gray.ContainsKey(y1 * 100 + x1))
+                            {
+                                mapCreator.gray_num++;
+                                mapCreator.UpdateTargetNum();
+                            }
+                            break;
+                        }
+                    default:
+                        {
+                            break;
+                        }
+                }
                 // determine if box is on the corresponding target
                 switch (box_color)
                 {
