@@ -468,8 +468,6 @@ public class Player : MonoBehaviour
 
     void makeRedBoxExpode(GameObject red_box)
     {
-        //TODO: the feature of red box expode
-        //red_box.SetActive(false);
         red_box.GetComponent<RedBox>().Explode();
     }
 

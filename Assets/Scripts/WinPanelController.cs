@@ -39,21 +39,24 @@ public class WinPanelController : MonoBehaviour
         Debug.Log("Click On Next");
         Debug.Log(final_step);
         gameController.levelPass(star);
-        //todo
+        if (gameController.top_level == gameController.cur_level)
+        {
+            SceneManager.LoadScene("LevelPage");
+            return;
+        }
+        gameController.cur_level++;
         SceneManager.LoadScene("GamePlay");
     }
     void onClickReplayButton()
     {
         Debug.Log("Click On Replay");
         gameController.levelPass(star);
-        //todo
         SceneManager.LoadScene("GamePlay");
     }
     void onClickReturnButton()
     {
         Debug.Log("Click On Return");
         gameController.levelPass(star);
-        //todo
         SceneManager.LoadScene("LevelPage");
     }
 }
