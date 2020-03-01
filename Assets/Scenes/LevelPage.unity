@@ -1200,7 +1200,6 @@ GameObject:
   - component: {fileID: 284864158}
   - component: {fileID: 284864160}
   - component: {fileID: 284864159}
-  - component: {fileID: 284864161}
   m_Layer: 5
   m_Name: Scores
   m_TagString: Untagged
@@ -1267,23 +1266,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 284864157}
   m_CullTransparentMesh: 0
---- !u!114 &284864161
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 284864157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9fdc076ec2f8d24f8af3ce2a3966f5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  starNum: 0
-  home: {fileID: 1534371499}
-  scores: 
-  score: 0
-  diamonds: {fileID: 284864159}
 --- !u!1 &289565614
 GameObject:
   m_ObjectHideFlags: 0
@@ -3896,7 +3878,6 @@ GameObject:
   - component: {fileID: 642213759}
   - component: {fileID: 642213761}
   - component: {fileID: 642213760}
-  - component: {fileID: 642213762}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -3963,23 +3944,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 642213758}
   m_CullTransparentMesh: 0
---- !u!114 &642213762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 642213758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9fdc076ec2f8d24f8af3ce2a3966f5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  starNum: 0
-  home: {fileID: 0}
-  scores: 
-  score: 0
-  diamonds: {fileID: 0}
 --- !u!1 &647133296
 GameObject:
   m_ObjectHideFlags: 0
@@ -8596,6 +8560,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   starNum: 0
   home: {fileID: 1534371499}
+  item1: {fileID: 110126102}
   scores: 
   score: 0
   diamonds: {fileID: 284864159}
@@ -9314,7 +9279,6 @@ GameObject:
   - component: {fileID: 1534371501}
   - component: {fileID: 1534371500}
   - component: {fileID: 1534371499}
-  - component: {fileID: 1534371502}
   m_Layer: 5
   m_Name: Home
   m_TagString: Untagged
@@ -9432,23 +9396,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1534371497}
   m_CullTransparentMesh: 0
---- !u!114 &1534371502
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1534371497}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9fdc076ec2f8d24f8af3ce2a3966f5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  starNum: 0
-  home: {fileID: 1534371499}
-  scores: 
-  score: 0
-  diamonds: {fileID: 284864159}
 --- !u!1 &1546464343
 GameObject:
   m_ObjectHideFlags: 0

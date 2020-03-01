@@ -54,5 +54,6 @@ public class WinPanelController : MonoBehaviour
         Debug.Log("Click On Return");
         gameController.levelPass(star);
         //todo
+        SceneManager.LoadScene("LevelPage");
     }
 }
