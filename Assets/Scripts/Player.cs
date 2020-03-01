@@ -172,7 +172,7 @@ public class Player : MonoBehaviour
             if(isWall(x2, y2))
             {
                 string box_color = getBox(x1, y1).name.Split('_')[1].Split('(')[0];
-                Debug.Log(box_color);
+                //Debug.Log(box_color);
                 if (box_color.Equals("Red"))
                 {
                     int[] tmp_dx = { 1, 0, -1 };
@@ -245,6 +245,36 @@ public class Player : MonoBehaviour
                                 mapCreator.blue_num++;
                                 mapCreator.UpdateTargetNum();
                             }
+                            if (isStone(x1, y1))
+                            {
+                                GameObject x1_y1_stone = getStone(x1, y1);
+                                Destroy(x1_y1_stone);
+                                mapCreator.stones.Remove(100 * y1 + x1);
+                                GameObject new_x1_y1_ice = Instantiate(mapCreator.floor_ice,
+                                    new Vector3(x1 + mapCreator.map_offset_X, y1 + mapCreator.map_offset_Y, 5),
+                                    Quaternion.identity);
+                                new_x1_y1_ice.SetActive(true);
+                                mapCreator.ices.Add(100 * y1 + x1, new_x1_y1_ice);
+                            }
+                            else if (isMud(x1, y1))
+                            {
+                                GameObject x1_y1_mud = getMud(x1, y1);
+                                Destroy(x1_y1_mud);
+                                mapCreator.muds.Remove(100 * y1 + x1);
+                                GameObject new_x1_y1_ice = Instantiate(mapCreator.floor_ice,
+                                    new Vector3(x1 + mapCreator.map_offset_X, y1 + mapCreator.map_offset_Y, 5),
+                                    Quaternion.identity);
+                                new_x1_y1_ice.SetActive(true);
+                                mapCreator.ices.Add(100 * y1 + x1, new_x1_y1_ice);
+                            }
+                            else if (isIce(x1, y1))
+                            {
+                                // here is ice
+                            }
+                            else
+                            {
+                                Debug.Log("Here should only be stone or mud or ice!");
+                            }
                             break;
                         }
                     case 3:
@@ -309,6 +339,37 @@ public class Player : MonoBehaviour
                             {
                                 mapCreator.blue_num--;
                                 mapCreator.UpdateTargetNum();
+                            }
+                            // blue box make (x1, y1) to ice
+                            if (isStone(x1, y1))
+                            {
+                                GameObject x1_y1_stone = getStone(x1, y1);
+                                Destroy(x1_y1_stone);
+                                mapCreator.stones.Remove(100 * y1 + x1);
+                                GameObject new_x1_y1_ice = Instantiate(mapCreator.floor_ice,
+                                    new Vector3(x1 + mapCreator.map_offset_X, y1 + mapCreator.map_offset_Y, 5),
+                                    Quaternion.identity);
+                                new_x1_y1_ice.SetActive(true);
+                                mapCreator.ices.Add(100 * y1 + x1, new_x1_y1_ice);
+                            }
+                            else if (isMud(x1, y1))
+                            {
+                                GameObject x1_y1_mud = getMud(x1, y1);
+                                Destroy(x1_y1_mud);
+                                mapCreator.muds.Remove(100 * y1 + x1);
+                                GameObject new_x1_y1_ice = Instantiate(mapCreator.floor_ice,
+                                    new Vector3(x1 + mapCreator.map_offset_X, y1 + mapCreator.map_offset_Y, 5),
+                                    Quaternion.identity);
+                                new_x1_y1_ice.SetActive(true);
+                                mapCreator.ices.Add(100 * y1 + x1, new_x1_y1_ice);
+                            }
+                            else if(isIce(x1, y1))
+                            {
+                                // here is ice
+                            }
+                            else
+                            {
+                                Debug.Log("Here should only be stone or mud or ice!");
                             }
                             break;
                         }
@@ -436,6 +497,11 @@ public class Player : MonoBehaviour
         return mapCreator.covered_pits.ContainsKey(y * 100 + x);
     }
 
+    bool isStone(int x, int y)
+    {
+        return mapCreator.stones.ContainsKey(y * 100 + x);
+    }
+
     bool isIce(int x, int y)
     {
         return mapCreator.ices.ContainsKey(y * 100 + x);
@@ -459,6 +525,21 @@ public class Player : MonoBehaviour
     GameObject getWall(int x, int y)
     {
         return mapCreator.walls[y * 100 + x];
+    }
+
+    GameObject getStone(int x, int y)
+    {
+        return mapCreator.stones[y * 100 + x];
+    }
+
+    GameObject getIce(int x, int y)
+    {
+        return mapCreator.ices[y * 100 + x];
+    }
+
+    GameObject getMud(int x, int y)
+    {
+        return mapCreator.muds[y * 100 + x];
     }
 
     void makeWallExpode(GameObject wall)

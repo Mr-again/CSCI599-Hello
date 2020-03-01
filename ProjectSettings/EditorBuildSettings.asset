@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Enterance.unity
     guid: 4641b257bf3904c469b90b2a09777d68
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/LevelPage.unity
     guid: b7056d437cc7e4b5e9e6cfe02df6da50
   - enabled: 0

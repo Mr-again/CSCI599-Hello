@@ -37,8 +37,8 @@ public class MapCreator : MonoBehaviour
     private string[] mud_position = { };
     private string[] pit_position = { "3 4", "4 4" };
     private int[] player_position = { 1, 1 };
-    private string[] box_position = { "2 3 1", "4 2 0" };
-    private string[] target_position = { "2 4 1", "4 1 0" };
+    private string[] box_position = { "2 3 1", "4 2 2" };
+    private string[] target_position = { "2 4 1", "4 1 2" };
 
     public GameObject win_panel;
 
