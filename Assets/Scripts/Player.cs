@@ -190,6 +190,11 @@ public class Player : MonoBehaviour
                         }
                     }
                     makeRedBoxExpode(getBox(x1, y1));
+                    if (mapCreator.targets_red.ContainsKey(y1 * 100 + x1))
+                    {
+                        mapCreator.red_num++;
+                        mapCreator.UpdateTargetNum();
+                    }
                     mapCreator.boxes.Remove(100 * y1 + x1);
 
 
@@ -544,6 +549,7 @@ public class Player : MonoBehaviour
 
     void makeWallExpode(GameObject wall)
     {
+
         wall.GetComponent<Wall>().Explode();
     }
 
