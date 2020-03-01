@@ -31,7 +31,7 @@ public class ItemManager : MonoBehaviour
         {
             tempItem = "Grid/Item" + " (" + i.ToString() + ")";
 
-            starNum = 1;
+            starNum = 3;
             score += starNum;
             ShowStar(starNum, tempItem);
         }
