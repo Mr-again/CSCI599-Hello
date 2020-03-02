@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class LevelButton : MonoBehaviour
 {
-    public Sprite lockSprite;
+    public Image locklogo;
 
     public Text levelText;
 
@@ -18,7 +18,7 @@ public class LevelButton : MonoBehaviour
     void OnEnable()
     {
         button = GetComponent<Button>();
-        image = GetComponent<Image>();
+        locklogo = GetComponent<Image>();
 
     }
 
@@ -29,13 +29,13 @@ public class LevelButton : MonoBehaviour
 
         if (isUnlock)
         {
-            image.sprite = null;
+            locklogo.gameObject.SetActive(false);
             button.enabled = true;
             levelText.gameObject.SetActive(true);
         }
         else
         {
-            image.sprite = lockSprite;
+            locklogo.gameObject.SetActive(true);
             button.enabled = false;
             levelText.gameObject.SetActive(false);
         }
