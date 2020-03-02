@@ -9481,6 +9481,8 @@ MonoBehaviour:
   starNum: 0
   home: {fileID: 1534371499}
   item1: {fileID: 110126102}
+  item2: {fileID: 926824840}
+  item3: {fileID: 719169329}
   scores: 
   score: 0
   diamonds: {fileID: 284864159}

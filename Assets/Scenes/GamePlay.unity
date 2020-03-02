@@ -464,7 +464,6 @@ GameObject:
   - component: {fileID: 275879195}
   - component: {fileID: 275879197}
   - component: {fileID: 275879196}
-  - component: {fileID: 275879198}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -527,24 +526,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 275879194}
   m_CullTransparentMesh: 0
---- !u!114 &275879198
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 275879194}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61b9f70e007294ce496c6cebfe9d3b73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameController: {fileID: 0}
-  mapCreator: {fileID: 0}
-  back_button: {fileID: 0}
-  replay_button: {fileID: 0}
-  final_step: 0
-  star: 0
 --- !u!1 &406007475
 GameObject:
   m_ObjectHideFlags: 0
@@ -654,7 +635,6 @@ GameObject:
   - component: {fileID: 473506935}
   - component: {fileID: 473506937}
   - component: {fileID: 473506936}
-  - component: {fileID: 473506938}
   m_Layer: 5
   m_Name: Player_Face
   m_TagString: Untagged
@@ -717,20 +697,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 473506934}
   m_CullTransparentMesh: 0
---- !u!114 &473506938
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 473506934}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 182b4b1db45ce4154b2065c5406b2a01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menu_panel: {fileID: 0}
-  menu_button: {fileID: 0}
 --- !u!1 &501188895
 GameObject:
   m_ObjectHideFlags: 0

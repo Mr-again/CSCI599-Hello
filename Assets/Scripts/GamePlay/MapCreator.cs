@@ -122,7 +122,7 @@ public class MapCreator : MonoBehaviour
     private void Awake()
     {
         gameController = FindObjectOfType<GameController>();
-        Debug.Log("Current Level: " + Convert.ToString(gameController.cur_level));
+        Debug.Log("Current Level: " + Convert.ToString(gameController.cur_level + 1));
         win = 0;
         getMapDataFromLocalFile(gameController.cur_level + 1);
     }
