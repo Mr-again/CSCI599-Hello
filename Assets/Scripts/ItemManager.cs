@@ -7,13 +7,10 @@ using UnityEngine.UI;
 
 public class ItemManager : MonoBehaviour
 {
-    GameController gameController;
     public int starNum;
     
     public Button home;
     public Button item1;
-    public Button item2;
-    public Button item3;
 
     public string scores;
 
@@ -21,36 +18,14 @@ public class ItemManager : MonoBehaviour
 
     public Text diamonds;
 
-    private int[][] thresholds;
-    private int[][] unlock_requires;
+
 
     private string tempItem;
     private void Awake()
-<<<<<<< Updated upstream
-    {
-        gameController = FindObjectOfType<GameController>();
-        //home = GetComponent<Button>();
-        //diamonds = GetComponent<Text>();
-=======
     {
         //home = GetComponent<Button>();
         //diamonds = GetComponent<Text>();
-        //本地路径
-        var fileAddress = Path.Combine(Application.streamingAssetsPath, "Levels/thresholds.txt");
-        FileInfo fInfo0 = new FileInfo(fileAddress);
-        if (fInfo0.Exists)
-        {
-            StreamReader r = new StreamReader(fileAddress);
-            //StreamReader默认的是UTF8的不需要转格式了，因为有些中文字符的需要有些是要转的，下面是转成String代码
-            //byte[] data = new byte[1024];
-            // data = Encoding.UTF8.GetBytes(r.ReadToEnd());
-            // s = Encoding.UTF8.GetString(data, 0, data.Length);
-            string s = r.ReadToEnd();
-            Debug.Log(s);
-        }
->>>>>>> Stashed changes
     }
-
 
     void CreateData()
     {
@@ -105,8 +80,6 @@ public class ItemManager : MonoBehaviour
     {
         home.onClick.AddListener(() => { ClickHome(); });
         item1.onClick.AddListener(() => { ClickItem1(); });
-        item2.onClick.AddListener(() => { ClickItem2(); });
-        item3.onClick.AddListener(() => { ClickItem3(); });
         CreateData();
     }
 
@@ -124,19 +97,6 @@ public class ItemManager : MonoBehaviour
     void ClickItem1()
     {
         Debug.Log("Click on Level 1");
-        gameController.cur_level = 0;
-        SceneManager.LoadScene("GamePlay");
-    }
-    void ClickItem2()
-    {
-        Debug.Log("Click on Level 2");
-        gameController.cur_level = 1;
-        SceneManager.LoadScene("GamePlay");
-    }
-    void ClickItem3()
-    {
-        Debug.Log("Click on Level 3");
-        gameController.cur_level = 2;
         SceneManager.LoadScene("GamePlay");
     }
 }
