@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+using System;
 
 public class MapCreator : MonoBehaviour
 {
@@ -9,36 +11,41 @@ public class MapCreator : MonoBehaviour
     GameController gameController;
     WinPanelController winPanelController;
 
-    public int level;
+    //public int level;
 
     //public string[] map;
-    private string[] wall_position
-        = { "0 0", "1 0", "2 0", "3 0", "4 0", "5 0", "6 0", "7 0", "8 0", "9 0",
-            "10 0", "11 0", "0 1", "11 1", "0 2", "8 2", "9 2", "10 2", "11 2", "0 3",
-            "5 3", "6 3", "7 3", "8 3", "9 3", "10 3", "11 3", "0 4", "5 4", "6 4",
-            "7 4", "8 4", "9 4", "10 4", "11 4", "0 5", "2 5", "3 5", "4 5", "5 5",
-            "6 5", "7 5", "8 5", "9 5", "10 5", "11 5", "0 6", "2 6", "3 6", "4 6",
-            "5 6", "6 6", "7 6", "8 6", "9 6", "10 6", "11 6", "0 7", "11 7", "0 8",
-            "1 8", "2 8", "3 8", "4 8", "5 8", "6 8", "7 8", "8 8", "9 8", "10 8",
-            "11 8" };
-    private string[] stone_position
-        = { "0 0", "1 0", "2 0", "3 0", "4 0", "5 0", "6 0", "7 0", "8 0", "9 0",
-            "10 0", "11 0", "0 1", "1 1", "2 1", "3 1", "4 1", "5 1", "6 1", "7 1",
-            "8 1", "9 1", "10 1", "11 1", "0 2", "1 2", "2 2", "3 2", "4 2", "5 2",
-            "6 2", "7 2", "8 2", "9 2", "10 2", "11 2", "0 3", "1 3", "5 3", "6 3",
-            "7 3", "8 3", "9 3", "10 3", "11 3", "0 4", "1 4", "5 4", "6 4", "7 4",
-            "8 4", "9 4", "10 4", "11 4", "0 5", "1 5", "2 5", "3 5", "4 5", "5 5",
-            "6 5", "7 5", "8 5", "9 5", "10 5", "11 5", "0 6", "2 6", "3 6", "4 6",
-            "5 6", "6 6", "7 6", "8 6", "9 6", "10 6", "11 6", "0 7", "1 7", "9 7",
-            "10 7", "11 7", "0 8", "1 8", "2 8", "3 8", "4 8", "5 8", "6 8", "7 8",
-            "8 8", "9 8", "10 8", "11 8" };
-    private string[] ice_position
-        = { "2 3", "3 3", "4 3", "2 4", "1 6", "2 7", "3 7", "4 7", "5 7", "6 7", "7 7", "8 7" };
-    private string[] mud_position = { };
-    private string[] pit_position = { "3 4", "4 4" };
-    private int[] player_position = { 1, 1 };
-    private string[] box_position = { "2 3 1", "4 2 2" };
-    private string[] target_position = { "2 4 1", "4 1 2" };
+    private string[] wall_position;
+    //= { "0 0", "1 0", "2 0", "3 0", "4 0", "5 0", "6 0", "7 0", "8 0", "9 0",
+    //    "10 0", "11 0", "0 1", "11 1", "0 2", "8 2", "9 2", "10 2", "11 2", "0 3",
+    //    "5 3", "6 3", "7 3", "8 3", "9 3", "10 3", "11 3", "0 4", "5 4", "6 4",
+    //    "7 4", "8 4", "9 4", "10 4", "11 4", "0 5", "2 5", "3 5", "4 5", "5 5",
+    //    "6 5", "7 5", "8 5", "9 5", "10 5", "11 5", "0 6", "2 6", "3 6", "4 6",
+    //    "5 6", "6 6", "7 6", "8 6", "9 6", "10 6", "11 6", "0 7", "11 7", "0 8",
+    //    "1 8", "2 8", "3 8", "4 8", "5 8", "6 8", "7 8", "8 8", "9 8", "10 8",
+    //    "11 8" };
+    private string[] stone_position;
+    //= { "0 0", "1 0", "2 0", "3 0", "4 0", "5 0", "6 0", "7 0", "8 0", "9 0",
+    //    "10 0", "11 0", "0 1", "1 1", "2 1", "3 1", "4 1", "5 1", "6 1", "7 1",
+    //    "8 1", "9 1", "10 1", "11 1", "0 2", "1 2", "2 2", "3 2", "4 2", "5 2",
+    //    "6 2", "7 2", "8 2", "9 2", "10 2", "11 2", "0 3", "1 3", "5 3", "6 3",
+    //    "7 3", "8 3", "9 3", "10 3", "11 3", "0 4", "1 4", "5 4", "6 4", "7 4",
+    //    "8 4", "9 4", "10 4", "11 4", "0 5", "1 5", "2 5", "3 5", "4 5", "5 5",
+    //    "6 5", "7 5", "8 5", "9 5", "10 5", "11 5", "0 6", "2 6", "3 6", "4 6",
+    //    "5 6", "6 6", "7 6", "8 6", "9 6", "10 6", "11 6", "0 7", "1 7", "9 7",
+    //    "10 7", "11 7", "0 8", "1 8", "2 8", "3 8", "4 8", "5 8", "6 8", "7 8",
+    //    "8 8", "9 8", "10 8", "11 8" };
+    private string[] ice_position;
+    //= { "2 3", "3 3", "4 3", "2 4", "1 6", "2 7", "3 7", "4 7", "5 7", "6 7", "7 7", "8 7" };
+    private string[] mud_position;
+    //= { };
+    private string[] pit_position;
+    //= { "3 4", "4 4" };
+    private int[] player_position;
+    //= { 1, 1 };
+    private string[] box_position;
+    //= { "2 3 1", "4 2 2" };
+    private string[] target_position;
+    //= { "2 4 1", "4 1 2" };
 
     public GameObject win_panel;
 
@@ -115,9 +122,99 @@ public class MapCreator : MonoBehaviour
     private void Awake()
     {
         gameController = FindObjectOfType<GameController>();
-        //Debug.Log(gameController.cur_level);
-
+        Debug.Log("Current Level: " + Convert.ToString(gameController.cur_level));
         win = 0;
+        getMapDataFromLocalFile(gameController.cur_level + 1);
+    }
+
+    private void getMapDataFromLocalFile(int level)
+    {
+        var fileAddress = Path.Combine(Application.streamingAssetsPath, "Levels/level_" + Convert.ToString(level) + ".txt");
+        FileInfo fInfo0 = new FileInfo(fileAddress);
+        if (fInfo0.Exists)
+        {
+            StreamReader r = new StreamReader(fileAddress);
+            string s = r.ReadToEnd();
+            string[] lines = s.Split('\n');
+            int type = -1;
+            string[] keywords = { "WALL", "STONE", "ICE", "MUD", "PIT", "BOX", "TARGET", "PLAYER" };
+            List<string> walls_list = new List<string>();
+            List<string> stones_list = new List<string>();
+            List<string> ices_list = new List<string>();
+            List<string> muds_list = new List<string>();
+            List<string> pits_list = new List<string>();
+            List<string> boxes_list = new List<string>();
+            List<string> targets_list = new List<string>();
+            List<int> player_list = new List<int>();
+            foreach (string line in lines)
+            {
+                int index = Array.IndexOf(keywords, line);
+                if(index != -1)
+                {
+                    type = index;
+                }
+                else
+                {
+                    switch (type)
+                    {
+                        case 0:
+                            {
+                                walls_list.Add(line);
+                                break;
+                            }
+                        case 1:
+                            {
+                                stones_list.Add(line);
+                                break;
+                            }
+                        case 2:
+                            {
+                                ices_list.Add(line);
+                                break;
+                            }
+                        case 3:
+                            {
+                                muds_list.Add(line);
+                                break;
+                            }
+                        case 4:
+                            {
+                                pits_list.Add(line);
+                                break;
+                            }
+                        case 5:
+                            {
+                                boxes_list.Add(line);
+                                break;
+                            }
+                        case 6:
+                            {
+                                targets_list.Add(line);
+                                break;
+                            }
+                        case 7:
+                            {
+                                player_list.Add(int.Parse(line.Split(' ')[0]));
+                                player_list.Add(int.Parse(line.Split(' ')[1]));
+                                break;
+                            }
+                        default:
+                            {
+                                break;
+                            }
+                    }
+                    wall_position = walls_list.ToArray();
+                    stone_position = stones_list.ToArray();
+                    ice_position = ices_list.ToArray();
+                    mud_position = muds_list.ToArray();
+                    pit_position = pits_list.ToArray();
+                    box_position = boxes_list.ToArray();
+                    target_position = targets_list.ToArray();
+                    player_position = player_list.ToArray();
+                }
+
+            }
+        }
     }
 
     void Start()

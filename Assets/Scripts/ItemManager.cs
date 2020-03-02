@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class ItemManager : MonoBehaviour
 {
     public int starNum;
-
+    
     public Button home;
     public Button item1;
 
@@ -20,7 +20,6 @@ public class ItemManager : MonoBehaviour
     private string tempItem;
     private void Awake()
     {
-
         //home = GetComponent<Button>();
         //diamonds = GetComponent<Text>();
     }
@@ -80,8 +79,6 @@ public class ItemManager : MonoBehaviour
         home.onClick.AddListener(() => { ClickHome(); });
         item1.onClick.AddListener(() => { ClickItem1(); });
         CreateData();
-
-
     }
 
     // Update is called once per frame
@@ -97,7 +94,7 @@ public class ItemManager : MonoBehaviour
     }
     void ClickItem1()
     {
-        Debug.Log("Click on Item1");
+        Debug.Log("Click on Level 1");
         SceneManager.LoadScene("GamePlay");
     }
 }

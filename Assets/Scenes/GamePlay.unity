@@ -735,7 +735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15e4ef5461cc342c9bd49d159a62999e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 0
+  level: 1
   win_panel: {fileID: 406007475}
   player: {fileID: 1089781571168915483, guid: f8434e538e37140faaee6fcde41c86c1, type: 3}
   wall: {fileID: 5256801442344684041, guid: e40b3ea390f7148ad817306e5f8529be, type: 3}
