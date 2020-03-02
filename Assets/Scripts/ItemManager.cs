@@ -26,6 +26,8 @@ public class ItemManager : MonoBehaviour
         gameController = FindObjectOfType<GameController>();
         //home = GetComponent<Button>();
         //diamonds = GetComponent<Text>();
+        Debug.Log("top_level=" + gameController.top_level);
+        Debug.Log("total_star=" + gameController.total_star);
     }
 
 

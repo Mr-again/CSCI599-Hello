@@ -38,6 +38,25 @@ public class WinPanelController : MonoBehaviour
     {
         Debug.Log("Click On Next");
         Debug.Log(final_step);
+
+        int[] threshold = gameController.thresholds[gameController.cur_level];
+        if (final_step < threshold[0])
+        {
+            star = 3;
+        }
+        else if (final_step < threshold[1])
+        {
+            star = 2;
+        }
+        else if (final_step < threshold[2])
+        {
+            star = 1;
+        }
+        else
+        {
+            star = 0;
+        }
+
         gameController.levelPass(star);
         if (gameController.top_level == gameController.cur_level)
         {
