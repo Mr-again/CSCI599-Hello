@@ -1,16 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ItemManager : MonoBehaviour
 {
+    GameController gameController;
     public int starNum;
-    
+
     public Button home;
     public Button item1;
+    public Button item2;
+    public Button item3;
 
     public string scores;
 
@@ -18,14 +20,14 @@ public class ItemManager : MonoBehaviour
 
     public Text diamonds;
 
-
-
     private string tempItem;
     private void Awake()
     {
+        gameController = FindObjectOfType<GameController>();
         //home = GetComponent<Button>();
         //diamonds = GetComponent<Text>();
     }
+
 
     void CreateData()
     {
@@ -80,6 +82,8 @@ public class ItemManager : MonoBehaviour
     {
         home.onClick.AddListener(() => { ClickHome(); });
         item1.onClick.AddListener(() => { ClickItem1(); });
+        item2.onClick.AddListener(() => { ClickItem2(); });
+        item3.onClick.AddListener(() => { ClickItem3(); });
         CreateData();
     }
 
@@ -97,6 +101,19 @@ public class ItemManager : MonoBehaviour
     void ClickItem1()
     {
         Debug.Log("Click on Level 1");
+        gameController.cur_level = 0;
+        SceneManager.LoadScene("GamePlay");
+    }
+    void ClickItem2()
+    {
+        Debug.Log("Click on Level 2");
+        gameController.cur_level = 1;
+        SceneManager.LoadScene("GamePlay");
+    }
+    void ClickItem3()
+    {
+        Debug.Log("Click on Level 3");
+        gameController.cur_level = 2;
         SceneManager.LoadScene("GamePlay");
     }
 }
