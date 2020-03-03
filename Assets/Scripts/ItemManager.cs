@@ -10,9 +10,10 @@ public class ItemManager : MonoBehaviour
     public int starNum;
 
     public Button home;
-    public Button item1;
-    public Button item2;
-    public Button item3;
+    private Button[] items = new Button[24];
+    private bool[] items_index = new bool[24];
+    private Text[] levels = new Text[24];
+    private Image[] locks = new Image[24];
 
     public string scores;
 
@@ -28,52 +29,26 @@ public class ItemManager : MonoBehaviour
         //diamonds = GetComponent<Text>();
         Debug.Log("top_level=" + gameController.top_level);
         Debug.Log("total_star=" + gameController.total_star);
-        //for(int i = 0; i < 24; i++)
-        //{
-
-        //}
-        int index = 0;
-        foreach (Transform i in this.transform)
+        for (int i = 0; i < 24; i++)
         {
-            if (i.gameObject.name == "Grid")
+            items_index[i] = true;
+            items[i] = GameObject.Find("Item (" + (i + 1).ToString() + ")").GetComponent<Button>();
+            levels[i] = GameObject.Find("level" + (i + 1).ToString()).GetComponent<Text>();
+            locks[i] = GameObject.Find("Lock" + (i + 1).ToString()).GetComponent<Image>();
+        }
+        for(int i = 0; i < 24; i++)
+        {
+            if (gameController.total_star >= gameController.unlock_requires[i])
             {
-                GameObject grid = i.gameObject;
-                foreach (Transform j in grid.transform)
-                {
-                    GameObject item = j.gameObject;
-                    Debug.Log(gameController.total_star.ToString() + " " + index.ToString() + " "
-                        + gameController.unlock_requires[index].ToString());
-                    if (gameController.total_star >= gameController.unlock_requires[index])
-                    {
-                        foreach (Transform k in item.transform)
-                        {
-                            if(k.gameObject.name[0] == 'l')
-                            {
-                                k.gameObject.SetActive(true);
-                            }
-                            else if(k.gameObject.name[0] == 'L')
-                            {
-                                k.gameObject.SetActive(false);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        foreach (Transform k in item.transform)
-                        {
-                            if (k.gameObject.name[0] == 'l')
-                            {
-                                k.gameObject.SetActive(false);
-                            }
-                            else if (k.gameObject.name[0] == 'L')
-                            {
-                                k.gameObject.SetActive(true);
-                            }
-                        }
-                    }
-                    index += 1;
-                }
-                break;
+                levels[i].gameObject.SetActive(true);
+                locks[i].gameObject.SetActive(false);
+                items_index[i] = true;
+            }
+            else
+            {
+                levels[i].gameObject.SetActive(false);
+                locks[i].gameObject.SetActive(true);
+                items_index[i] = false;
             }
         }
     }
@@ -131,9 +106,14 @@ public class ItemManager : MonoBehaviour
     void Start()
     {
         home.onClick.AddListener(() => { ClickHome(); });
-        item1.onClick.AddListener(() => { ClickItem1(); });
-        item2.onClick.AddListener(() => { ClickItem2(); });
-        item3.onClick.AddListener(() => { ClickItem3(); });
+        //item1.onClick.AddListener(() => { ClickItem1(); });
+        //item2.onClick.AddListener(() => { ClickItem2(); });
+        //item3.onClick.AddListener(() => { ClickItem3(); });
+        for (int i = 0; i < 24; i++)
+        {
+            int index = i;
+            items[i].onClick.AddListener(delegate () { this.ClickItem(index, items_index[index]); });
+        }
         CreateData();
     }
 
@@ -148,22 +128,20 @@ public class ItemManager : MonoBehaviour
         Debug.Log("Click on Home");
         SceneManager.LoadScene("Enterance");
     }
-    void ClickItem1()
+
+    void ClickItem(int i, bool can_play)
     {
-        Debug.Log("Click on Level 1");
-        gameController.cur_level = 0;
-        SceneManager.LoadScene("GamePlay");
-    }
-    void ClickItem2()
-    {
-        Debug.Log("Click on Level 2");
-        gameController.cur_level = 1;
-        SceneManager.LoadScene("GamePlay");
-    }
-    void ClickItem3()
-    {
-        Debug.Log("Click on Level 3");
-        gameController.cur_level = 2;
-        SceneManager.LoadScene("GamePlay");
+        if (can_play)
+        {
+            Debug.Log(i);
+            Debug.Log("Click on Level " + (i + 1).ToString());
+            gameController.cur_level = i;
+            SceneManager.LoadScene("GamePlay");
+        }
+        else
+        {
+            Debug.Log("Level " + (i + 1).ToString() + " is unlock~");
+        }
+        
     }
 }
