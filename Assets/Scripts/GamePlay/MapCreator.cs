@@ -131,6 +131,8 @@ public class MapCreator : MonoBehaviour
         {
             {"level_index",gameController.cur_level }
         });
+        Debug.Log(Analytics.enabled);
+        Debug.Log(Analytics.IsCustomEventEnabled("level_start"));
     }
 
     private void getMapDataFromLocalFile(int level)

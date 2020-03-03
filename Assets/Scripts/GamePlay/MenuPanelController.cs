@@ -13,6 +13,7 @@ public class MenuPanelController : MonoBehaviour
 
     public Button back_button;
     public Button replay_button;
+    public Button cancel_button;
 
     public int final_step = 0;
     public int star = 0;
@@ -27,6 +28,7 @@ public class MenuPanelController : MonoBehaviour
     {
         back_button.onClick.AddListener(() => { onClickBackButton(); });
         replay_button.onClick.AddListener(() => { onClickReplayButton(); });
+        cancel_button.onClick.AddListener(() => { onClickCancelButton(); });
     }
 
     // Update is called once per frame
@@ -46,6 +48,10 @@ public class MenuPanelController : MonoBehaviour
         Debug.Log("Click On Back");
         SceneManager.LoadScene("LevelPage");
     }
-
+    private void onClickCancelButton()
+    {
+        Debug.Log("Click On Cancel");
+        this.gameObject.SetActive(false);
+    }
 
 }
