@@ -28,6 +28,54 @@ public class ItemManager : MonoBehaviour
         //diamonds = GetComponent<Text>();
         Debug.Log("top_level=" + gameController.top_level);
         Debug.Log("total_star=" + gameController.total_star);
+        //for(int i = 0; i < 24; i++)
+        //{
+
+        //}
+        int index = 0;
+        foreach (Transform i in this.transform)
+        {
+            if (i.gameObject.name == "Grid")
+            {
+                GameObject grid = i.gameObject;
+                foreach (Transform j in grid.transform)
+                {
+                    GameObject item = j.gameObject;
+                    Debug.Log(gameController.total_star.ToString() + " " + index.ToString() + " "
+                        + gameController.unlock_requires[index].ToString());
+                    if (gameController.total_star >= gameController.unlock_requires[index])
+                    {
+                        foreach (Transform k in item.transform)
+                        {
+                            if(k.gameObject.name[0] == 'l')
+                            {
+                                k.gameObject.SetActive(true);
+                            }
+                            else if(k.gameObject.name[0] == 'L')
+                            {
+                                k.gameObject.SetActive(false);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (Transform k in item.transform)
+                        {
+                            if (k.gameObject.name[0] == 'l')
+                            {
+                                k.gameObject.SetActive(false);
+                            }
+                            else if (k.gameObject.name[0] == 'L')
+                            {
+                                k.gameObject.SetActive(true);
+                            }
+                        }
+                    }
+                    index += 1;
+                }
+                break;
+            }
+        }
     }
 
 
