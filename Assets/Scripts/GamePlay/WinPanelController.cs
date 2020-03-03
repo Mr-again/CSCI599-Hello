@@ -64,7 +64,7 @@ public class WinPanelController : MonoBehaviour
         gameController.levelPass(star);
         SceneManager.LoadScene("LevelPage");
     }
-    int GetStar()
+    public int GetStar()
     {
         int[] threshold = gameController.thresholds[gameController.cur_level];
         if (final_step < threshold[0])

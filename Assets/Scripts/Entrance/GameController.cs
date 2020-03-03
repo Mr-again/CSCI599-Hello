@@ -130,10 +130,10 @@ public class GameController : MonoBehaviour
         if (fInfo0.Exists)
         {
             StreamReader r = new StreamReader(fileAddress);
-    //StreamReader默认的是UTF8的不需要转格式了，因为有些中文字符的需要有些是要转的，下面是转成String代码
-    //byte[] data = new byte[1024];
-    // data = Encoding.UTF8.GetBytes(r.ReadToEnd());
-    // s = Encoding.UTF8.GetString(data, 0, data.Length);
+            //StreamReader默认的是UTF8的不需要转格式了，因为有些中文字符的需要有些是要转的，下面是转成String代码
+            //byte[] data = new byte[1024];
+            // data = Encoding.UTF8.GetBytes(r.ReadToEnd());
+            // s = Encoding.UTF8.GetString(data, 0, data.Length);
             string s = r.ReadToEnd();
             string[] lines = s.Split('\n');
             this.thresholds = new int[lines.Length][];

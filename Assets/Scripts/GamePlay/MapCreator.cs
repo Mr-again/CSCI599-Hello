@@ -171,7 +171,6 @@ public class MapCreator : MonoBehaviour
                 int index = Array.IndexOf(keywords, line);
                 if(index != -1)
                 {
-
                     type = index;
                 }
                 else
@@ -233,7 +232,6 @@ public class MapCreator : MonoBehaviour
                     box_position = boxes_list.ToArray();
                     target_position = targets_list.ToArray();
                     player_position = player_list.ToArray();
-                    // Debug.Log("Here" + wall_position.Length.ToString());
                 }
 
             }
@@ -248,8 +246,6 @@ public class MapCreator : MonoBehaviour
         blue_num = 0;
         green_num = 0;
         gray_num = 0;
-        Debug.Log(player_position[0] + map_offset_X);
-        Debug.Log(player_position[1] + map_offset_Y);
         GameObject newPlayer = Instantiate(player, new Vector3(player_position[0]+ map_offset_X, player_position[1]+ map_offset_Y, 0), Quaternion.identity);
         newPlayer.SetActive(true);
 
@@ -486,8 +482,12 @@ public class MapCreator : MonoBehaviour
             winPanelController = FindObjectOfType<WinPanelController>();
             final_step = step;
             //todo star
+            
             winPanelController.final_step = final_step;
             winPanelController.star = star;
+            winPanelController.GetComponentInChildren<Text>().text
+                = "You Win with " + winPanelController.final_step.ToString()
+                + " Steps and " + winPanelController.GetStar().ToString() + " Stars~";
             return 1;
         }
         return 0;

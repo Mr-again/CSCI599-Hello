@@ -17,7 +17,7 @@ public class ItemManager : MonoBehaviour
 
     public string scores;
 
-    public int score = 0;
+    //public int score = 0;
 
     public Text diamonds;
 
@@ -60,17 +60,18 @@ public class ItemManager : MonoBehaviour
         {
             tempItem = "Grid/Item" + " (" + i.ToString() + ")";
 
-            starNum = 1;
-            score += starNum;
-            ShowStar(starNum, tempItem);
+            //starNum = 1;
+            //score += starNum;
+            ShowStar(gameController.level_scores[i - 1], tempItem);
         }
-        ShowScores(score);
+        ShowScores(gameController.total_star);
     }
 
     // 
     void ShowStar(int num, string level)
     {
-        if (num == 0)
+        transform.Find(level + "/stars").gameObject.SetActive(true);
+        if (num == 0 || num == -1)
         {
             transform.Find(level + "/stars/star1").gameObject.SetActive(false);
             transform.Find(level + "/stars/star2").gameObject.SetActive(false);
@@ -133,8 +134,8 @@ public class ItemManager : MonoBehaviour
     {
         if (can_play)
         {
-            Debug.Log(i);
-            Debug.Log("Click on Level " + (i + 1).ToString());
+            //Debug.Log(i);
+            //Debug.Log("Click on Level " + (i + 1).ToString());
             gameController.cur_level = i;
             SceneManager.LoadScene("GamePlay");
         }
