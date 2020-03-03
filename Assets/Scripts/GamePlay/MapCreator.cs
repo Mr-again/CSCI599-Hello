@@ -129,10 +129,13 @@ public class MapCreator : MonoBehaviour
 
         Analytics.CustomEvent("level_start", new Dictionary<string, object>
         {
-            {"level_index",gameController.cur_level }
+            {"level_index",gameController.cur_level },
+            {"session_id" ,AnalyticsSessionInfo.sessionId },
+            {"user_id" ,AnalyticsSessionInfo.userId  }
         });
         Debug.Log(Analytics.enabled);
         Debug.Log(Analytics.IsCustomEventEnabled("level_start"));
+
     }
 
     private void getMapDataFromLocalFile(int level)
