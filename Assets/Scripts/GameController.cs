@@ -33,8 +33,10 @@ public class GameController : MonoBehaviour
 
         DealWithLevels();
 
-        PlayerPrefs.DeleteAll();
-
+        if(SystemInfo.deviceType== DeviceType.Desktop)
+        {
+            PlayerPrefs.DeleteAll();
+        }
     }
 
     void Start()

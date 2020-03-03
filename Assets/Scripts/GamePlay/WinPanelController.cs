@@ -39,23 +39,7 @@ public class WinPanelController : MonoBehaviour
         Debug.Log("Click On Next");
         Debug.Log(final_step);
 
-        int[] threshold = gameController.thresholds[gameController.cur_level];
-        if (final_step < threshold[0])
-        {
-            star = 3;
-        }
-        else if (final_step < threshold[1])
-        {
-            star = 2;
-        }
-        else if (final_step < threshold[2])
-        {
-            star = 1;
-        }
-        else
-        {
-            star = 0;
-        }
+        int star = GetStar();
 
         gameController.levelPass(star);
         if (gameController.top_level == gameController.cur_level)
@@ -69,13 +53,35 @@ public class WinPanelController : MonoBehaviour
     void onClickReplayButton()
     {
         Debug.Log("Click On Replay");
+        int star = GetStar();
         gameController.levelPass(star);
         SceneManager.LoadScene("GamePlay");
     }
     void onClickReturnButton()
     {
         Debug.Log("Click On Return");
+        int star = GetStar();
         gameController.levelPass(star);
         SceneManager.LoadScene("LevelPage");
+    }
+    int GetStar()
+    {
+        int[] threshold = gameController.thresholds[gameController.cur_level];
+        if (final_step < threshold[0])
+        {
+            return 3;
+        }
+        else if (final_step < threshold[1])
+        {
+            return 2;
+        }
+        else if (final_step < threshold[2])
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
     }
 }
