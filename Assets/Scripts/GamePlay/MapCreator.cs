@@ -148,7 +148,16 @@ public class MapCreator : MonoBehaviour
             string s = r.ReadToEnd();
             string[] lines = s.Split('\n');
             int type = -1;
-            string[] keywords = { "WALL", "STONE", "ICE", "MUD", "PIT", "BOX", "TARGET", "PLAYER" };
+            string[] keywords;
+            if (SystemInfo.operatingSystem.ToString()[0] == 'W')
+            {
+                keywords = new string[]{ "WALL\r", "STONE\r", "ICE\r", "MUD\r", "PIT\r", "BOX\r", "TARGET\r", "PLAYER\r" };
+            }
+            else
+            {
+                keywords = new string[]{ "WALL", "STONE", "ICE", "MUD", "PIT", "BOX", "TARGET", "PLAYER" };
+
+            }
             List<string> walls_list = new List<string>();
             List<string> stones_list = new List<string>();
             List<string> ices_list = new List<string>();
@@ -162,10 +171,12 @@ public class MapCreator : MonoBehaviour
                 int index = Array.IndexOf(keywords, line);
                 if(index != -1)
                 {
+
                     type = index;
                 }
                 else
                 {
+                    
                     switch (type)
                     {
                         case 0:
@@ -222,6 +233,7 @@ public class MapCreator : MonoBehaviour
                     box_position = boxes_list.ToArray();
                     target_position = targets_list.ToArray();
                     player_position = player_list.ToArray();
+                    // Debug.Log("Here" + wall_position.Length.ToString());
                 }
 
             }
@@ -236,7 +248,8 @@ public class MapCreator : MonoBehaviour
         blue_num = 0;
         green_num = 0;
         gray_num = 0;
-
+        Debug.Log(player_position[0] + map_offset_X);
+        Debug.Log(player_position[1] + map_offset_Y);
         GameObject newPlayer = Instantiate(player, new Vector3(player_position[0]+ map_offset_X, player_position[1]+ map_offset_Y, 0), Quaternion.identity);
         newPlayer.SetActive(true);
 
