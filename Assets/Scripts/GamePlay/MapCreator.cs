@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using System;
+using UnityEngine.Analytics;
 
 public class MapCreator : MonoBehaviour
 {
@@ -125,6 +126,11 @@ public class MapCreator : MonoBehaviour
         Debug.Log("Current Level: " + Convert.ToString(gameController.cur_level + 1));
         win = 0;
         getMapDataFromLocalFile(gameController.cur_level + 1);
+
+        Analytics.CustomEvent("level_start", new Dictionary<string, object>
+        {
+            {"level_index",gameController.cur_level }
+        });
     }
 
     private void getMapDataFromLocalFile(int level)

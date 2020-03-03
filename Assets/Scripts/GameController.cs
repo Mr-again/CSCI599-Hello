@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 public class GameController : MonoBehaviour
 {
