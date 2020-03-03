@@ -98,7 +98,7 @@ public class ItemManager : MonoBehaviour
 
     void ShowScores(int number)
     {
-        scores = score.ToString();
+        scores = (100 + number).ToString().Substring(1);
         diamonds.text = scores;
     }
 
