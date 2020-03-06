@@ -16,37 +16,13 @@ public class MapCreator : MonoBehaviour
 
     //public string[] map;
     private string[] wall_position;
-    //= { "0 0", "1 0", "2 0", "3 0", "4 0", "5 0", "6 0", "7 0", "8 0", "9 0",
-    //    "10 0", "11 0", "0 1", "11 1", "0 2", "8 2", "9 2", "10 2", "11 2", "0 3",
-    //    "5 3", "6 3", "7 3", "8 3", "9 3", "10 3", "11 3", "0 4", "5 4", "6 4",
-    //    "7 4", "8 4", "9 4", "10 4", "11 4", "0 5", "2 5", "3 5", "4 5", "5 5",
-    //    "6 5", "7 5", "8 5", "9 5", "10 5", "11 5", "0 6", "2 6", "3 6", "4 6",
-    //    "5 6", "6 6", "7 6", "8 6", "9 6", "10 6", "11 6", "0 7", "11 7", "0 8",
-    //    "1 8", "2 8", "3 8", "4 8", "5 8", "6 8", "7 8", "8 8", "9 8", "10 8",
-    //    "11 8" };
     private string[] stone_position;
-    //= { "0 0", "1 0", "2 0", "3 0", "4 0", "5 0", "6 0", "7 0", "8 0", "9 0",
-    //    "10 0", "11 0", "0 1", "1 1", "2 1", "3 1", "4 1", "5 1", "6 1", "7 1",
-    //    "8 1", "9 1", "10 1", "11 1", "0 2", "1 2", "2 2", "3 2", "4 2", "5 2",
-    //    "6 2", "7 2", "8 2", "9 2", "10 2", "11 2", "0 3", "1 3", "5 3", "6 3",
-    //    "7 3", "8 3", "9 3", "10 3", "11 3", "0 4", "1 4", "5 4", "6 4", "7 4",
-    //    "8 4", "9 4", "10 4", "11 4", "0 5", "1 5", "2 5", "3 5", "4 5", "5 5",
-    //    "6 5", "7 5", "8 5", "9 5", "10 5", "11 5", "0 6", "2 6", "3 6", "4 6",
-    //    "5 6", "6 6", "7 6", "8 6", "9 6", "10 6", "11 6", "0 7", "1 7", "9 7",
-    //    "10 7", "11 7", "0 8", "1 8", "2 8", "3 8", "4 8", "5 8", "6 8", "7 8",
-    //    "8 8", "9 8", "10 8", "11 8" };
     private string[] ice_position;
-    //= { "2 3", "3 3", "4 3", "2 4", "1 6", "2 7", "3 7", "4 7", "5 7", "6 7", "7 7", "8 7" };
     private string[] mud_position;
-    //= { };
     private string[] pit_position;
-    //= { "3 4", "4 4" };
     private int[] player_position;
-    //= { 1, 1 };
     private string[] box_position;
-    //= { "2 3 1", "4 2 2" };
     private string[] target_position;
-    //= { "2 4 1", "4 1 2" };
 
     public GameObject win_panel;
 
@@ -361,6 +337,10 @@ public class MapCreator : MonoBehaviour
                         targets_brown.Add(100 * y + x, newTarget);
                         newTarget.SetActive(true);
                         brown_num++;
+                        if (boxes.ContainsKey(100 * y + x) && boxes[100 * y + x].Key == 0)
+                        {
+                            brown_num--;
+                        }
                         break;
                     }
                 case 1:
@@ -369,6 +349,10 @@ public class MapCreator : MonoBehaviour
                         targets_red.Add(100 * y + x, newTarget);
                         newTarget.SetActive(true);
                         red_num++;
+                        if (boxes.ContainsKey(100 * y + x) && boxes[100 * y + x].Key == 1)
+                        {
+                            red_num--;
+                        }
                         break;
                     }
                 case 2:
@@ -377,6 +361,10 @@ public class MapCreator : MonoBehaviour
                         targets_blue.Add(100 * y + x, newTarget);
                         newTarget.SetActive(true);
                         blue_num++;
+                        if (boxes.ContainsKey(100 * y + x) && boxes[100 * y + x].Key == 2)
+                        {
+                            blue_num--;
+                        }
                         break;
                     }
                 case 3:
@@ -385,6 +373,10 @@ public class MapCreator : MonoBehaviour
                         targets_green.Add(100 * y + x, newTarget);
                         newTarget.SetActive(true);
                         green_num++;
+                        if (boxes.ContainsKey(100 * y + x) && boxes[100 * y + x].Key == 3)
+                        {
+                            green_num--;
+                        }
                         break;
                     }
                 case 4:
@@ -393,6 +385,10 @@ public class MapCreator : MonoBehaviour
                         targets_gray.Add(100 * y + x, newTarget);
                         newTarget.SetActive(true);
                         gray_num++;
+                        if (boxes.ContainsKey(100 * y + x) && boxes[100 * y + x].Key == 4)
+                        {
+                            gray_num--;
+                        }
                         break;
                     }
                 default:
