@@ -13,6 +13,10 @@ public class WinPanelController : MonoBehaviour
     public Button replay_button;
     public Button return_button;
 
+    public GameObject star_1;
+    public GameObject star_2;
+    public GameObject star_3;
+
     public int final_step = 0;
     public int star = 0;
 
@@ -82,6 +86,30 @@ public class WinPanelController : MonoBehaviour
         else
         {
             return 0;
+        }
+    }
+    public void ShowStar()
+    {
+        Debug.Log(star);
+        if (star == 0)
+            return;
+        if (star == 1)
+        {
+            star_2.SetActive(true);
+            return;
+        }
+        if (star == 2)
+        {
+            star_1.SetActive(true);
+            star_3.SetActive(true);
+            return;
+        }
+        if (star == 3)
+        {
+            star_1.SetActive(true);
+            star_2.SetActive(true);
+            star_3.SetActive(true);
+            return;
         }
     }
 }

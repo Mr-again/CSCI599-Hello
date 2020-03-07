@@ -662,7 +662,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &240391611
 RectTransform:
   m_ObjectHideFlags: 0
@@ -808,7 +808,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &310185299
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1109,6 +1109,9 @@ MonoBehaviour:
   next_button: {fileID: 1997640290}
   replay_button: {fileID: 1096346776}
   return_button: {fileID: 832922805}
+  star_1: {fileID: 1362437698}
+  star_2: {fileID: 310185298}
+  star_3: {fileID: 240391610}
   final_step: 0
   star: 0
 --- !u!1 &454219051
@@ -3251,7 +3254,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1362437699
 RectTransform:
   m_ObjectHideFlags: 0

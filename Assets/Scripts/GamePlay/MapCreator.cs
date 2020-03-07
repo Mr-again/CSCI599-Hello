@@ -480,10 +480,10 @@ public class MapCreator : MonoBehaviour
             //todo star
             
             winPanelController.final_step = final_step;
-            winPanelController.star = star;
-            winPanelController.GetComponentInChildren<Text>().text
-                = "You Win with " + winPanelController.final_step.ToString()
-                + " Steps and " + winPanelController.GetStar().ToString() + " Stars~";
+            winPanelController.star = winPanelController.GetStar();
+            winPanelController.GetComponentInChildren<Text>().text= "You Win!";
+            
+            winPanelController.ShowStar();
             return 1;
         }
         return 0;
