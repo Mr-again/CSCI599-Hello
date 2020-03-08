@@ -95,13 +95,16 @@ public class WinPanelController : MonoBehaviour
             return;
         if (star == 1)
         {
-            star_2.SetActive(true);
+            star_1.SetActive(true);
+            star_2.SetActive(false);
+            star_3.SetActive(false);
             return;
         }
         if (star == 2)
         {
             star_1.SetActive(true);
-            star_3.SetActive(true);
+            star_2.SetActive(true);
+            star_3.SetActive(false);
             return;
         }
         if (star == 3)
