@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,6 +24,20 @@ public class WinPanelController : MonoBehaviour
     {
         gameController = FindObjectOfType<GameController>();
         mapCreator= FindObjectOfType<MapCreator>();
+        Analytics.CustomEvent("level_finish", new Dictionary<string, object>
+        {
+            {"level_index",gameController.cur_level },
+            {"session_id" ,AnalyticsSessionInfo.sessionId },
+            {"user_id" ,AnalyticsSessionInfo.userId  }
+            {"runningTime", Time.realtimeSinceStartup}
+        });
+        Debug.Log(Analytics.enabled);
+        Debug.Log(Analytics.IsCustomEventEnabled("level_finish"));
+
+
+
+
+
     }
     // Start is called before the first frame update
     void Start()

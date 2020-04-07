@@ -107,7 +107,8 @@ public class MapCreator : MonoBehaviour
         {
             {"level_index",gameController.cur_level },
             {"session_id" ,AnalyticsSessionInfo.sessionId },
-            {"user_id" ,AnalyticsSessionInfo.userId  }
+            {"user_id" ,AnalyticsSessionInfo.userId},
+            {"runningTime", Time.realtimeSinceStartup  }
         });
         Debug.Log(Analytics.enabled);
         Debug.Log(Analytics.IsCustomEventEnabled("level_start"));
