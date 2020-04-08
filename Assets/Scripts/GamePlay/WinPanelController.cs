@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Analytics;
 
 public class WinPanelController : MonoBehaviour
 {
@@ -28,7 +29,7 @@ public class WinPanelController : MonoBehaviour
         {
             {"level_index",gameController.cur_level },
             {"session_id" ,AnalyticsSessionInfo.sessionId },
-            {"user_id" ,AnalyticsSessionInfo.userId  }
+            {"user_id" ,AnalyticsSessionInfo.userId  },
             {"runningTime", Time.realtimeSinceStartup}
         });
         Debug.Log(Analytics.enabled);
