@@ -15,13 +15,11 @@ public class GameController : MonoBehaviour
     public int total_star = 0;
     public int[] level_scores;
 
-<<<<<<< Updated upstream
-    public int[][] thresholds;
-=======
+
     public int gameplay_enetrance;
 
     public int[][] thresholds;
->>>>>>> Stashed changes
+
     public int[] unlock_requires;
 
     private Currency currency;
