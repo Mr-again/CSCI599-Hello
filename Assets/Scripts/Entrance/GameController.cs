@@ -182,6 +182,12 @@ class Currency
         {
             this.money -= 100;
             PlayerPrefs.SetInt("currency", this.money);
+            Analytics.CustomEvent("spend_money", new Dictionary<string, object>{
+                {"amount", 100 },
+                {"source", "release_map" },
+                {"session_id", AnalyticsSessionInfo.sessionId },
+                {"user_id", AnalyticsSessionInfo.userId  }
+            });
             return true;
         }
         return false;
@@ -196,5 +202,11 @@ class Currency
     {
         this.money += 10 * star;
         PlayerPrefs.SetInt("currency", this.money);
+        Analytics.CustomEvent("earn_money", new Dictionary<string, object>{
+            {"amount", 10 * star },
+            {"source", "pass_level" },
+            {"session_id", AnalyticsSessionInfo.sessionId },
+            {"user_id", AnalyticsSessionInfo.userId  }
+        });
     }
 }

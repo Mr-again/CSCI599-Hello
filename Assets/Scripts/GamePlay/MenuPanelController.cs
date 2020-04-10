@@ -41,6 +41,7 @@ public class MenuPanelController : MonoBehaviour
     {
         Debug.Log("Click On Replay");
         SceneManager.LoadScene("GamePlay");
+        //AnalyticsHelper.AddTry(gameController.cur_level); // TODO: is this redundant?
     }
 
     private void onClickBackButton()

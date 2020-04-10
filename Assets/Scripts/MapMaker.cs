@@ -120,7 +120,8 @@ public class MapMaker : MonoBehaviour
         select_elem_name = "Wall";
         selected_element = wall_obj;
 
-
+        AnalyticsHelper.time_startCreatingLevel = Time.realtimeSinceStartup;
+        // TODO: publish event when player finishes creating level
     }
 
     // Update is called once per frame

@@ -103,16 +103,14 @@ public class MapCreator : MonoBehaviour
         win = 0;
         getMapDataFromLocalFile(gameController.cur_level + 1);
 
+        AnalyticsHelper.time_startPlayingLevel = Time.realtimeSinceStartup;
+        AnalyticsHelper.AddTry(gameController.cur_level);
         Analytics.CustomEvent("level_start", new Dictionary<string, object>
         {
-            {"level_index",gameController.cur_level },
-            {"session_id" ,AnalyticsSessionInfo.sessionId },
-            {"user_id" ,AnalyticsSessionInfo.userId},
-            {"runningTime", Time.realtimeSinceStartup  }
+            {"level_index", gameController.cur_level },
+            {"session_id", AnalyticsSessionInfo.sessionId },
+            {"user_id", AnalyticsSessionInfo.userId}
         });
-        Debug.Log(Analytics.enabled);
-        Debug.Log(Analytics.IsCustomEventEnabled("level_start"));
-
     }
 
     private void getMapDataFromLocalFile(int level)

@@ -25,20 +25,17 @@ public class WinPanelController : MonoBehaviour
     {
         gameController = FindObjectOfType<GameController>();
         mapCreator= FindObjectOfType<MapCreator>();
+
         Analytics.CustomEvent("level_finish", new Dictionary<string, object>
         {
             {"level_index",gameController.cur_level },
             {"session_id" ,AnalyticsSessionInfo.sessionId },
             {"user_id" ,AnalyticsSessionInfo.userId  },
-            {"runningTime", Time.realtimeSinceStartup}
+            {"steps", final_step },
+            {"time_elapsed", Time.realtimeSinceStartup - AnalyticsHelper.time_startPlayingLevel },
+            {"tries", AnalyticsHelper.GetTries(gameController.cur_level) }
         });
-        Debug.Log(Analytics.enabled);
-        Debug.Log(Analytics.IsCustomEventEnabled("level_finish"));
-
-
-
-
-
+        AnalyticsHelper.ResetTries(gameController.cur_level);
     }
     // Start is called before the first frame update
     void Start()
