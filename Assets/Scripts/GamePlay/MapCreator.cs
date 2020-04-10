@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.IO;
 using System;
 using UnityEngine.Analytics;
+using Json;
 
 public class MapCreator : MonoBehaviour
 {
@@ -201,17 +202,18 @@ public class MapCreator : MonoBehaviour
                                 break;
                             }
                     }
-                    wall_position = walls_list.ToArray();
-                    stone_position = stones_list.ToArray();
-                    ice_position = ices_list.ToArray();
-                    mud_position = muds_list.ToArray();
-                    pit_position = pits_list.ToArray();
-                    box_position = boxes_list.ToArray();
-                    target_position = targets_list.ToArray();
-                    player_position = player_list.ToArray();
-                }
 
+                }
+                
             }
+            wall_position = walls_list.ToArray();
+            stone_position = stones_list.ToArray();
+            ice_position = ices_list.ToArray();
+            mud_position = muds_list.ToArray();
+            pit_position = pits_list.ToArray();
+            box_position = boxes_list.ToArray();
+            target_position = targets_list.ToArray();
+            player_position = player_list.ToArray();
         }
     }
 
