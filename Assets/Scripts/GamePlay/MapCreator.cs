@@ -111,7 +111,7 @@ public class MapCreator : MonoBehaviour
         }
         else
         {
-            getMapDataFromDatabase()
+            getMapDataFromDatabase();
         }
         
 
