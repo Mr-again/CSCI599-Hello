@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
+using System.Threading.Tasks;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 public class MapMaker : MonoBehaviour
 {
@@ -23,6 +26,10 @@ public class MapMaker : MonoBehaviour
     public Button mud_floor;
     public Button ice_floor;
     public Button player;
+    public Button release_button;
+    public Button page_up_button;
+    public Button page_down_button;
+    public Button delete_button;
 
     public GameObject player_obj;
     public GameObject wall_obj;
@@ -119,9 +126,9 @@ public class MapMaker : MonoBehaviour
 
         select_elem_name = "Wall";
         selected_element = wall_obj;
-
         AnalyticsHelper.time_startCreatingLevel = Time.realtimeSinceStartup;
         // TODO: publish event when player finishes creating level
+
     }
 
     // Update is called once per frame
@@ -147,6 +154,7 @@ public class MapMaker : MonoBehaviour
             
         }
     }
+
     void OnClickElement()
     {
         var selected_button = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
@@ -718,4 +726,5 @@ public class MapMaker : MonoBehaviour
                 }
         }
     }
+
 }
