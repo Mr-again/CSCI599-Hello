@@ -5,25 +5,25 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Enterance.unity
     guid: 4641b257bf3904c469b90b2a09777d68
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/LevelPage.unity
     guid: b7056d437cc7e4b5e9e6cfe02df6da50
   - enabled: 0
     path: Assets/Scenes/Community.unity
     guid: 53f27848807264636bfee8076ce1219e
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/GamePlay.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/MapDesign.unity
     guid: 943b4902276ee4a809966576f8a0fb36
   - enabled: 0
     path: Assets/Scenes/LeaderBoard.unity
     guid: 26cac4f3ee0cf485dafde9c489768492
   - enabled: 0
-    path: Assets/Scenes/GamePlay 2.unity
-    guid: 4dd6da9026e8d46a98b51fb127287a54
+    path: 
+    guid: 00000000000000000000000000000000
   m_configObjects: {}

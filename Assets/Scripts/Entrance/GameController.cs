@@ -18,6 +18,8 @@ public class GameController : MonoBehaviour
     public int[][] thresholds;
     public int[] unlock_requires;
 
+    private Currency currency;
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -42,6 +44,9 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
+        //deal with currency
+        this.currency = new Currency();
+        
 
 
         level_scores[0] = 0;
@@ -150,5 +155,46 @@ public class GameController : MonoBehaviour
                 unlock_requires[i] = unlock_require;
             }
         }
+    }
+}
+
+class Currency
+{
+    private int money;
+
+    public Currency()
+    {
+        if (PlayerPrefs.HasKey("currency"))
+        {
+            this.money = PlayerPrefs.GetInt("currency");
+        }
+        else
+        {
+            this.money = 100;
+            PlayerPrefs.SetInt("currency", this.money);
+        }
+        
+    }
+
+    public bool ReleaseMap()
+    {
+        if (this.money >= 100)
+        {
+            this.money -= 100;
+            PlayerPrefs.SetInt("currency", this.money);
+            return true;
+        }
+        return false;
+    }
+
+    public int GetMoney()
+    {
+        return this.money;
+    }
+
+    public void PassLevel(int star)
+    {
+        this.money += 10 * star;
+        PlayerPrefs.SetInt("currency", this.money);
     }
 }

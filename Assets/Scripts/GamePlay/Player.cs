@@ -37,12 +37,6 @@ public class Player : MonoBehaviour
         mapCreator = FindObjectOfType<MapCreator>();
         animator = GetComponent<Animator>();
 
-        //targets[0] = mapCreator.targets_brown;
-        //targets[1] = mapCreator.targets_red;
-        //targets[2] = mapCreator.targets_blue;
-        //targets[3] = mapCreator.targets_green;
-        //targets[4] = mapCreator.targets_gray;
-
         covered_pits[0] = mapCreator.pit_brown;
         covered_pits[1] = mapCreator.pit_red;
         covered_pits[2] = mapCreator.pit_blue;

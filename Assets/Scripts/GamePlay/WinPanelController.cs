@@ -1,8 +1,9 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Analytics;
 
 public class WinPanelController : MonoBehaviour
 {
@@ -24,6 +25,20 @@ public class WinPanelController : MonoBehaviour
     {
         gameController = FindObjectOfType<GameController>();
         mapCreator= FindObjectOfType<MapCreator>();
+        Analytics.CustomEvent("level_finish", new Dictionary<string, object>
+        {
+            {"level_index",gameController.cur_level },
+            {"session_id" ,AnalyticsSessionInfo.sessionId },
+            {"user_id" ,AnalyticsSessionInfo.userId  },
+            {"runningTime", Time.realtimeSinceStartup}
+        });
+        Debug.Log(Analytics.enabled);
+        Debug.Log(Analytics.IsCustomEventEnabled("level_finish"));
+
+
+
+
+
     }
     // Start is called before the first frame update
     void Start()
@@ -95,13 +110,16 @@ public class WinPanelController : MonoBehaviour
             return;
         if (star == 1)
         {
-            star_2.SetActive(true);
+            star_1.SetActive(true);
+            star_2.SetActive(false);
+            star_3.SetActive(false);
             return;
         }
         if (star == 2)
         {
             star_1.SetActive(true);
-            star_3.SetActive(true);
+            star_2.SetActive(true);
+            star_3.SetActive(false);
             return;
         }
         if (star == 3)
