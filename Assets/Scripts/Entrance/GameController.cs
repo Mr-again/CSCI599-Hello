@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour
 
 
     public int gameplay_enetrance;
+    public string target_map_json;
 
     public int[][] thresholds;
 

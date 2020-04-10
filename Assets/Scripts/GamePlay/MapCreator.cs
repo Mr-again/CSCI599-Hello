@@ -105,6 +105,13 @@ public class MapCreator : MonoBehaviour
         if (gameController.gameplay_enetrance == 0)
         {
             getMapDataFromLocalFile(gameController.cur_level + 1);
+        }else if (gameController.gameplay_enetrance == 1)
+        {
+            getMapDataFromLocalJson();
+        }
+        else
+        {
+            getMapDataFromDatabase()
         }
         
 
@@ -116,6 +123,24 @@ public class MapCreator : MonoBehaviour
             {"session_id", AnalyticsSessionInfo.sessionId },
             {"user_id", AnalyticsSessionInfo.userId}
         });
+    }
+
+    private void getMapDataFromDatabase()
+    {
+
+    }
+
+    private void getMapDataFromLocalJson()
+    {
+        JsonObject jsonObject = JsonObject.CreateFromJSON(gameController.target_map_json);
+        wall_position = jsonObject.wall_position;
+        stone_position = jsonObject.stone_position;
+        ice_position = jsonObject.ice_position;
+        mud_position = jsonObject.mud_position;
+        pit_position = jsonObject.pit_position;
+        box_position = jsonObject.box_position;
+        target_position = jsonObject.target_position;
+        player_position = jsonObject.player_position;
     }
 
     private void getMapDataFromLocalFile(int level)
