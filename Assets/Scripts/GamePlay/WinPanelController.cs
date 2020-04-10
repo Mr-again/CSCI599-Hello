@@ -64,6 +64,7 @@ public class WinPanelController : MonoBehaviour
             return;
         }
         gameController.cur_level++;
+        gameController.gameplay_enetrance = 0;
         SceneManager.LoadScene("GamePlay");
     }
     void onClickReplayButton()
@@ -71,6 +72,7 @@ public class WinPanelController : MonoBehaviour
         Debug.Log("Click On Replay");
         int star = GetStar();
         gameController.levelPass(star);
+        gameController.gameplay_enetrance = 0;
         SceneManager.LoadScene("GamePlay");
     }
     void onClickReturnButton()

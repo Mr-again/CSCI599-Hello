@@ -40,6 +40,7 @@ public class MenuPanelController : MonoBehaviour
     private void onClickReplayButton()
     {
         Debug.Log("Click On Replay");
+        gameController.gameplay_enetrance = 0;
         SceneManager.LoadScene("GamePlay");
         //AnalyticsHelper.AddTry(gameController.cur_level); // TODO: is this redundant?
     }

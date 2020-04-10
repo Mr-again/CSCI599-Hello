@@ -137,6 +137,7 @@ public class ItemManager : MonoBehaviour
             //Debug.Log(i);
             //Debug.Log("Click on Level " + (i + 1).ToString());
             gameController.cur_level = i;
+            gameController.gameplay_enetrance = 0;
             SceneManager.LoadScene("GamePlay");
         }
         else

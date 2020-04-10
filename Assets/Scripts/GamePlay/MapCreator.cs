@@ -102,7 +102,11 @@ public class MapCreator : MonoBehaviour
         gameController = FindObjectOfType<GameController>();
         Debug.Log("Current Level: " + Convert.ToString(gameController.cur_level + 1));
         win = 0;
-        getMapDataFromLocalFile(gameController.cur_level + 1);
+        if (gameController.gameplay_enetrance == 0)
+        {
+            getMapDataFromLocalFile(gameController.cur_level + 1);
+        }
+        
 
         AnalyticsHelper.time_startPlayingLevel = Time.realtimeSinceStartup;
         AnalyticsHelper.AddTry(gameController.cur_level);
