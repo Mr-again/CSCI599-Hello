@@ -4,9 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
+
 using System.Threading.Tasks;
 using System.Net.Http;
 using Newtonsoft.Json;
+
+using Json;
+
 
 public class MapMaker : MonoBehaviour
 {
@@ -62,19 +66,19 @@ public class MapMaker : MonoBehaviour
     public string select_elem_name;
 
     //TODO: here need to return serveral arrays of map data
-    public string[] map = new string[] {
-        "############",
-        "############",
-        "############",
-        "############",
-        "############",
-        "############",
-        "############",
-        "############",
-        "############",};
+    //public string[] map = new string[] {
+    //    "############",
+    //    "############",
+    //    "############",
+    //    "############",
+    //    "############",
+    //    "############",
+    //    "############",
+    //    "############",
+    //    "############",};
     public int[] player_position = { -100, -100 };
-    public string[] box_position;
-    public string[] target_position;
+    //public string[] box_position;
+    //public string[] target_position;
     
     
     
@@ -247,6 +251,7 @@ public class MapMaker : MonoBehaviour
                     break;
                 }
         }
+        generateTestMapData();
     }
 
     public bool isWall(string elem_name)
@@ -310,7 +315,6 @@ public class MapMaker : MonoBehaviour
     {
         int store_x = pos_x + offset_x;
         int store_y = pos_y + offset_y;
-
 
         bool new_obj_is_wall = isWall(elem_name);
         bool new_obj_is_pit = isPit(elem_name);
@@ -725,6 +729,108 @@ public class MapMaker : MonoBehaviour
                     return;
                 }
         }
+    }
+
+
+    public string generateTestMapData()
+    {
+        List<string> walls_list = new List<string>();
+        List<string> stones_list = new List<string>();
+        List<string> ices_list = new List<string>();
+        List<string> muds_list = new List<string>();
+        List<string> pits_list = new List<string>();
+        List<string> boxes_list = new List<string>();
+        List<string> targets_list = new List<string>();
+        List<int> player_list = new List<int>();
+
+        foreach(int key in walls.Keys)
+        {
+            walls_list.Add(key % 100 + " " + key / 100);
+        }
+        foreach (int key in layer0.Keys)
+        {
+            GameObject value = layer0[key];
+            string name = value.name;
+            switch(name){
+                case "Floor_Mud(Clone)":
+                    muds_list.Add(key % 100 + " " + key / 100);
+                    break;
+                case "Floor_Ice(Clone)":
+                    ices_list.Add(key % 100 + " " + key / 100);
+                    break;
+                case "Floor_Stone(Clone)":
+                    stones_list.Add(key % 100 + " " + key / 100);
+                    break;
+                default:
+                    break;
+            }
+        }
+        foreach (int key in pits.Keys)
+        {
+            pits_list.Add(key % 100 + " " + key / 100);
+        }
+        foreach (int key in boxes.Keys)
+        {
+            GameObject value = boxes[key];
+            string name = value.name;
+            switch (name)
+            {
+                case "Box_Brown(Clone)":
+                    boxes_list.Add(key % 100 + " " + key / 100+" 0");
+                    break;
+                case "Box_Red(Clone)":
+                    boxes_list.Add(key % 100 + " " + key / 100+" 1");
+                    break;
+                case "Box_Blue(Clone)":
+                    boxes_list.Add(key % 100 + " " + key / 100+" 2");
+                    break;
+                case "Box_Green(Clone)":
+                    boxes_list.Add(key % 100 + " " + key / 100+" 3");
+                    break;
+                case "Box_Gray(Clone)":
+                    boxes_list.Add(key % 100 + " " + key / 100+" 4");
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        foreach (int key in targets.Keys)
+        {
+            GameObject value = targets[key];
+            string name = value.name;
+            switch (name)
+            {
+                case "Target_Brown(Clone)":
+                    targets_list.Add(key % 100 + " " + key / 100 + " 0");
+                    break;
+                case "Target_Red(Clone)":
+                    targets_list.Add(key % 100 + " " + key / 100 + " 1");
+                    break;
+                case "Target_Blue(Clone)":
+                    targets_list.Add(key % 100 + " " + key / 100 + " 2");
+                    break;
+                case "Target_Green(Clone)":
+                    targets_list.Add(key % 100 + " " + key / 100 + " 3");
+                    break;
+                case "Target_Gray(Clone)":
+                    targets_list.Add(key % 100 + " " + key / 100 + " 4");
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        string[] wall_position = walls_list.ToArray();
+        string[] stone_position = stones_list.ToArray();
+        string[] ice_position = ices_list.ToArray();
+        string[] mud_position = muds_list.ToArray();
+        string[] pit_position = pits_list.ToArray();
+        string[] box_position = boxes_list.ToArray();
+        string[] target_position = targets_list.ToArray();
+
+        JsonObject jsonObject = new JsonObject(wall_position, stone_position, ice_position, mud_position, pit_position, player_position, box_position, target_position);
+        return jsonObject.SaveToString();
     }
 
 }
