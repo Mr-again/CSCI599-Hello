@@ -40,15 +40,26 @@ public class MenuPanelController : MonoBehaviour
     private void onClickReplayButton()
     {
         Debug.Log("Click On Replay");
-        gameController.gameplay_enetrance = 0;
         SceneManager.LoadScene("GamePlay");
-        //AnalyticsHelper.AddTry(gameController.cur_level); // TODO: is this redundant?
+            //AnalyticsHelper.AddTry(gameController.cur_level); // TODO: is this redundant?
     }
 
     private void onClickBackButton()
     {
-        Debug.Log("Click On Back");
-        SceneManager.LoadScene("LevelPage");
+        if (gameController.gameplay_enetrance == 0)
+        {
+            Debug.Log("Click On Back");
+            SceneManager.LoadScene("LevelPage");
+        }else if (gameController.gameplay_enetrance == 1)
+        {
+            Debug.Log("Click On Back");
+            SceneManager.LoadScene("Community");
+        }
+        else
+        {
+
+        }
+        
     }
     private void onClickCancelButton()
     {
