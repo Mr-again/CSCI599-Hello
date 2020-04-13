@@ -36,6 +36,10 @@ public class WinPanelController : MonoBehaviour
             {"tries", AnalyticsHelper.GetTries(gameController.cur_level) }
         });
         AnalyticsHelper.ResetTries(gameController.cur_level);
+        if (gameController.gameplay_enetrance == 1)
+        {
+            next_button.gameObject.SetActive(false);
+        }
     }
     // Start is called before the first frame update
     void Start()
@@ -64,23 +68,40 @@ public class WinPanelController : MonoBehaviour
             return;
         }
         gameController.cur_level++;
-        gameController.gameplay_enetrance = 0;
+        //gameController.gameplay_enetrance = 0;
         SceneManager.LoadScene("GamePlay");
     }
     void onClickReplayButton()
     {
-        Debug.Log("Click On Replay");
-        int star = GetStar();
-        gameController.levelPass(star);
-        gameController.gameplay_enetrance = 0;
-        SceneManager.LoadScene("GamePlay");
+        if(gameController.gameplay_enetrance == 0)
+        {
+            Debug.Log("Click On Replay");
+            int star = GetStar();
+            gameController.levelPass(star);
+            //gameController.gameplay_enetrance = 0;
+            SceneManager.LoadScene("GamePlay");
+        }
+        else
+        {
+            Debug.Log("Click On Replay");
+            SceneManager.LoadScene("GamePlay");
+        }
     }
     void onClickReturnButton()
     {
-        Debug.Log("Click On Return");
-        int star = GetStar();
-        gameController.levelPass(star);
-        SceneManager.LoadScene("LevelPage");
+        if (gameController.gameplay_enetrance == 0)
+        {
+            Debug.Log("Click On Return");
+            int star = GetStar();
+            gameController.levelPass(star);
+            SceneManager.LoadScene("LevelPage");
+        }
+        else
+        {
+            Debug.Log("Click On Return");
+            SceneManager.LoadScene("Community");
+        }
+
     }
     public int GetStar()
     {
