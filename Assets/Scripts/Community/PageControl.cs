@@ -35,7 +35,7 @@ public class PageControl : MonoBehaviour
     {
         gameController = FindObjectOfType<GameController>();
         downloadMap(0);
-        Debug.Log("Page:" + page.ToString());
+        //Debug.Log("Page:" + page.ToString());
         pageUp.onClick.AddListener(() => { OnClickPageUp(); });
         pageDown.onClick.AddListener(() => { OnClickPageDown(); });
         communityButton.onClick.AddListener(() => { OnClickCommunity(); });
@@ -63,7 +63,6 @@ public class PageControl : MonoBehaviour
 
     public void OnClickCommunityPannels(LevelData ld)
     {
-        Debug.Log(gameController);
         gameController.gameplay_enetrance = 1;
         gameController.target_map_json = ld.MapData;
         SceneManager.LoadScene("GamePlay");
@@ -71,13 +70,13 @@ public class PageControl : MonoBehaviour
     public void OnClickPageUp()
     {
         downloadMap(1);
-        Debug.Log("Page:" + page.ToString());
+        //Debug.Log("Page:" + page.ToString());
     }
 
     public void OnClickPageDown()
     {
         downloadMap(-1);
-        Debug.Log("Page:" + page.ToString());
+        //Debug.Log("Page:" + page.ToString());
     }
 
     public void OnClickRelease(LevelData ld)
@@ -111,16 +110,17 @@ public class PageControl : MonoBehaviour
             communityPanels[i].GetComponentsInChildren<Text>()[0].text = "Map " + ldArr[i].levelId.ToString();
             communityPanels[i].GetComponentsInChildren<Text>()[1].text = ldArr[i].ThumbNum.ToString();
             communityPanelsButton[i].onClick.AddListener(delegate() { OnClickCommunityPannels(ldArr[index]); });
+            communityPanels[i].gameObject.SetActive(true);
             // TODO: Give out a image of level: communityPanels[i].GetComponentsInChildren<Image>()[0];
             i++;
         }
-        while(i < page_size)
-        {
-            communityPanels[i].GetComponentsInChildren<Text>()[0].text = "Empty";
-            communityPanels[i].GetComponentsInChildren<Text>()[1].text = "0";
-            communityPanelsButton[i].interactable = false;
-            i++;
-        }
+        //while(i < page_size)
+        //{
+        //    //communityPanels[i].GetComponentsInChildren<Text>()[0].text = "Empty";
+        //    //communityPanels[i].GetComponentsInChildren<Text>()[1].text = "0";
+        //    //communityPanelsButton[i].interactable = false;
+        //    i++;
+        //}
 
     }
 
