@@ -29,12 +29,14 @@ public class PageControl : MonoBehaviour
 
     private int page_size = 4;
     private int page = 1;
-    int maker_id = 0;
+    int maker_id = 2;
     // Start is called before the first frame update
     void Start()
     {
         gameController = FindObjectOfType<GameController>();
+        Debug.Log("GameController: " + gameController.ToString());
         downloadMap(0);
+        Debug.Log("Community Start: Downloading Success");
         //Debug.Log("Page:" + page.ToString());
         pageUp.onClick.AddListener(() => { OnClickPageUp(); });
         pageDown.onClick.AddListener(() => { OnClickPageDown(); });
@@ -101,7 +103,9 @@ public class PageControl : MonoBehaviour
         HttpClient client = new HttpClient();
         var responseString = await client.GetStringAsync(
             "http://35.238.86.31/level?type=2");
+        Debug.Log("Download: " + responseString);
         LevelData[] ldArr = convertToJson(responseString, page_size, page);
+        Debug.Log("Transformed");
         if (ldArr == null) return;
         int i = 0;
         while(i < ldArr.Length)
@@ -114,6 +118,7 @@ public class PageControl : MonoBehaviour
             // TODO: Give out a image of level: communityPanels[i].GetComponentsInChildren<Image>()[0];
             i++;
         }
+        Debug.Log("Pushed");
         //while(i < page_size)
         //{
         //    //communityPanels[i].GetComponentsInChildren<Text>()[0].text = "Empty";
@@ -127,6 +132,7 @@ public class PageControl : MonoBehaviour
     public LevelData[] convertToJson(string responseString, int page_size, int page)
     {
         LevelData[] ldArr = JsonConvert.DeserializeObject<LevelData[]>(responseString);
+        Debug.Log("Pushed1");
         int len = ldArr.Length;
         if (page_size == 0)
         {
@@ -150,6 +156,7 @@ public class PageControl : MonoBehaviour
         {
             GameObject.Find("PageDown").GetComponent<Button>().interactable = true;
         }
+        Debug.Log("Pushed2");
         int left = (page - 1) * page_size;
         int right = left + page_size - 1;
         if (right >= len) right = len - 1;
@@ -158,6 +165,7 @@ public class PageControl : MonoBehaviour
         {
             retArr[i - left] = ldArr[i];
         }
+        Debug.Log("Pushed3");
         return retArr;
     }
 
