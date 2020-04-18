@@ -25,6 +25,17 @@ public class WinPanelController : MonoBehaviour
     {
         gameController = FindObjectOfType<GameController>();
         mapCreator= FindObjectOfType<MapCreator>();
+
+        Analytics.CustomEvent("level_finish", new Dictionary<string, object>
+        {
+            {"level_index",gameController.cur_level },
+            {"session_id" ,AnalyticsSessionInfo.sessionId },
+            {"user_id" ,AnalyticsSessionInfo.userId  },
+            {"steps", final_step },
+            {"time_elapsed", Time.realtimeSinceStartup - AnalyticsHelper.time_startPlayingLevel },
+            {"tries", AnalyticsHelper.GetTries(gameController.cur_level) }
+        });
+        AnalyticsHelper.ResetTries(gameController.cur_level);
     }
     // Start is called before the first frame update
     void Start()
@@ -44,8 +55,6 @@ public class WinPanelController : MonoBehaviour
         Debug.Log("Click On Next");
         Debug.Log(final_step);
 
-        OnFinish();
-
         int star = GetStar();
 
         gameController.levelPass(star);
@@ -61,9 +70,6 @@ public class WinPanelController : MonoBehaviour
     void onClickReplayButton()
     {
         Debug.Log("Click On Replay");
-
-        OnFinish();
-
         int star = GetStar();
         gameController.levelPass(star);
         gameController.gameplay_enetrance = 0;
@@ -72,9 +78,6 @@ public class WinPanelController : MonoBehaviour
     void onClickReturnButton()
     {
         Debug.Log("Click On Return");
-
-        OnFinish();
-
         int star = GetStar();
         gameController.levelPass(star);
         SceneManager.LoadScene("LevelPage");
@@ -125,18 +128,5 @@ public class WinPanelController : MonoBehaviour
             star_3.SetActive(true);
             return;
         }
-    }
-
-    void OnFinish() {
-        Analytics.CustomEvent("level_finish", new Dictionary<string, object>
-        {
-            {"level_index",gameController.cur_level },
-            {"session_id" ,AnalyticsSessionInfo.sessionId },
-            {"user_id" ,AnalyticsSessionInfo.userId  },
-            {"steps", final_step },
-            {"time_elapsed", Time.realtimeSinceStartup - AnalyticsHelper.time_startPlayingLevel },
-            {"tries", AnalyticsHelper.GetTries(gameController.cur_level) }
-        });
-        AnalyticsHelper.ResetTries(gameController.cur_level);
     }
 }
