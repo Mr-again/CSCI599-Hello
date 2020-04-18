@@ -6,6 +6,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEditor;
+using System.Drawing;
+using System.IO;
 
 public class PageControl : MonoBehaviour
 {
@@ -17,6 +20,7 @@ public class PageControl : MonoBehaviour
     public Image[] communityPanels;
     public Button[] communityPanelsButton;
     public Image[] likeImages;
+    public Button[] likeButtons;
     public Image[] communityMapImages;
     public GameObject slotPanel;
     public GameObject slotPanelCard;
@@ -34,14 +38,13 @@ public class PageControl : MonoBehaviour
     void Start()
     {
         gameController = FindObjectOfType<GameController>();
-        Debug.Log("GameController: " + gameController.ToString());
         downloadMap(0);
-        Debug.Log("Community Start: Downloading Success");
         //Debug.Log("Page:" + page.ToString());
         pageUp.onClick.AddListener(() => { OnClickPageUp(); });
         pageDown.onClick.AddListener(() => { OnClickPageDown(); });
         communityButton.onClick.AddListener(() => { OnClickCommunity(); });
         slotButton.onClick.AddListener(() => { OnClickSlot(); });
+
     }
 
     // Update is called once per frame
@@ -68,6 +71,7 @@ public class PageControl : MonoBehaviour
         gameController.gameplay_enetrance = 1;
         gameController.target_map_json = ld.MapData;
         SceneManager.LoadScene("GamePlay");
+        
     }
     public void OnClickPageUp()
     {
@@ -86,7 +90,6 @@ public class PageControl : MonoBehaviour
         Button cur = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
         cur.GetComponentInChildren<Text>().text = "Released";
         cur.interactable = false;
-        //uploadMap(mapData);
         uploadMap(ld.MapData);
     }
 
@@ -96,16 +99,34 @@ public class PageControl : MonoBehaviour
         GameObject cur = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
         cur.SetActive(false);
     }
+    
+    public void OnClickLikeButton()
+    {
+        GameObject cur = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
+        int level_id = int.Parse(cur.GetComponentsInChildren<Text>()[0].text.Split(' ')[1]);
+        thumbUpMap(level_id);
+        int cur_thumb = int.Parse(cur.GetComponentsInChildren<Text>()[1].text);
+        cur.GetComponentsInChildren<Text>()[1].text = (cur_thumb + 1).ToString();
+        ScreenCapture.CaptureScreenshot("test.png");
+    }
+
+    public async void thumbUpMap(int level_id)
+    {
+        HttpClient client = new HttpClient();
+        var values = new Dictionary<string, string>();
+        var content = new FormUrlEncodedContent(values);
+        await client.PostAsync(
+            "http://35.238.86.31/level?update=1&try=0&pass=0&thumb=1&level_id=" + level_id.ToString(), content);
+    }
+
+    // public static PreviewManager Instance;
 
     public async void downloadMap(int offset)
     {
         page += offset;
         HttpClient client = new HttpClient();
-        var responseString = await client.GetStringAsync(
-            "http://35.238.86.31/level?type=2");
-        Debug.Log("Download: " + responseString);
+        var responseString = await client.GetStringAsync("http://35.238.86.31/level?type=2");
         LevelData[] ldArr = convertToJson(responseString, page_size, page);
-        Debug.Log("Transformed");
         if (ldArr == null) return;
         int i = 0;
         while(i < ldArr.Length)
@@ -114,25 +135,22 @@ public class PageControl : MonoBehaviour
             communityPanels[i].GetComponentsInChildren<Text>()[0].text = "Map " + ldArr[i].levelId.ToString();
             communityPanels[i].GetComponentsInChildren<Text>()[1].text = ldArr[i].ThumbNum.ToString();
             communityPanelsButton[i].onClick.AddListener(delegate() { OnClickCommunityPannels(ldArr[index]); });
+            likeButtons[i].onClick.AddListener(() => { OnClickLikeButton(); });
             communityPanels[i].gameObject.SetActive(true);
+            // communityPanels[i].GetComponentInChildren<Image>().sprite
+
             // TODO: Give out a image of level: communityPanels[i].GetComponentsInChildren<Image>()[0];
             i++;
         }
-        Debug.Log("Pushed");
-        //while(i < page_size)
-        //{
-        //    //communityPanels[i].GetComponentsInChildren<Text>()[0].text = "Empty";
-        //    //communityPanels[i].GetComponentsInChildren<Text>()[1].text = "0";
-        //    //communityPanelsButton[i].interactable = false;
-        //    i++;
-        //}
-
     }
 
+    public Image createMapImage(string mapData)
+    {
+        return null;
+    }
     public LevelData[] convertToJson(string responseString, int page_size, int page)
     {
         LevelData[] ldArr = JsonConvert.DeserializeObject<LevelData[]>(responseString);
-        Debug.Log("Pushed1");
         int len = ldArr.Length;
         if (page_size == 0)
         {
@@ -156,7 +174,6 @@ public class PageControl : MonoBehaviour
         {
             GameObject.Find("PageDown").GetComponent<Button>().interactable = true;
         }
-        Debug.Log("Pushed2");
         int left = (page - 1) * page_size;
         int right = left + page_size - 1;
         if (right >= len) right = len - 1;
@@ -165,7 +182,6 @@ public class PageControl : MonoBehaviour
         {
             retArr[i - left] = ldArr[i];
         }
-        Debug.Log("Pushed3");
         return retArr;
     }
 
