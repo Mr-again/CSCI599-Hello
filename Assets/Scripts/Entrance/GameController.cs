@@ -216,3 +216,48 @@ class Currency
         });
     }
 }
+
+class PlayHistory
+{
+    int history_len;
+    Dictionary<string, int[]> dict;//key:id  value:{index of local storage, star}
+
+    public PlayHistory()
+    {
+        if (PlayerPrefs.HasKey("history_len"))
+        {
+            history_len = PlayerPrefs.GetInt("history_len");
+        }
+        history_len = 0;
+        dict = new Dictionary<string, int[]>();
+        for (int i = 0; i < history_len; i++)
+        {
+            string[] history_map = PlayerPrefs.GetString("history_map_" + i).Split(';');//key:idx   value:"id;star"
+            int star = int.Parse(history_map[1]);
+            int[] tmp = new int[2];
+            tmp[0] = i;
+            tmp[1] = star;
+            dict.Add(history_map[0], tmp);
+        }
+    }
+
+    public void AddHistory(string id, int star)
+    {
+        int[] before = GetHistory(id);
+        if (before[0] != -1 && before[1] > star)
+        {
+            dict[id][1] = star;
+            PlayerPrefs.SetString("history_map_" + dict[id][0], id + ";" + star);
+        }
+        
+    }
+    //return star
+    public int[] GetHistory(string id)
+    {
+        if (!dict.ContainsKey(id))
+        {
+            return new int[] { -1, 0 };
+        }
+        return dict[id];
+    }
+}
