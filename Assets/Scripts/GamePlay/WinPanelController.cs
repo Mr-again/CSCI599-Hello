@@ -36,6 +36,7 @@ public class WinPanelController : MonoBehaviour
             {"tries", AnalyticsHelper.GetTries(gameController.cur_level) }
         });
         AnalyticsHelper.ResetTries(gameController.cur_level);
+
         if (gameController.gameplay_enetrance == 1)
         {
             next_button.gameObject.SetActive(false);

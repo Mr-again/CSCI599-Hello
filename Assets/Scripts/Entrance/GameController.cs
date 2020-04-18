@@ -205,6 +205,7 @@ class Currency
 
     public void PassLevel(int star)
     {
+        if (star <= 0) return;
         this.money += 10 * star;
         PlayerPrefs.SetInt("currency", this.money);
         Analytics.CustomEvent("earn_money", new Dictionary<string, object>{
