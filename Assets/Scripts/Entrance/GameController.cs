@@ -43,7 +43,7 @@ public class GameController : MonoBehaviour
 
         if(SystemInfo.deviceType== DeviceType.Desktop)
         {
-            PlayerPrefs.DeleteAll();
+            //PlayerPrefs.DeleteAll();
         }
     }
 
