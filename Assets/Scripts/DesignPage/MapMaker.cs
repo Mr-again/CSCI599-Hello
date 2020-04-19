@@ -14,6 +14,8 @@ using Json;
 
 public class MapMaker : MonoBehaviour
 {
+    GameController gameController;
+
     public Button wall;
     public Button brown_box;
     public Button red_box;
@@ -30,7 +32,7 @@ public class MapMaker : MonoBehaviour
     public Button mud_floor;
     public Button ice_floor;
     public Button player;
-    public Button release_button;
+    public Button try_button;
     public Button page_up_button;
     public Button page_down_button;
     public Button delete_button;
@@ -108,6 +110,12 @@ public class MapMaker : MonoBehaviour
     private GameObject selected_element;
     private bool is_player_exist = false;
     private GameObject existed_player_obj = null;
+
+
+    private void Awake()
+    {
+        gameController = FindObjectOfType<GameController>();
+    }
     // Start is called before the first frame update
     void Start()
     {   
@@ -127,6 +135,7 @@ public class MapMaker : MonoBehaviour
         mud_floor.onClick.AddListener(() => { OnClickElement(); });
         ice_floor.onClick.AddListener(() => { OnClickElement(); });
         player.onClick.AddListener(() => { OnClickElement(); });
+        try_button.onClick.AddListener(() => { OnClickTry(); });
 
         select_elem_name = "Wall";
         selected_element = wall_obj;
@@ -157,6 +166,14 @@ public class MapMaker : MonoBehaviour
             }
             
         }
+    }
+
+    void OnClickTry()
+    {
+        gameController.gameplay_enetrance = 2;
+        gameController.target_map_json = generateTestMapData();
+        SceneManager.LoadScene("GamePlay");
+
     }
 
     void OnClickElement()
@@ -830,7 +847,7 @@ public class MapMaker : MonoBehaviour
         string[] target_position = targets_list.ToArray();
 
         JsonObject jsonObject = new JsonObject(wall_position, stone_position, ice_position, mud_position, pit_position, player_position, box_position, target_position);
+        Debug.Log(jsonObject.SaveToString());
         return jsonObject.SaveToString();
     }
-
 }

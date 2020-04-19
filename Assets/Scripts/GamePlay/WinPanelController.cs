@@ -26,6 +26,11 @@ public class WinPanelController : MonoBehaviour
         gameController = FindObjectOfType<GameController>();
         mapCreator= FindObjectOfType<MapCreator>();
 
+        //if(gameController.gameplay_enetrance == 2)
+        //{
+        //    this.gameObject.SetActive(false);
+        //}
+
         Analytics.CustomEvent("level_finish", new Dictionary<string, object>
         {
             {"level_index",gameController.cur_level },
