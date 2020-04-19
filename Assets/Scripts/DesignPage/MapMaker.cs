@@ -33,9 +33,8 @@ public class MapMaker : MonoBehaviour
     public Button ice_floor;
     public Button player;
     public Button try_button;
-    public Button page_up_button;
-    public Button page_down_button;
-    public Button delete_button;
+    public Button save_button;
+    public Button back_button;
 
     public GameObject player_obj;
     public GameObject wall_obj;
@@ -136,6 +135,9 @@ public class MapMaker : MonoBehaviour
         ice_floor.onClick.AddListener(() => { OnClickElement(); });
         player.onClick.AddListener(() => { OnClickElement(); });
         try_button.onClick.AddListener(() => { OnClickTry(); });
+        save_button.onClick.AddListener(() => { OnClickSave(); });
+        back_button.onClick.AddListener(() => { OnClickBack(); });
+
 
         select_elem_name = "Wall";
         selected_element = wall_obj;
@@ -174,6 +176,16 @@ public class MapMaker : MonoBehaviour
         gameController.target_map_json = generateTestMapData();
         SceneManager.LoadScene("GamePlay");
 
+    }
+
+    void OnClickSave()
+    {
+        SceneManager.LoadScene("Community");
+    }
+
+    void OnClickBack()
+    {
+        SceneManager.LoadScene("Community");
     }
 
     void OnClickElement()
@@ -268,7 +280,6 @@ public class MapMaker : MonoBehaviour
                     break;
                 }
         }
-        generateTestMapData();
     }
 
     public bool isWall(string elem_name)

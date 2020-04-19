@@ -67,7 +67,8 @@ public class MenuPanelController : MonoBehaviour
         }
         else
         {
-
+            Debug.Log("Click On Back");
+            SceneManager.LoadScene("MapDesign");
         }
     }
     private void onClickCancelButton()
