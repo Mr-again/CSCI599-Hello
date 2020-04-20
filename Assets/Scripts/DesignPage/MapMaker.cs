@@ -36,6 +36,10 @@ public class MapMaker : MonoBehaviour
     public Button save_button;
     public Button back_button;
 
+    public InputField one_star;
+    public InputField two_star;
+    public InputField three_star;
+
     public GameObject player_obj;
     public GameObject wall_obj;
     public GameObject box_brown_obj;
@@ -180,6 +184,7 @@ public class MapMaker : MonoBehaviour
 
     void OnClickSave()
     {
+        Debug.Log(one_star.text);
         SceneManager.LoadScene("Community");
     }
 
