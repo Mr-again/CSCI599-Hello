@@ -13,7 +13,8 @@ public class LevelData
     public int OneStarStep;
     public int TwoStarStep;
     public int ThreeStarStep;
-    public LevelData(string mapData, int maker_id, int one_star_step, int two_star_step, int three_star_step)
+    public string LevelName;
+    public LevelData(string mapData, int maker_id, int one_star_step, int two_star_step, int three_star_step, string level_name)
     {
         this.MapData = mapData;
         this.IdOfMaker = maker_id;
@@ -24,6 +25,7 @@ public class LevelData
         this.OneStarStep = one_star_step;
         this.TwoStarStep = two_star_step;
         this.ThreeStarStep = three_star_step;
+        this.LevelName = level_name;
     }
 }
 

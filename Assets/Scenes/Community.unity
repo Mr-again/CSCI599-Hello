@@ -458,6 +458,7 @@ MonoBehaviour:
   mySlotPanel: {fileID: 649795425}
   mySlotPanelTransform: {fileID: 1077200000}
   mySlotPanelGrid: {fileID: 1077200001}
+  NameMap: {fileID: 2127890259}
   AddNewButton: {fileID: 1978636733}
 --- !u!4 &191292044
 Transform:

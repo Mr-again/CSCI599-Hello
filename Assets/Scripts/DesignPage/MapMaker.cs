@@ -420,7 +420,7 @@ public class MapMaker : MonoBehaviour
             gameController.cur_two_star_step = two_star_step;
             gameController.cur_three_star_step = three_star_step;
             string mapData = generateTestMapData();
-            LevelData ld = new LevelData(mapData, 1, one_star_step, two_star_step, three_star_step);
+            LevelData ld = new LevelData(mapData, 1, one_star_step, two_star_step, three_star_step, gameController.cur_level_name);
             LocalSlot ls = new LocalSlot();
             if(gameController.cur_slot_index == -1)
             {

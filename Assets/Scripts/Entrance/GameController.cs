@@ -21,7 +21,7 @@ public class GameController : MonoBehaviour
     public int cur_two_star_step = -1;
     public int cur_three_star_step = -1;
     public int[] cur_threshhold = { 0, 0, 0 };
-
+    public string cur_level_name = "";
 
     public int gameplay_enetrance;
     public string target_map_json;
