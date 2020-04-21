@@ -111,7 +111,17 @@ public class WinPanelController : MonoBehaviour
     }
     public int GetStar()
     {
-        int[] threshold = gameController.thresholds[gameController.cur_level];
+
+        int[] threshold;
+        if (gameController.gameplay_enetrance == 0)
+        {
+            threshold = gameController.thresholds[gameController.cur_level];
+        }
+        else
+        {
+            threshold = gameController.cur_threshhold;
+        }
+
         if (final_step < threshold[0])
         {
             return 3;

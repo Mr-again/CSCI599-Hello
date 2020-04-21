@@ -36,6 +36,8 @@ public class MapMaker : MonoBehaviour
     public Button save_button;
     public Button back_button;
 
+    public Text alert_text;
+
     public InputField one_star;
     public InputField two_star;
     public InputField three_star;
@@ -366,6 +368,7 @@ public class MapMaker : MonoBehaviour
         if(one_star.text == "" || two_star.text == "" || three_star.text == "")
         {
             Debug.Log("Must have value of star values");
+            alert_text.text = "Must have value of star values";
             return;
         }
         int one_star_step = int.Parse(one_star.text);
@@ -573,6 +576,7 @@ public class MapMaker : MonoBehaviour
             if (!old_obj_is_layer0)
             {
                 Debug.Log("There must be a floor before putting " + elem_name);
+                alert_text.text = "There must be a floor before putting " + elem_name;
                 return;
             }
             
@@ -594,6 +598,7 @@ public class MapMaker : MonoBehaviour
             if (old_obj_is_player)
             {
                 Debug.Log("Cannot put " + elem_name + " on player!");
+                alert_text.text = "Cannot put " + elem_name + " on player!";
                 return;
             }
         }
@@ -618,6 +623,7 @@ public class MapMaker : MonoBehaviour
             case 32:
                 {
                     Debug.Log("There must be a floor before putting " + elem_name);
+                    alert_text.text = "There must be a floor before putting " + elem_name;
                     break;
                 }
             case 36:
@@ -657,6 +663,7 @@ public class MapMaker : MonoBehaviour
             case 40:
                 {
                     Debug.Log(elem_name + " cannot be put on pits.");
+                    alert_text.text = elem_name + " cannot be put on pits.";
                     break;
                 }
             case 52:
@@ -672,6 +679,7 @@ public class MapMaker : MonoBehaviour
             case 64:
                 {
                     Debug.Log("There must be a floor before putting " + elem_name);
+                    alert_text.text = "There must be a floor before putting " + elem_name;
                     break;
                 }
             case 68:
@@ -711,6 +719,7 @@ public class MapMaker : MonoBehaviour
             case 72:
                 {
                     Debug.Log(elem_name + " cannot be put on pits.");
+                    alert_text.text = elem_name + " cannot be put on pits.";
                     break;
                 }
             case 84:
@@ -898,6 +907,7 @@ public class MapMaker : MonoBehaviour
             case 512:
                 {
                     Debug.Log("There must be a floor before putting " + elem_name);
+                    alert_text.text = "There must be a floor before putting " + elem_name;
                     break;
                 }
             case 516:
@@ -944,6 +954,7 @@ public class MapMaker : MonoBehaviour
             case 520:
                 {
                     Debug.Log(elem_name + " cannot be put on pits.");
+                    alert_text.text = elem_name + " cannot be put on pits.";
                     break;
                 }
             case 532:
