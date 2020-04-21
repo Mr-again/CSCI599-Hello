@@ -573,9 +573,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'One star
-
-'
+  m_Text: "Steps for 3\u2605\n"
 --- !u!222 &125069401
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2750,7 +2748,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Two star
+  m_Text: "Steps for 2\u2605"
 --- !u!222 &1601179615
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2904,7 +2902,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Three star
+  m_Text: "Steps for 1\u2605"
 --- !u!222 &1689146159
 CanvasRenderer:
   m_ObjectHideFlags: 0
