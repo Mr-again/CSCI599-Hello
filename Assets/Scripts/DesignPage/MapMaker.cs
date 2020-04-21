@@ -360,6 +360,9 @@ public class MapMaker : MonoBehaviour
     {
         gameController.gameplay_enetrance = 2;
         gameController.target_map_json = generateTestMapData();
+        gameController.cur_one_star_step = int.Parse(one_star.text);
+        gameController.cur_two_star_step = int.Parse(two_star.text);
+        gameController.cur_three_star_step = int.Parse(three_star.text);
         //Debug.Log(gameController.target_map_json);
         SceneManager.LoadScene("GamePlay");
 
@@ -420,7 +423,7 @@ public class MapMaker : MonoBehaviour
             gameController.cur_two_star_step = two_star_step;
             gameController.cur_three_star_step = three_star_step;
             string mapData = generateTestMapData();
-            LevelData ld = new LevelData(mapData, 1, one_star_step, two_star_step, three_star_step, gameController.cur_level_name);
+            LevelData ld = new LevelData(mapData, gameController.cur_maker_id, one_star_step, two_star_step, three_star_step, gameController.cur_level_name);
             LocalSlot ls = new LocalSlot();
             if(gameController.cur_slot_index == -1)
             {

@@ -8,13 +8,13 @@ public class LevelData
     public int TryNum;
     public int PassNum;
     public int ThumbNum;
-    public int IdOfMaker;
+    public string IdOfMaker;
     public string MapData;
     public int OneStarStep;
     public int TwoStarStep;
     public int ThreeStarStep;
     public string LevelName;
-    public LevelData(string mapData, int maker_id, int one_star_step, int two_star_step, int three_star_step, string level_name)
+    public LevelData(string mapData, string maker_id, int one_star_step, int two_star_step, int three_star_step, string level_name)
     {
         this.MapData = mapData;
         this.IdOfMaker = maker_id;
