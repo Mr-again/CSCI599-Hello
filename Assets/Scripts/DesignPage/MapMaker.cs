@@ -365,7 +365,27 @@ public class MapMaker : MonoBehaviour
 
     }
 
-    Texture2D CaptureScreenshot2(Rect rect)
+    IEnumerator CaptureScreenshot2(Rect rect, Action<Texture2D> callback) {
+        yield return new WaitForEndOfFrame();
+
+        // 先创建一个的空纹理，大小可根据实现需要来设置  
+        Texture2D screenShot = new Texture2D((int)rect.width, (int)rect.height, TextureFormat.RGB24, false);
+
+        // 读取屏幕像素信息并存储为纹理数据，  
+        screenShot.ReadPixels(rect, 0, 0);
+        screenShot.Apply();
+
+        // 然后将这些纹理数据，成一个png图片文件  
+        byte[] bytes = screenShot.EncodeToPNG();
+        string filename = Application.dataPath + "/Screenshot.png";
+        System.IO.File.WriteAllBytes(filename, bytes);
+        Debug.Log(string.Format("截屏了一张图片: {0}", filename));
+
+        // 最后，我返回这个Texture2d对象，这样我们直接，所这个截图图示在游戏中，当然这个根据自己的需求的。  
+        callback(screenShot);
+    }
+
+    /*Texture2D CaptureScreenshot2(Rect rect)
     {
         // 先创建一个的空纹理，大小可根据实现需要来设置  
         Texture2D screenShot = new Texture2D((int)rect.width, (int)rect.height, TextureFormat.RGB24, false);
@@ -382,37 +402,37 @@ public class MapMaker : MonoBehaviour
 
         // 最后，我返回这个Texture2d对象，这样我们直接，所这个截图图示在游戏中，当然这个根据自己的需求的。  
         return screenShot;
-    }
+    }*/
 
     void OnClickSave()
     {
-        CaptureScreenshot2(new Rect(Screen.width * 0.2f, Screen.height * 0f, Screen.width * 0.715f, Screen.height * 1f));
+        StartCoroutine(CaptureScreenshot2(new Rect(Screen.width * 0.2f, Screen.height * 0f, Screen.width * 0.715f, Screen.height * 1f), screenshot => {
+            if (one_star.text == "" || two_star.text == "" || three_star.text == "")
+            {
+                Debug.Log("Must have value of star values");
+                alert_text.text = "Must have value of star values";
+                return;
+            }
+            int one_star_step = int.Parse(one_star.text);
+            int two_star_step = int.Parse(two_star.text);
+            int three_star_step = int.Parse(three_star.text);
+            gameController.cur_one_star_step = one_star_step;
+            gameController.cur_two_star_step = two_star_step;
+            gameController.cur_three_star_step = three_star_step;
+            string mapData = generateTestMapData();
+            LevelData ld = new LevelData(mapData, 1, one_star_step, two_star_step, three_star_step);
+            LocalSlot ls = new LocalSlot();
+            if(gameController.cur_slot_index == -1)
+            {
+                ls.AddSlotMap(ld);
+            }
+            else
+            {
+                ls.UpdateSlotMap(gameController.cur_slot_index, ld);
+            }
 
-        if (one_star.text == "" || two_star.text == "" || three_star.text == "")
-        {
-            Debug.Log("Must have value of star values");
-            alert_text.text = "Must have value of star values";
-            return;
-        }
-        int one_star_step = int.Parse(one_star.text);
-        int two_star_step = int.Parse(two_star.text);
-        int three_star_step = int.Parse(three_star.text);
-        gameController.cur_one_star_step = one_star_step;
-        gameController.cur_two_star_step = two_star_step;
-        gameController.cur_three_star_step = three_star_step;
-        string mapData = generateTestMapData();
-        LevelData ld = new LevelData(mapData, 1, one_star_step, two_star_step, three_star_step);
-        LocalSlot ls = new LocalSlot();
-        if(gameController.cur_slot_index == -1)
-        {
-            ls.AddSlotMap(ld);
-        }
-        else
-        {
-            ls.UpdateSlotMap(gameController.cur_slot_index, ld);
-        }
-
-        SceneManager.LoadScene("Community");
+            SceneManager.LoadScene("Community");
+        }));
     }
 
     void OnClickBack()
