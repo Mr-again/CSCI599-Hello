@@ -44,12 +44,13 @@ public class LocalSlot
         }
     }
 
-    public void AddSlotMap(LevelData ld)
+    public int AddSlotMap(LevelData ld)
     {
         List<LevelData> ldList = new List<LevelData>(ldArr);
         ldList.Add(ld);
         ldArr = ldList.ToArray();
         PlayerPrefs.SetString("slot", JsonConvert.SerializeObject(ldArr));
+        return ldArr.Length - 1;
     }
 
     public LevelData[] GetAllSlotMap()

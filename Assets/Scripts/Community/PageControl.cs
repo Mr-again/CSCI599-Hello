@@ -36,19 +36,27 @@ public class PageControl : MonoBehaviour
     private int page = 1;
     int maker_id = 2;
     static int deleted_item_size = 0;
-    LocalSlot ls;
+    //LocalSlot ls = new LocalSlot();
     // Start is called before the first frame update
     void Start()
     {
         gameController = FindObjectOfType<GameController>();
-        downloadMap(0);
+        if(gameController.cur_community == 1)
+        {
+            downloadMap(0);
+        }
+        else
+        {
+            changedToSlotPanel();
+        }
+        
         //Debug.Log("Page:" + page.ToString());
         pageUp.onClick.AddListener(() => { OnClickPageUp(); });
         pageDown.onClick.AddListener(() => { OnClickPageDown(); });
         communityButton.onClick.AddListener(() => { OnClickCommunity(); });
         slotButton.onClick.AddListener(() => { OnClickSlot(); });
         AddNewButton.onClick.AddListener(() => { OnClickAddNew(); });
-        ls = new LocalSlot();
+        //ls = ;
         deleted_item_size = 0;
     }
 
@@ -61,13 +69,22 @@ public class PageControl : MonoBehaviour
     public void OnClickAddNew()
     {
         gameController.gameplay_enetrance = 2;
+        LocalSlot ls = new LocalSlot();
+        LevelData ld = new LevelData("", maker_id, 0, 0, 0);
+        gameController.cur_slot_index = ls.AddSlotMap(ld);
+        gameController.gameplay_enetrance = 2;
+        gameController.target_map_json = "";
         SceneManager.LoadScene("MapDesign");
     }
 
-    public void OnClickSlotPanelToMapDesign(LevelData ld)
+    public void OnClickSlotPanelToMapDesign(LevelData ld, int index)
     {
         gameController.gameplay_enetrance = 2;
         gameController.target_map_json = ld.MapData;
+        gameController.cur_slot_index = index;
+        gameController.cur_one_star_step = ld.OneStarStep;
+        gameController.cur_two_star_step = ld.TwoStarStep;
+        gameController.cur_three_star_step = ld.ThreeStarStep;
         SceneManager.LoadScene("MapDesign");
     }
     public void OnClickCommunity()
@@ -75,16 +92,23 @@ public class PageControl : MonoBehaviour
         downloadMap(0);
         communityPanel.SetActive(true);
         mySlotPanel.SetActive(false);
+        gameController.cur_community = 1;
     }
 
     public void OnClickSlot()
     {
+        changedToSlotPanel();
+        gameController.cur_community = 2;
+    }
+
+    void changedToSlotPanel()
+    {
         communityPanel.SetActive(false);
         mySlotPanel.SetActive(true);
         Image[] tmp_img = slotPanel.GetComponentsInChildren<Image>();
-        for(int i = 0; i < tmp_img.Length; i++)
+        for (int i = 0; i < tmp_img.Length; i++)
         {
-            if(tmp_img[i].name == "SlotPanelCard(Clone)")
+            if (tmp_img[i].name == "SlotPanelCard(Clone)")
             {
                 foreach (Transform child in tmp_img[i].transform)
                 {
@@ -94,7 +118,6 @@ public class PageControl : MonoBehaviour
             }
         }
         getCurrentUserMap();
-        
     }
 
     public void OnClickCommunityPannels(LevelData ld)
@@ -240,6 +263,7 @@ public class PageControl : MonoBehaviour
 
 
         // TODO: Get data from local playpref
+        LocalSlot ls = new LocalSlot();
         //LevelData ld = new LevelData("testMap", maker_id, 20, 40, 60);
         //ls.AddSlotMap(ld);
         //ld = new LevelData("testMap2", maker_id, 20, 40, 60);
@@ -256,7 +280,7 @@ public class PageControl : MonoBehaviour
             {
                 new_slotPanelCard.GetComponentInChildren<Text>().text = "Local Map";
                 new_slotPanelCard.GetComponentsInChildren<Button>()[1].onClick.AddListener(delegate () { OnClickRelease(ldArr[index], index); });
-                new_slotPanelCard.GetComponentsInChildren<Button>()[0].onClick.AddListener(delegate () { OnClickSlotPanelToMapDesign(ldArr[index]); });
+                new_slotPanelCard.GetComponentsInChildren<Button>()[0].onClick.AddListener(delegate () { OnClickSlotPanelToMapDesign(ldArr[index], index); });
 
             }
             else
@@ -286,6 +310,7 @@ public class PageControl : MonoBehaviour
             "&three_star_step=" + three_star_step.ToString() +
             "&id_of_maker=" + maker_id.ToString() + "&map_data=" + mapData);
         LevelData ld = JsonConvert.DeserializeObject<LevelData>(responseString);
+        LocalSlot ls = new LocalSlot();
         ls.UpdateSlotMap(index, ld);
         curPanel.GetComponentInChildren<Text>().text = "Map: " + ld.levelId.ToString();
 
@@ -301,6 +326,7 @@ public class PageControl : MonoBehaviour
             HttpClient client = new HttpClient();
             await client.GetStringAsync("http://35.238.86.31/level?type=3&delete=1&level_id=" + level_id.ToString());
         }
+        LocalSlot ls = new LocalSlot();
         ls.DeleteSlotMap(index - deleted_item_size);
         deleted_item_size += 1;
     }

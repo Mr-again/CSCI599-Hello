@@ -15,6 +15,11 @@ public class GameController : MonoBehaviour
     public int total_star = 0;
     public int[] level_scores;
 
+    public int cur_community = 1;
+    public int cur_slot_index = 0;
+    public int cur_one_star_step = -1;
+    public int cur_two_star_step = -1;
+    public int cur_three_star_step = -1;
 
     public int gameplay_enetrance;
     public string target_map_json;
