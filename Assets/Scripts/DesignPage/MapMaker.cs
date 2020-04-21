@@ -160,7 +160,11 @@ public class MapMaker : MonoBehaviour
 
     void generateMapFromString()
     {
+        if (gameController.target_map_json == "")
+            return;
+
         JsonObject jsonObject = JsonObject.CreateFromJSON(gameController.target_map_json);
+
         string[] wall_position = jsonObject.wall_position;
         string[] stone_position = jsonObject.stone_position;
         string[] ice_position = jsonObject.ice_position;
@@ -168,10 +172,13 @@ public class MapMaker : MonoBehaviour
         string[] pit_position = jsonObject.pit_position;
         string[] box_position = jsonObject.box_position;
         string[] target_position = jsonObject.target_position;
-        int[] player_position = jsonObject.player_position;
+        int[] player_position_inner = jsonObject.player_position;
 
-        GameObject newPlayer = Instantiate(player_obj, new Vector3(player_position[0] + map_offset_X, player_position[1] + map_offset_Y, 0), Quaternion.identity);
+        GameObject newPlayer = Instantiate(player_obj, new Vector3(player_position_inner[0] + map_offset_X, player_position_inner[1] + map_offset_Y, 0), Quaternion.identity);
         newPlayer.SetActive(true);
+        player_position = player_position_inner;
+        is_player_exist = true;
+        existed_player_obj = newPlayer;
 
         for (int i = 0; i < wall_position.Length; i++)
         {
@@ -349,12 +356,18 @@ public class MapMaker : MonoBehaviour
     {
         gameController.gameplay_enetrance = 2;
         gameController.target_map_json = generateTestMapData();
+        //Debug.Log(gameController.target_map_json);
         SceneManager.LoadScene("GamePlay");
 
     }
 
     void OnClickSave()
     {
+        if(one_star.text == "" || two_star.text == "" || three_star.text == "")
+        {
+            Debug.Log("Must have value of star values");
+            return;
+        }
         int one_star_step = int.Parse(one_star.text);
         int two_star_step = int.Parse(two_star.text);
         int three_star_step = int.Parse(three_star.text);
@@ -364,7 +377,14 @@ public class MapMaker : MonoBehaviour
         string mapData = generateTestMapData();
         LevelData ld = new LevelData(mapData, 1, one_star_step, two_star_step, three_star_step);
         LocalSlot ls = new LocalSlot();
-        ls.UpdateSlotMap(gameController.cur_slot_index, ld);
+        if(gameController.cur_slot_index == -1)
+        {
+            ls.AddSlotMap(ld);
+        }
+        else
+        {
+            ls.UpdateSlotMap(gameController.cur_slot_index, ld);
+        }
 
         SceneManager.LoadScene("Community");
     }
@@ -1043,8 +1063,10 @@ public class MapMaker : MonoBehaviour
         string[] box_position = boxes_list.ToArray();
         string[] target_position = targets_list.ToArray();
 
+        Debug.Log(player_position[0]);
         JsonObject jsonObject = new JsonObject(wall_position, stone_position, ice_position, mud_position, pit_position, player_position, box_position, target_position);
-        //Debug.Log(jsonObject.SaveToString());
+        
+        Debug.Log(jsonObject.SaveToString());
         return jsonObject.SaveToString();
     }
 }

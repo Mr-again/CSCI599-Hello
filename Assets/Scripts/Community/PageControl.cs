@@ -71,9 +71,12 @@ public class PageControl : MonoBehaviour
         gameController.gameplay_enetrance = 2;
         LocalSlot ls = new LocalSlot();
         LevelData ld = new LevelData("", maker_id, 0, 0, 0);
-        gameController.cur_slot_index = ls.AddSlotMap(ld);
+        gameController.cur_slot_index = -1;
         gameController.gameplay_enetrance = 2;
         gameController.target_map_json = "";
+        gameController.cur_one_star_step = -1;
+        gameController.cur_two_star_step = -1;
+        gameController.cur_three_star_step = -1;
         SceneManager.LoadScene("MapDesign");
     }
 
@@ -124,6 +127,9 @@ public class PageControl : MonoBehaviour
     {
         gameController.gameplay_enetrance = 1;
         gameController.target_map_json = ld.MapData;
+        gameController.cur_threshhold[0] = ld.OneStarStep;
+        gameController.cur_threshhold[1] = ld.TwoStarStep;
+        gameController.cur_threshhold[2] = ld.ThreeStarStep;
         SceneManager.LoadScene("GamePlay");
         
     }
