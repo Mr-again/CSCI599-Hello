@@ -27,11 +27,15 @@ public class GameController : MonoBehaviour
     public int gameplay_enetrance;
     public string target_map_json;
 
+    public string target_map_id;
+
     public int[][] thresholds;
 
     public int[] unlock_requires;
 
-    private Currency currency;
+    public Currency currency;
+
+    public PlayHistory playHistory;
 
     // Start is called before the first frame update
     private void Awake()
@@ -60,6 +64,9 @@ public class GameController : MonoBehaviour
     {
         //deal with currency
         this.currency = new Currency();
+
+        //deal with play history
+        this.playHistory = new PlayHistory();
         
 
 
@@ -172,7 +179,7 @@ public class GameController : MonoBehaviour
     }
 }
 
-class Currency
+public class Currency
 {
     private int money;
 
@@ -187,7 +194,7 @@ class Currency
             this.money = 100;
             PlayerPrefs.SetInt("currency", this.money);
         }
-        
+        Debug.Log("Current money: " + this.money);
     }
 
     public bool ReleaseMap()
@@ -214,8 +221,10 @@ class Currency
 
     public void PassLevel(int star)
     {
+        Debug.Log("star "+star);
         if (star <= 0) return;
         this.money += 10 * star;
+        Debug.Log("money " + this.money);
         PlayerPrefs.SetInt("currency", this.money);
         Analytics.CustomEvent("earn_money", new Dictionary<string, object>{
             {"amount", 10 * star },
@@ -226,18 +235,18 @@ class Currency
     }
 }
 
-class PlayHistory
+public class PlayHistory
 {
     int history_len;
     Dictionary<string, int[]> dict;//key:id  value:{index of local storage, star}
 
     public PlayHistory()
     {
+        history_len = 0;
         if (PlayerPrefs.HasKey("history_len"))
         {
             history_len = PlayerPrefs.GetInt("history_len");
         }
-        history_len = 0;
         dict = new Dictionary<string, int[]>();
         for (int i = 0; i < history_len; i++)
         {
@@ -253,7 +262,14 @@ class PlayHistory
     public void AddHistory(string id, int star)
     {
         int[] before = GetHistory(id);
-        if (before[0] != -1 && before[1] > star)
+        if (before[0] == -1)
+        {
+            dict.Add(id, new int[] { this.history_len, star });
+            PlayerPrefs.SetString("history_map_" + this.history_len, id + ";" + star);
+            this.history_len++;
+            PlayerPrefs.SetInt("history_len", this.history_len);
+        }
+        else if (before[1] < star)
         {
             dict[id][1] = star;
             PlayerPrefs.SetString("history_map_" + dict[id][0], id + ";" + star);

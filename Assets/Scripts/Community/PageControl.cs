@@ -10,6 +10,8 @@ using UnityEditor;
 using System.Drawing;
 using System.IO;
 
+using UnityEngine.Analytics;
+
 public class PageControl : MonoBehaviour
 {
     GameController gameController;
@@ -25,6 +27,8 @@ public class PageControl : MonoBehaviour
     public GameObject slotPanel;
     public GameObject slotPanelCard;
     public GameObject slotMapImage;
+
+    public Text score;
 
     public GameObject communityPanel;
     public GameObject mySlotPanel;
@@ -67,7 +71,7 @@ public class PageControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        score.text = gameController.currency.GetMoney().ToString();
     }
 
     public void OnClickAddNew()
@@ -151,6 +155,7 @@ public class PageControl : MonoBehaviour
         gameController.cur_threshhold[0] = ld.OneStarStep;
         gameController.cur_threshhold[1] = ld.TwoStarStep;
         gameController.cur_threshhold[2] = ld.ThreeStarStep;
+        gameController.target_map_id = ld.levelId.ToString();
         SceneManager.LoadScene("GamePlay");
     }
 
@@ -170,6 +175,17 @@ public class PageControl : MonoBehaviour
 
     public void OnClickRelease(LevelData ld, int index)
     {
+        if (gameController.currency.GetMoney() < 100)
+        {
+            Debug.Log("no money");
+            return;
+        }
+        if (!gameController.currency.ReleaseMap())
+        {
+            Debug.Log("currency fail");
+            return;
+        }
+
         Button cur = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
         
         GameObject curPanel = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
@@ -179,6 +195,11 @@ public class PageControl : MonoBehaviour
         cur.GetComponentInChildren<Text>().text = "Released";
         cur.interactable = false;
         
+        Analytics.CustomEvent("design_release", new Dictionary<string, object>
+        {
+            {"session_id", AnalyticsSessionInfo.sessionId },
+            {"user_id", AnalyticsSessionInfo.userId  }
+        });
     }
 
     public void OnClickDelete(LevelData ld, int index)
