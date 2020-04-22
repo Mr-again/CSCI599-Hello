@@ -153,6 +153,7 @@ public class PageControl : MonoBehaviour
         gameController.cur_threshhold[0] = ld.OneStarStep;
         gameController.cur_threshhold[1] = ld.TwoStarStep;
         gameController.cur_threshhold[2] = ld.ThreeStarStep;
+        gameController.target_map_id = ld.levelId.ToString();
         SceneManager.LoadScene("GamePlay");
     }
 

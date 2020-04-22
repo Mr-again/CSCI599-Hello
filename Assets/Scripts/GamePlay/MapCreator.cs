@@ -501,7 +501,6 @@ public class MapCreator : MonoBehaviour
             win_panel.SetActive(true);
             winPanelController = FindObjectOfType<WinPanelController>();
             final_step = step;
-            //todo star
             
             winPanelController.final_step = final_step;
             int tmp= winPanelController.GetStar();
@@ -509,7 +508,11 @@ public class MapCreator : MonoBehaviour
             if (gameController.gameplay_enetrance == 1)
             {
                 Debug.Log("handle currency");
-                gameController.currency.PassLevel(tmp);
+
+                int[] before = gameController.playHistory.GetHistory(gameController.target_map_id);
+                int extra = tmp - before[1];
+                gameController.playHistory.AddHistory(gameController.target_map_id, tmp);
+                gameController.currency.PassLevel(extra);
             }
             winPanelController.GetComponentInChildren<Text>().text= "You Win!";
             
