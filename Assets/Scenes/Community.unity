@@ -531,6 +531,7 @@ MonoBehaviour:
   slotPanel: {fileID: 1077199999}
   slotPanelCard: {fileID: 219670281}
   slotMapImage: {fileID: 886526871}
+  score: {fileID: 1661652611}
   communityPanel: {fileID: 1253152166}
   mySlotPanel: {fileID: 649795425}
   mySlotPanelTransform: {fileID: 1077200000}

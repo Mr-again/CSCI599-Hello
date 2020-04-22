@@ -26,6 +26,8 @@ public class PageControl : MonoBehaviour
     public GameObject slotPanelCard;
     public GameObject slotMapImage;
 
+    public Text score;
+
     public GameObject communityPanel;
     public GameObject mySlotPanel;
     public RectTransform mySlotPanelTransform;
@@ -67,7 +69,7 @@ public class PageControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        score.text = gameController.currency.GetMoney().ToString();
     }
 
     public void OnClickAddNew()
