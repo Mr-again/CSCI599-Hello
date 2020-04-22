@@ -34,7 +34,11 @@ public class PageControl : MonoBehaviour
     public GameObject mySlotPanel;
     public RectTransform mySlotPanelTransform;
     public GridLayoutGroup mySlotPanelGrid;
+
     public Image NameMap;
+
+    public Image MoneyAlert;
+
     public Button AddNewButton;
     private int page_size = 4;
     private int page = 1;
@@ -173,11 +177,19 @@ public class PageControl : MonoBehaviour
         //Debug.Log("Page:" + page.ToString());
     }
 
+    public void OnClickMoneyAlertOk()
+    {
+        MoneyAlert.gameObject.SetActive(false);
+    }
+
     public void OnClickRelease(LevelData ld, int index)
     {
         if (gameController.currency.GetMoney() < 100)
         {
             Debug.Log("no money");
+            MoneyAlert.gameObject.SetActive(true);
+
+            MoneyAlert.GetComponentsInChildren<Button>()[0].onClick.AddListener(() => { OnClickMoneyAlertOk(); });
             return;
         }
         if (!gameController.currency.ReleaseMap())

@@ -505,7 +505,7 @@ public class MapCreator : MonoBehaviour
             winPanelController.final_step = final_step;
             int tmp= winPanelController.GetStar();
             winPanelController.star = tmp;
-            if (gameController.gameplay_enetrance == 1)
+            if (gameController.gameplay_enetrance == 1 && gameController.cur_maker_id != gameController.cur_map_maker_id) 
             {
                 Debug.Log("handle currency");
 
