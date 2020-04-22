@@ -48,7 +48,6 @@ public class PageControl : MonoBehaviour
         gameController = FindObjectOfType<GameController>();
         maker_id = gameController.cur_maker_id;
 
-        Debug.Log(maker_id);
         if (gameController.cur_community == 1)
         {
             downloadMap(0);
@@ -156,6 +155,7 @@ public class PageControl : MonoBehaviour
         gameController.cur_threshhold[1] = ld.TwoStarStep;
         gameController.cur_threshhold[2] = ld.ThreeStarStep;
         gameController.target_map_id = ld.levelId.ToString();
+        gameController.cur_map_maker_id = ld.IdOfMaker;
         SceneManager.LoadScene("GamePlay");
     }
 
