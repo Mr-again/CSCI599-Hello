@@ -10,6 +10,8 @@ using UnityEditor;
 using System.Drawing;
 using System.IO;
 
+using UnityEngine.Analytics;
+
 public class PageControl : MonoBehaviour
 {
     GameController gameController;
@@ -193,6 +195,11 @@ public class PageControl : MonoBehaviour
         cur.GetComponentInChildren<Text>().text = "Released";
         cur.interactable = false;
         
+        Analytics.CustomEvent("design_release", new Dictionary<string, object>
+        {
+            {"session_id", AnalyticsSessionInfo.sessionId },
+            {"user_id", AnalyticsSessionInfo.userId  }
+        });
     }
 
     public void OnClickDelete(LevelData ld, int index)

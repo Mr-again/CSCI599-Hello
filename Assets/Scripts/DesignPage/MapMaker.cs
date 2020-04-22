@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System;
+using UnityEngine.Analytics;
 
 using System.Threading.Tasks;
 using System.Net.Http;
@@ -120,6 +122,13 @@ public class MapMaker : MonoBehaviour
     private void Awake()
     {
         gameController = FindObjectOfType<GameController>();
+
+        AnalyticsHelper.time_startCreatingLevel = Time.realtimeSinceStartup;
+        Analytics.CustomEvent("design_start", new Dictionary<string, object>
+        {
+            {"session_id", AnalyticsSessionInfo.sessionId },
+            {"user_id", AnalyticsSessionInfo.userId  }
+        });
     }
     // Start is called before the first frame update
     void Start()
@@ -434,12 +443,26 @@ public class MapMaker : MonoBehaviour
                 ls.UpdateSlotMap(gameController.cur_slot_index, ld);
             }
 
+            Analytics.CustomEvent("design_finish", new Dictionary<string, object>
+            {
+                {"session_id", AnalyticsSessionInfo.sessionId },
+                {"user_id", AnalyticsSessionInfo.userId  },
+                {"time_elapsed", Time.realtimeSinceStartup - AnalyticsHelper.time_startCreatingLevel }
+            });
+
             SceneManager.LoadScene("Community");
         }));
     }
 
     void OnClickBack()
     {
+        Analytics.CustomEvent("design_suspend", new Dictionary<string, object>
+        {
+            {"session_id", AnalyticsSessionInfo.sessionId },
+            {"user_id", AnalyticsSessionInfo.userId  },
+            {"time_elapsed", Time.realtimeSinceStartup - AnalyticsHelper.time_startCreatingLevel }
+        });
+
         SceneManager.LoadScene("Community");
     }
 
