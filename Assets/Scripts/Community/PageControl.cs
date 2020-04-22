@@ -27,7 +27,7 @@ public class PageControl : MonoBehaviour
     public GameObject slotPanel;
     public GameObject slotPanelCard;
     public GameObject slotMapImage;
-
+    public Button HomeButton;
     public Text score;
 
     public GameObject communityPanel;
@@ -67,7 +67,8 @@ public class PageControl : MonoBehaviour
         communityButton.onClick.AddListener(() => { OnClickCommunity(); });
         slotButton.onClick.AddListener(() => { OnClickSlot(); });
         AddNewButton.onClick.AddListener(() => { OnClickAddNew(); });
-        //ls = ;
+
+        HomeButton.onClick.AddListener(() => { OnClickBackHome(); });
         deleted_item_size = 0;
     }
 
@@ -75,6 +76,12 @@ public class PageControl : MonoBehaviour
     void Update()
     {
         score.text = gameController.currency.GetMoney().ToString();
+    }
+
+    public void OnClickBackHome()
+    {
+        Debug.Log("Home");
+        SceneManager.LoadScene("Enterance");
     }
 
     public void OnClickAddNew()

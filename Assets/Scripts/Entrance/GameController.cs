@@ -59,6 +59,20 @@ public class GameController : MonoBehaviour
             //PlayerPrefs.DeleteAll();
         }
         cur_maker_id = SystemInfo.deviceUniqueIdentifier;
+        if (!PlayerPrefs.HasKey("Hint1"))
+        {
+            PlayerPrefs.SetInt("Hint1", 1);
+        }
+
+        if (!PlayerPrefs.HasKey("Hint2"))
+        {
+            PlayerPrefs.SetInt("Hint2", 1);
+        }
+
+        if (!PlayerPrefs.HasKey("Hint3"))
+        {
+            PlayerPrefs.SetInt("Hint3", 1);
+        }
     }
 
     void Start()

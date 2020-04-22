@@ -531,6 +531,7 @@ MonoBehaviour:
   slotPanel: {fileID: 1077199999}
   slotPanelCard: {fileID: 219670281}
   slotMapImage: {fileID: 886526871}
+  HomeButton: {fileID: 323345035}
   score: {fileID: 1661652611}
   communityPanel: {fileID: 1253152166}
   mySlotPanel: {fileID: 649795425}
@@ -1389,7 +1390,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 438.5, y: 300.3}
+  m_AnchoredPosition: {x: 362, y: 296}
   m_SizeDelta: {x: 79.3, y: 164}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &473832761
@@ -5327,8 +5328,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 120.4, y: 300.3}
-  m_SizeDelta: {x: 635, y: 65.7}
+  m_AnchoredPosition: {x: 160, y: 300.3}
+  m_SizeDelta: {x: 403.4, y: 65.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1661652611
 MonoBehaviour:

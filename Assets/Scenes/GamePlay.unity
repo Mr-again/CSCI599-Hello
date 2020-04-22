@@ -2208,6 +2208,9 @@ MonoBehaviour:
   win: 0
   map_offset_X: -8
   map_offset_Y: -4
+  hint1: {fileID: 1192118214}
+  hint2: {fileID: 1495353901}
+  hint3: {fileID: 642630380}
 --- !u!4 &576685845
 Transform:
   m_ObjectHideFlags: 0
@@ -5318,6 +5321,7 @@ MonoBehaviour:
   cur_three_star_step: -1
   cur_threshhold: 000000000000000000000000
   cur_level_name: 
+  cur_map_maker_id: Default
   cur_maker_id: Default
   gameplay_enetrance: 2
   target_map_json: '{"wall_position":["1 0","2 0","3 0","4 0","5 0","6 0","7 0","8
@@ -5338,6 +5342,7 @@ MonoBehaviour:
     5","7 5"],"mud_position":[],"pit_position":["3 6"],"player_position":[3,3],"box_position":["1
     2 0","2 3 0","4 3 0","6 5 0","3 4 0"],"target_position":["1 7 0","8 2 0","8 3
     0"]}'
+  target_map_id: 
   unlock_requires: 
 --- !u!4 &1511927207
 Transform:
