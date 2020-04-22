@@ -504,7 +504,13 @@ public class MapCreator : MonoBehaviour
             //todo star
             
             winPanelController.final_step = final_step;
-            winPanelController.star = winPanelController.GetStar();
+            int tmp= winPanelController.GetStar();
+            winPanelController.star = tmp;
+            if (gameController.gameplay_enetrance == 1)
+            {
+                Debug.Log("handle currency");
+                gameController.currency.PassLevel(tmp);
+            }
             winPanelController.GetComponentInChildren<Text>().text= "You Win!";
             
             winPanelController.ShowStar();

@@ -31,7 +31,7 @@ public class GameController : MonoBehaviour
 
     public int[] unlock_requires;
 
-    private Currency currency;
+    public Currency currency;
 
     // Start is called before the first frame update
     private void Awake()
@@ -172,7 +172,7 @@ public class GameController : MonoBehaviour
     }
 }
 
-class Currency
+public class Currency
 {
     private int money;
 
@@ -187,7 +187,7 @@ class Currency
             this.money = 100;
             PlayerPrefs.SetInt("currency", this.money);
         }
-        
+        Debug.Log("Current money: " + this.money);
     }
 
     public bool ReleaseMap()
@@ -214,8 +214,10 @@ class Currency
 
     public void PassLevel(int star)
     {
+        Debug.Log("star "+star);
         if (star <= 0) return;
         this.money += 10 * star;
+        Debug.Log("money " + this.money);
         PlayerPrefs.SetInt("currency", this.money);
         Analytics.CustomEvent("earn_money", new Dictionary<string, object>{
             {"amount", 10 * star },

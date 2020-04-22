@@ -170,6 +170,17 @@ public class PageControl : MonoBehaviour
 
     public void OnClickRelease(LevelData ld, int index)
     {
+        if (gameController.currency.GetMoney() < 100)
+        {
+            Debug.Log("no money");
+            return;
+        }
+        if (!gameController.currency.ReleaseMap())
+        {
+            Debug.Log("currency fail");
+            return;
+        }
+
         Button cur = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
         
         GameObject curPanel = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
