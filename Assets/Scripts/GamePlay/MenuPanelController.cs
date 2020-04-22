@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Analytics;
 
 public class MenuPanelController : MonoBehaviour
 {
@@ -41,11 +42,20 @@ public class MenuPanelController : MonoBehaviour
     {
         Debug.Log("Click On Replay");
         SceneManager.LoadScene("GamePlay");
-            //AnalyticsHelper.AddTry(gameController.cur_level); // TODO: is this redundant?
     }
 
     private void onClickBackButton()
     {
+        Analytics.CustomEvent("level_quit", new Dictionary<string, object>
+        {
+            {"level_index",gameController.cur_level },
+            {"session_id" ,AnalyticsSessionInfo.sessionId },
+            {"user_id" ,AnalyticsSessionInfo.userId  },
+            {"steps", final_step },
+            {"time_elapsed", Time.realtimeSinceStartup - AnalyticsHelper.time_startPlayingLevel },
+            {"tries", AnalyticsHelper.GetTries(gameController.cur_level) }
+        });
+
         if (gameController.gameplay_enetrance == 0)
         {
             Debug.Log("Click On Back");
@@ -57,9 +67,9 @@ public class MenuPanelController : MonoBehaviour
         }
         else
         {
-
+            Debug.Log("Click On Back");
+            SceneManager.LoadScene("MapDesign");
         }
-        
     }
     private void onClickCancelButton()
     {

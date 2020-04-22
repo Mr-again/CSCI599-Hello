@@ -26,6 +26,11 @@ public class WinPanelController : MonoBehaviour
         gameController = FindObjectOfType<GameController>();
         mapCreator= FindObjectOfType<MapCreator>();
 
+        //if(gameController.gameplay_enetrance == 2)
+        //{
+        //    this.gameObject.SetActive(false);
+        //}
+
         Analytics.CustomEvent("level_finish", new Dictionary<string, object>
         {
             {"level_index",gameController.cur_level },
@@ -36,6 +41,7 @@ public class WinPanelController : MonoBehaviour
             {"tries", AnalyticsHelper.GetTries(gameController.cur_level) }
         });
         AnalyticsHelper.ResetTries(gameController.cur_level);
+
         if (gameController.gameplay_enetrance == 1)
         {
             next_button.gameObject.SetActive(false);
@@ -105,7 +111,17 @@ public class WinPanelController : MonoBehaviour
     }
     public int GetStar()
     {
-        int[] threshold = gameController.thresholds[gameController.cur_level];
+
+        int[] threshold;
+        if (gameController.gameplay_enetrance == 0)
+        {
+            threshold = gameController.thresholds[gameController.cur_level];
+        }
+        else
+        {
+            threshold = gameController.cur_threshhold;
+        }
+
         if (final_step < threshold[0])
         {
             return 3;

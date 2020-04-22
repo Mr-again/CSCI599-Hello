@@ -495,7 +495,7 @@ public class MapCreator : MonoBehaviour
         blue_tar.text = (100 + blue_num).ToString().Substring(1);
         green_tar.text = (100 + green_num).ToString().Substring(1);
         gray_tar.text = (100 + gray_num).ToString().Substring(1);
-        if(win == 0 && brown_num == 0 && red_num == 0 && blue_num == 0 && green_num == 0 && gray_num == 0)
+        if(gameController.gameplay_enetrance != 2 && win == 0 && brown_num == 0 && red_num == 0 && blue_num == 0 && green_num == 0 && gray_num == 0)
         {
             win = 1;
             win_panel.SetActive(true);

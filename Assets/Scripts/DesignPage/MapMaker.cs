@@ -14,6 +14,10 @@ using Json;
 
 public class MapMaker : MonoBehaviour
 {
+
+
+    GameController gameController;
+
     public Button wall;
     public Button brown_box;
     public Button red_box;
@@ -30,10 +34,15 @@ public class MapMaker : MonoBehaviour
     public Button mud_floor;
     public Button ice_floor;
     public Button player;
-    public Button release_button;
-    public Button page_up_button;
-    public Button page_down_button;
-    public Button delete_button;
+    public Button try_button;
+    public Button save_button;
+    public Button back_button;
+
+    public Text alert_text;
+
+    public InputField one_star;
+    public InputField two_star;
+    public InputField three_star;
 
     public GameObject player_obj;
     public GameObject wall_obj;
@@ -80,8 +89,6 @@ public class MapMaker : MonoBehaviour
     //public string[] box_position;
     //public string[] target_position;
     
-    
-    
     //public Dictionary<int, GameObject> pits = new Dictionary<int, GameObject>();
     //public Dictionary<int, GameObject> covered_pits = new Dictionary<int, GameObject>();
 
@@ -108,6 +115,12 @@ public class MapMaker : MonoBehaviour
     private GameObject selected_element;
     private bool is_player_exist = false;
     private GameObject existed_player_obj = null;
+
+
+    private void Awake()
+    {
+        gameController = FindObjectOfType<GameController>();
+    }
     // Start is called before the first frame update
     void Start()
     {   
@@ -127,14 +140,198 @@ public class MapMaker : MonoBehaviour
         mud_floor.onClick.AddListener(() => { OnClickElement(); });
         ice_floor.onClick.AddListener(() => { OnClickElement(); });
         player.onClick.AddListener(() => { OnClickElement(); });
+        try_button.onClick.AddListener(() => { OnClickTry(); });
+        save_button.onClick.AddListener(() => { OnClickSave(); });
+        back_button.onClick.AddListener(() => { OnClickBack(); });
+
 
         select_elem_name = "Wall";
         selected_element = wall_obj;
         AnalyticsHelper.time_startCreatingLevel = Time.realtimeSinceStartup;
         // TODO: publish event when player finishes creating level
-
+        //Debug.Log(gameController.target_map_json);
+        generateMapFromString();
+        if(gameController.cur_one_star_step != -1)
+            one_star.text = gameController.cur_one_star_step.ToString();
+        if(gameController.cur_two_star_step != -1)
+            two_star.text = gameController.cur_two_star_step.ToString();
+        if(gameController.cur_three_star_step != -1)
+            three_star.text = gameController.cur_three_star_step.ToString();
     }
 
+    public int map_offset_X = -8;
+    public int map_offset_Y = -4;
+
+    void generateMapFromString()
+    {
+        if (gameController.target_map_json == "")
+            return;
+
+        JsonObject jsonObject = JsonObject.CreateFromJSON(gameController.target_map_json);
+
+        string[] wall_position = jsonObject.wall_position;
+        string[] stone_position = jsonObject.stone_position;
+        string[] ice_position = jsonObject.ice_position;
+        string[] mud_position = jsonObject.mud_position;
+        string[] pit_position = jsonObject.pit_position;
+        string[] box_position = jsonObject.box_position;
+        string[] target_position = jsonObject.target_position;
+        int[] player_position_inner = jsonObject.player_position;
+
+        GameObject newPlayer = Instantiate(player_obj, new Vector3(player_position_inner[0] + map_offset_X, player_position_inner[1] + map_offset_Y, 0), Quaternion.identity);
+        newPlayer.SetActive(true);
+        player_position = player_position_inner;
+        is_player_exist = true;
+        existed_player_obj = newPlayer;
+
+        for (int i = 0; i < wall_position.Length; i++)
+        {
+            string[] str_arr = wall_position[i].Split(' ');
+            int x = int.Parse(str_arr[0]);
+            int y = int.Parse(str_arr[1]);
+            GameObject newWall = Instantiate(wall_obj, new Vector3(x + map_offset_X, y + map_offset_Y, 0), Quaternion.identity);
+            walls.Add(100 * y + x, newWall);
+            newWall.SetActive(true);
+        }
+        for (int i = 0; i < pit_position.Length; i++)
+        {
+            string[] str_arr = pit_position[i].Split(' ');
+            int x = int.Parse(str_arr[0]);
+            int y = int.Parse(str_arr[1]);
+            GameObject newPit = Instantiate(pit_obj, new Vector3(x + map_offset_X, y + map_offset_Y, 5), Quaternion.identity);
+            pits.Add(100 * y + x, newPit);
+            newPit.SetActive(true);
+        }
+
+        for (int i = 0; i < stone_position.Length; i++)
+        {
+            string[] str_arr = stone_position[i].Split(' ');
+            int x = int.Parse(str_arr[0]);
+            int y = int.Parse(str_arr[1]);
+            GameObject newStone = Instantiate(floor_stone_obj, new Vector3(x + map_offset_X, y + map_offset_Y, 5), Quaternion.identity);
+            layer0.Add(100 * y + x, newStone);
+            newStone.SetActive(true);
+        }
+
+        for (int i = 0; i < ice_position.Length; i++)
+        {
+            string[] str_arr = ice_position[i].Split(' ');
+            int x = int.Parse(str_arr[0]);
+            int y = int.Parse(str_arr[1]);
+            GameObject newIce = Instantiate(floor_ice_obj, new Vector3(x + map_offset_X, y + map_offset_Y, 5), Quaternion.identity);
+            layer0.Add(100 * y + x, newIce);
+            newIce.SetActive(true);
+        }
+
+        for (int i = 0; i < mud_position.Length; i++)
+        {
+            string[] str_arr = mud_position[i].Split(' ');
+            int x = int.Parse(str_arr[0]);
+            int y = int.Parse(str_arr[1]);
+            GameObject newMud = Instantiate(floor_mud_obj, new Vector3(x + map_offset_X, y + map_offset_Y, 5), Quaternion.identity);
+            layer0.Add(100 * y + x, newMud);
+            newMud.SetActive(true);
+        }
+
+        for (int i = 0; i < box_position.Length; i++)
+        {
+            string[] str_arr = box_position[i].Split(' ');
+            int x = int.Parse(str_arr[0]);
+            int y = int.Parse(str_arr[1]);
+            int color = int.Parse(str_arr[2]);
+            switch (color)
+            {
+                case 0:
+                    {
+                        GameObject newBox = Instantiate(box_brown_obj, new Vector3(x + map_offset_X, y + map_offset_Y, 0), Quaternion.identity);
+                        boxes.Add(100 * y + x, newBox);
+                        newBox.SetActive(true);
+                        break;
+                    }
+                case 1:
+                    {
+                        GameObject newBox = Instantiate(box_red_obj, new Vector3(x + map_offset_X, y + map_offset_Y, 0), Quaternion.identity);
+                        boxes.Add(100 * y + x, newBox);
+                        newBox.SetActive(true);
+                        break;
+                    }
+                case 2:
+                    {
+                        GameObject newBox = Instantiate(box_blue_obj, new Vector3(x + map_offset_X, y + map_offset_Y, 0), Quaternion.identity);
+                        boxes.Add(100 * y + x, newBox);
+                        newBox.SetActive(true);
+                        break;
+                    }
+                case 3:
+                    {
+                        GameObject newBox = Instantiate(box_green_obj, new Vector3(x + map_offset_X, y + map_offset_Y, 0), Quaternion.identity);
+                        boxes.Add(100 * y + x, newBox);
+                        newBox.SetActive(true);
+                        break;
+                    }
+                case 4:
+                    {
+                        GameObject newBox = Instantiate(box_gray_obj, new Vector3(x + map_offset_X, y + map_offset_Y, 0), Quaternion.identity);
+                        boxes.Add(100 * y + x, newBox);
+                        newBox.SetActive(true);
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
+            }
+        }
+        for (int i = 0; i < target_position.Length; i++)
+        {
+            string[] str_arr = target_position[i].Split(' ');
+            int x = int.Parse(str_arr[0]);
+            int y = int.Parse(str_arr[1]);
+            int color = int.Parse(str_arr[2]);
+            switch (color)
+            {
+                case 0:
+                    {
+                        GameObject newTarget = Instantiate(target_brown_obj, new Vector3(x + map_offset_X, y + map_offset_Y, 3), Quaternion.identity);
+                        targets.Add(100 * y + x, newTarget);
+                        newTarget.SetActive(true);
+                        break;
+                    }
+                case 1:
+                    {
+                        GameObject newTarget = Instantiate(target_red_obj, new Vector3(x + map_offset_X, y + map_offset_Y, 3), Quaternion.identity);
+                        targets.Add(100 * y + x, newTarget);
+                        newTarget.SetActive(true);
+                        break;
+                    }
+                case 2:
+                    {
+                        GameObject newTarget = Instantiate(target_blue_obj, new Vector3(x + map_offset_X, y + map_offset_Y, 3), Quaternion.identity);
+                        targets.Add(100 * y + x, newTarget);
+                        newTarget.SetActive(true);
+                        break;
+                    }
+                case 3:
+                    {
+                        GameObject newTarget = Instantiate(target_green_obj, new Vector3(x + map_offset_X, y + map_offset_Y, 3), Quaternion.identity);
+                        targets.Add(100 * y + x, newTarget);
+                        newTarget.SetActive(true);
+                        break;
+                    }
+                case 4:
+                    {
+                        GameObject newTarget = Instantiate(target_gray_obj, new Vector3(x + map_offset_X, y + map_offset_Y, 3), Quaternion.identity);
+                        targets.Add(100 * y + x, newTarget);
+                        newTarget.SetActive(true);
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
+            }
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -157,6 +354,93 @@ public class MapMaker : MonoBehaviour
             }
             
         }
+    }
+
+    void OnClickTry()
+    {
+        gameController.gameplay_enetrance = 2;
+        gameController.target_map_json = generateTestMapData();
+        gameController.cur_one_star_step = int.Parse(one_star.text);
+        gameController.cur_two_star_step = int.Parse(two_star.text);
+        gameController.cur_three_star_step = int.Parse(three_star.text);
+        //Debug.Log(gameController.target_map_json);
+        SceneManager.LoadScene("GamePlay");
+
+    }
+
+    IEnumerator CaptureScreenshot2(Rect rect, Action<Texture2D> callback) {
+        yield return new WaitForEndOfFrame();
+
+        // 先创建一个的空纹理，大小可根据实现需要来设置  
+        Texture2D screenShot = new Texture2D((int)rect.width, (int)rect.height, TextureFormat.RGB24, false);
+
+        // 读取屏幕像素信息并存储为纹理数据，  
+        screenShot.ReadPixels(rect, 0, 0);
+        screenShot.Apply();
+
+        // 然后将这些纹理数据，成一个png图片文件  
+        byte[] bytes = screenShot.EncodeToPNG();
+        string filename = Application.dataPath + "/Screenshot.png";
+        System.IO.File.WriteAllBytes(filename, bytes);
+        Debug.Log(string.Format("截屏了一张图片: {0}", filename));
+
+        // 最后，我返回这个Texture2d对象，这样我们直接，所这个截图图示在游戏中，当然这个根据自己的需求的。  
+        callback(screenShot);
+    }
+
+    /*Texture2D CaptureScreenshot2(Rect rect)
+    {
+        // 先创建一个的空纹理，大小可根据实现需要来设置  
+        Texture2D screenShot = new Texture2D((int)rect.width, (int)rect.height, TextureFormat.RGB24, false);
+
+        // 读取屏幕像素信息并存储为纹理数据，  
+        screenShot.ReadPixels(rect, 0, 0);
+        screenShot.Apply();
+
+        // 然后将这些纹理数据，成一个png图片文件  
+        byte[] bytes = screenShot.EncodeToPNG();
+        string filename = Application.dataPath + "/Screenshot.png";
+        System.IO.File.WriteAllBytes(filename, bytes);
+        Debug.Log(string.Format("截屏了一张图片: {0}", filename));
+
+        // 最后，我返回这个Texture2d对象，这样我们直接，所这个截图图示在游戏中，当然这个根据自己的需求的。  
+        return screenShot;
+    }*/
+
+    void OnClickSave()
+    {
+        StartCoroutine(CaptureScreenshot2(new Rect(Screen.width * 0.2f, Screen.height * 0f, Screen.width * 0.715f, Screen.height * 1f), screenshot => {
+            if (one_star.text == "" || two_star.text == "" || three_star.text == "")
+            {
+                Debug.Log("Must have value of star values");
+                alert_text.text = "Must have value of star values";
+                return;
+            }
+            int one_star_step = int.Parse(one_star.text);
+            int two_star_step = int.Parse(two_star.text);
+            int three_star_step = int.Parse(three_star.text);
+            gameController.cur_one_star_step = one_star_step;
+            gameController.cur_two_star_step = two_star_step;
+            gameController.cur_three_star_step = three_star_step;
+            string mapData = generateTestMapData();
+            LevelData ld = new LevelData(mapData, gameController.cur_maker_id, one_star_step, two_star_step, three_star_step, gameController.cur_level_name);
+            LocalSlot ls = new LocalSlot();
+            if(gameController.cur_slot_index == -1)
+            {
+                ls.AddSlotMap(ld);
+            }
+            else
+            {
+                ls.UpdateSlotMap(gameController.cur_slot_index, ld);
+            }
+
+            SceneManager.LoadScene("Community");
+        }));
+    }
+
+    void OnClickBack()
+    {
+        SceneManager.LoadScene("Community");
     }
 
     void OnClickElement()
@@ -251,7 +535,6 @@ public class MapMaker : MonoBehaviour
                     break;
                 }
         }
-        generateTestMapData();
     }
 
     public bool isWall(string elem_name)
@@ -339,6 +622,7 @@ public class MapMaker : MonoBehaviour
             if (!old_obj_is_layer0)
             {
                 Debug.Log("There must be a floor before putting " + elem_name);
+                alert_text.text = "There must be a floor before putting " + elem_name;
                 return;
             }
             
@@ -360,6 +644,7 @@ public class MapMaker : MonoBehaviour
             if (old_obj_is_player)
             {
                 Debug.Log("Cannot put " + elem_name + " on player!");
+                alert_text.text = "Cannot put " + elem_name + " on player!";
                 return;
             }
         }
@@ -384,6 +669,7 @@ public class MapMaker : MonoBehaviour
             case 32:
                 {
                     Debug.Log("There must be a floor before putting " + elem_name);
+                    alert_text.text = "There must be a floor before putting " + elem_name;
                     break;
                 }
             case 36:
@@ -423,6 +709,7 @@ public class MapMaker : MonoBehaviour
             case 40:
                 {
                     Debug.Log(elem_name + " cannot be put on pits.");
+                    alert_text.text = elem_name + " cannot be put on pits.";
                     break;
                 }
             case 52:
@@ -438,6 +725,7 @@ public class MapMaker : MonoBehaviour
             case 64:
                 {
                     Debug.Log("There must be a floor before putting " + elem_name);
+                    alert_text.text = "There must be a floor before putting " + elem_name;
                     break;
                 }
             case 68:
@@ -477,6 +765,7 @@ public class MapMaker : MonoBehaviour
             case 72:
                 {
                     Debug.Log(elem_name + " cannot be put on pits.");
+                    alert_text.text = elem_name + " cannot be put on pits.";
                     break;
                 }
             case 84:
@@ -664,6 +953,7 @@ public class MapMaker : MonoBehaviour
             case 512:
                 {
                     Debug.Log("There must be a floor before putting " + elem_name);
+                    alert_text.text = "There must be a floor before putting " + elem_name;
                     break;
                 }
             case 516:
@@ -710,6 +1000,7 @@ public class MapMaker : MonoBehaviour
             case 520:
                 {
                     Debug.Log(elem_name + " cannot be put on pits.");
+                    alert_text.text = elem_name + " cannot be put on pits.";
                     break;
                 }
             case 532:
@@ -829,8 +1120,10 @@ public class MapMaker : MonoBehaviour
         string[] box_position = boxes_list.ToArray();
         string[] target_position = targets_list.ToArray();
 
+        Debug.Log(player_position[0]);
         JsonObject jsonObject = new JsonObject(wall_position, stone_position, ice_position, mud_position, pit_position, player_position, box_position, target_position);
+        
+        Debug.Log(jsonObject.SaveToString());
         return jsonObject.SaveToString();
     }
-
 }

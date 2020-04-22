@@ -15,6 +15,14 @@ public class GameController : MonoBehaviour
     public int total_star = 0;
     public int[] level_scores;
 
+    public int cur_community = 1;
+    public int cur_slot_index = 0;
+    public int cur_one_star_step = -1;
+    public int cur_two_star_step = -1;
+    public int cur_three_star_step = -1;
+    public int[] cur_threshhold = { 0, 0, 0 };
+    public string cur_level_name = "";
+    public string cur_maker_id = "Default";
 
     public int gameplay_enetrance;
     public string target_map_json;
@@ -43,8 +51,9 @@ public class GameController : MonoBehaviour
 
         if(SystemInfo.deviceType== DeviceType.Desktop)
         {
-            PlayerPrefs.DeleteAll();
+            //PlayerPrefs.DeleteAll();
         }
+        cur_maker_id = SystemInfo.deviceUniqueIdentifier;
     }
 
     void Start()
@@ -205,6 +214,7 @@ class Currency
 
     public void PassLevel(int star)
     {
+        if (star <= 0) return;
         this.money += 10 * star;
         PlayerPrefs.SetInt("currency", this.money);
         Analytics.CustomEvent("earn_money", new Dictionary<string, object>{
@@ -213,5 +223,50 @@ class Currency
             {"session_id", AnalyticsSessionInfo.sessionId },
             {"user_id", AnalyticsSessionInfo.userId  }
         });
+    }
+}
+
+class PlayHistory
+{
+    int history_len;
+    Dictionary<string, int[]> dict;//key:id  value:{index of local storage, star}
+
+    public PlayHistory()
+    {
+        if (PlayerPrefs.HasKey("history_len"))
+        {
+            history_len = PlayerPrefs.GetInt("history_len");
+        }
+        history_len = 0;
+        dict = new Dictionary<string, int[]>();
+        for (int i = 0; i < history_len; i++)
+        {
+            string[] history_map = PlayerPrefs.GetString("history_map_" + i).Split(';');//key:idx   value:"id;star"
+            int star = int.Parse(history_map[1]);
+            int[] tmp = new int[2];
+            tmp[0] = i;
+            tmp[1] = star;
+            dict.Add(history_map[0], tmp);
+        }
+    }
+
+    public void AddHistory(string id, int star)
+    {
+        int[] before = GetHistory(id);
+        if (before[0] != -1 && before[1] > star)
+        {
+            dict[id][1] = star;
+            PlayerPrefs.SetString("history_map_" + dict[id][0], id + ";" + star);
+        }
+        
+    }
+    //return star
+    public int[] GetHistory(string id)
+    {
+        if (!dict.ContainsKey(id))
+        {
+            return new int[] { -1, 0 };
+        }
+        return dict[id];
     }
 }
