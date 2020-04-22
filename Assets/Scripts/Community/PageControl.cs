@@ -34,18 +34,14 @@ public class PageControl : MonoBehaviour
     public Button AddNewButton;
     private int page_size = 4;
     private int page = 1;
-    string maker_id;
+    int maker_id = 2;
     static int deleted_item_size = 0;
     //LocalSlot ls = new LocalSlot();
     // Start is called before the first frame update
     void Start()
     {
-        
         gameController = FindObjectOfType<GameController>();
-        maker_id = gameController.cur_maker_id;
-
-        Debug.Log(maker_id);
-        if (gameController.cur_community == 1)
+        if(gameController.cur_community == 1)
         {
             downloadMap(0);
         }
@@ -332,13 +328,12 @@ public class PageControl : MonoBehaviour
     public async void uploadMap(string mapData, int one_star_step, int two_star_step, int three_star_step, int index, GameObject curPanel, string level_name)
     {
         HttpClient client = new HttpClient();
-        Debug.Log(maker_id);
         var responseString = await client.GetStringAsync(
             "http://35.238.86.31/level?type=3&try_num=0&pass_num=0&thumb_num=0" +
             "&one_star_step=" + one_star_step.ToString() +
             "&two_star_step=" + two_star_step.ToString() +
             "&three_star_step=" + three_star_step.ToString() +
-            "&id_of_maker=" + maker_id + "&map_data=" + mapData + "&level_name=" + level_name);
+            "&id_of_maker=" + maker_id.ToString() + "&map_data=" + mapData + "&level_name=" + level_name);
         LevelData ld = JsonConvert.DeserializeObject<LevelData>(responseString);
         LocalSlot ls = new LocalSlot();
         ls.UpdateSlotMap(index, ld);

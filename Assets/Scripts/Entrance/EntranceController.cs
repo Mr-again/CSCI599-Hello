@@ -63,7 +63,7 @@ public class EntranceController : MonoBehaviour
     {
      
         Debug.Log("Click On Leader Board");
-        //SceneManager.LoadScene("LeaderBoard");
+        SceneManager.LoadScene("LeaderBoard");
         /*Analytics.CustomEvent("LeaderBoardTime", new Dictionary<string, object> {
                     {"user_id" ,AnalyticsSessionInfo.userId},
                     {"times", AnalyticsSessionInfo.sessionCount}
