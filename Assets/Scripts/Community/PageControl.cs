@@ -211,7 +211,7 @@ public class PageControl : MonoBehaviour
         uploadMap(ld.MapData, ld.OneStarStep, ld.TwoStarStep, ld.ThreeStarStep, index, curPanel, ld.LevelName);
         Button btnPanel = curPanel.GetComponentsInChildren<Button>()[0];
         btnPanel.enabled = false;
-        cur.GetComponentInChildren<Text>().text = "Released";
+        cur.GetComponentInChildren<Text>().text = "Published";
         cur.interactable = false;
         
         Analytics.CustomEvent("design_release", new Dictionary<string, object>
@@ -357,7 +357,7 @@ public class PageControl : MonoBehaviour
                 new_slotPanelCard.GetComponentInChildren<Text>().text = ldArr[index].LevelName;
                 Button cur = new_slotPanelCard.GetComponentsInChildren<Button>()[1];
                 cur.onClick.AddListener(delegate () { OnClickRelease(ldArr[index], index); });
-                cur.GetComponentInChildren<Text>().text = "Released";
+                cur.GetComponentInChildren<Text>().text = "Published";
                 cur.interactable = false;
                 new_slotPanelCard.GetComponentsInChildren<Button>()[0].enabled = false;
             }

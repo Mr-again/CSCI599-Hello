@@ -1497,7 +1497,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Release
+  m_Text: Publish
 --- !u!222 &494736694
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3478,9 +3478,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: c8fb9cdb51bf643e384d566b6c0fccda, type: 3}
-    m_FontSize: 17
-    m_FontStyle: 1
+    m_Font: {fileID: 12800000, guid: 3e9325730fd764c4d93ce9c44e589e30, type: 3}
+    m_FontSize: 19
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 120
@@ -3490,7 +3490,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: My Slots
+  m_Text: mine
 --- !u!222 &1103078257
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4416,9 +4416,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: c8fb9cdb51bf643e384d566b6c0fccda, type: 3}
-    m_FontSize: 17
-    m_FontStyle: 1
+    m_Font: {fileID: 12800000, guid: 3e9325730fd764c4d93ce9c44e589e30, type: 3}
+    m_FontSize: 19
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 40
@@ -4428,7 +4428,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Community
+  m_Text: browse
 --- !u!222 &1481896915
 CanvasRenderer:
   m_ObjectHideFlags: 0

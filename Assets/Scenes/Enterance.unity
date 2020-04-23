@@ -255,7 +255,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Leader Board
+  m_Text: 'Leaderboard
 
 '
 --- !u!222 &479569011
@@ -434,7 +434,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Stage Mode
+  m_Text: LEVELS
 --- !u!222 &1002926648
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -490,6 +490,19 @@ MonoBehaviour:
   cur_level: 0
   total_star: 0
   level_scores: 
+  cur_community: 1
+  cur_slot_index: 0
+  cur_one_star_step: -1
+  cur_two_star_step: -1
+  cur_three_star_step: -1
+  cur_threshhold: 000000000000000000000000
+  cur_level_name: 
+  cur_map_maker_id: Default
+  cur_maker_id: Default
+  gameplay_enetrance: 0
+  target_map_json: 
+  target_map_id: 
+  unlock_requires: 
 --- !u!1 &1189388860
 GameObject:
   m_ObjectHideFlags: 0
