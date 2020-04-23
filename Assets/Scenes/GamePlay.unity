@@ -449,7 +449,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'WALL
 
-    Limit on your move'
+    Blocks your way.'
 --- !u!222 &104526495
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1532,10 +1532,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'ICE CRATE
+  m_Text: 'RED CRATE
 
-    When you push red crate on the Wall, the box will explode.
-    Then the Wall elements will disappear and become the ground.'
+    When pushed against a wall, it explodes!'
 --- !u!222 &422787335
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1991,8 +1990,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "PIT\nYou cannot walk through the black pit. \nHowever, if you push a box
-    into it, the pit will be filled and you can walk it through."
+  m_Text: 'PIT
+
+    It''s too deep to cross. But maybe you can fill it?'
 --- !u!222 &531518555
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2821,8 +2821,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'ICED FLOOR
 
-    When you walk on iced floor, you will slide to the end
-    of iced floor.'
+    It''s slippery!'
 --- !u!222 &750895496
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3248,9 +3247,9 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'BROWN CRATE
 
-    To store
+    Push it onto the
 
-    same color target '
+    same color target.'
 --- !u!222 &920604270
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3329,8 +3328,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'MUD
 
-    When you push a crate on the mud, this crate cannot be moved
-    then.'
+    When you push a crate into mud, it gets stuck!'
 --- !u!222 &953801138
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4119,8 +4117,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'ICE CRATE
 
-    When you push ice crate on the wall, after the ice crate
-    passes by, the ground will become ice.'
+    Leaves a trail of ice behind.'
 --- !u!222 &1120089791
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5946,7 +5943,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'BROWN TARGET
 
-    be stored by crate'
+    Get the crate here!'
 --- !u!222 &1873281225
 CanvasRenderer:
   m_ObjectHideFlags: 0
