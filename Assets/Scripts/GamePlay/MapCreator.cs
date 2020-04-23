@@ -97,9 +97,30 @@ public class MapCreator : MonoBehaviour
     public Dictionary<int, GameObject> targets_gray = new Dictionary<int, GameObject>();
     // Start is called before the first frame update
 
+
+    public Image hint1;
+    public Image hint2;
+    public Image hint3;
+
     private void Awake()
     {
         gameController = FindObjectOfType<GameController>();
+        if (gameController.cur_level == 0 && PlayerPrefs.GetInt("Hint1") == 1)
+        {
+            hint1.gameObject.SetActive(true);
+            hint1.GetComponentInChildren<Button>().onClick.AddListener(() => { OnClickCancelInHint(1); });
+        }
+        else if(gameController.cur_level == 1 && PlayerPrefs.GetInt("Hint2") == 1)
+        {
+            hint2.gameObject.SetActive(true);
+            hint2.GetComponentInChildren<Button>().onClick.AddListener(() => { OnClickCancelInHint(2); });
+        }
+        else if (gameController.cur_level == 2 && PlayerPrefs.GetInt("Hint3") == 1)
+        {
+            hint3.gameObject.SetActive(true);
+            hint3.GetComponentInChildren<Button>().onClick.AddListener(() => { OnClickCancelInHint(3); });
+        }
+        
         Debug.Log("Current Level: " + Convert.ToString(gameController.cur_level + 1));
         win = 0;
         if (gameController.gameplay_enetrance == 0)
@@ -120,6 +141,23 @@ public class MapCreator : MonoBehaviour
             {"session_id", AnalyticsSessionInfo.sessionId },
             {"user_id", AnalyticsSessionInfo.userId}
         });
+    }
+
+    public void OnClickCancelInHint(int level)
+    {
+        if(level == 1)
+        {
+            hint1.gameObject.SetActive(false);
+        }
+        else if (level == 2)
+        {
+            hint2.gameObject.SetActive(false);
+        }
+        else if (level == 3)
+        {
+            hint3.gameObject.SetActive(false);
+        }
+        PlayerPrefs.SetInt("Hint" + level.ToString(), 0);
     }
 
     private void getMapDataFromLocalJson()
@@ -234,7 +272,7 @@ public class MapCreator : MonoBehaviour
             target_position = targets_list.ToArray();
             player_position = player_list.ToArray();
             JsonObject jsonObject = new JsonObject(wall_position, stone_position, ice_position, mud_position, pit_position, player_position, box_position, target_position);
-            Debug.Log(jsonObject.SaveToString());
+            //Debug.Log(jsonObject.SaveToString());
         }
     }
 
