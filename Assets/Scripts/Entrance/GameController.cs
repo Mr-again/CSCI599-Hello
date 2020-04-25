@@ -24,6 +24,7 @@ public class GameController : MonoBehaviour
     public string cur_level_name = "";
     public string cur_map_maker_id = "Default";
     public string cur_maker_id = "Default";
+    public int cur_community_maps_page = 1;
 
     public int gameplay_enetrance;
     public string target_map_json;

@@ -51,7 +51,7 @@ public class PageControl : MonoBehaviour
         
         gameController = FindObjectOfType<GameController>();
         maker_id = gameController.cur_maker_id;
-
+        page = gameController.cur_community_maps_page;
         if (gameController.cur_community == 1)
         {
             downloadMap(0);
@@ -258,6 +258,7 @@ public class PageControl : MonoBehaviour
     public async void downloadMap(int offset)
     {
         page += offset;
+        gameController.cur_community_maps_page = page;
         HttpClient client = new HttpClient();
         var responseString = await client.GetStringAsync("http://35.238.86.31/level?type=2");
         LevelData[] ldArr = convertToJson(responseString, page_size, page);
