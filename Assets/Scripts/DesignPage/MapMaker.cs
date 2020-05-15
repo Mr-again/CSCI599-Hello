@@ -389,7 +389,7 @@ public class MapMaker : MonoBehaviour
 
         // 然后将这些纹理数据，成一个png图片文件  
         byte[] bytes = screenShot.EncodeToPNG();
-        string filename = Application.dataPath + "/Screenshot.png";
+        string filename = Application.streamingAssetsPath + "/Screenshots/Screenshot.png";
         System.IO.File.WriteAllBytes(filename, bytes);
         Debug.Log(string.Format("截屏了一张图片: {0}", filename));
 

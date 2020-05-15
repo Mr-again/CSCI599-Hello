@@ -57,7 +57,7 @@ public class GameController : MonoBehaviour
 
         if(SystemInfo.deviceType== DeviceType.Desktop)
         {
-            //PlayerPrefs.DeleteAll();
+            // PlayerPrefs.DeleteAll();
         }
         cur_maker_id = SystemInfo.deviceUniqueIdentifier;
         if (!PlayerPrefs.HasKey("Hint1"))
@@ -201,13 +201,14 @@ public class Currency
 
     public Currency()
     {
+        PlayerPrefs.SetInt("currency", 10000);
         if (PlayerPrefs.HasKey("currency"))
         {
             this.money = PlayerPrefs.GetInt("currency");
         }
         else
         {
-            this.money = 100;
+            this.money = 10000;
             PlayerPrefs.SetInt("currency", this.money);
         }
         Debug.Log("Current money: " + this.money);

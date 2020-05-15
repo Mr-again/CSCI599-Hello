@@ -11,6 +11,8 @@ using System.Drawing;
 using System.IO;
 
 using UnityEngine.Analytics;
+using System.Text;
+using System;
 
 public class PageControl : MonoBehaviour
 {
@@ -35,6 +37,7 @@ public class PageControl : MonoBehaviour
     public RectTransform mySlotPanelTransform;
     public GridLayoutGroup mySlotPanelGrid;
 
+    
     public Image NameMap;
 
     public Image MoneyAlert;
@@ -44,6 +47,8 @@ public class PageControl : MonoBehaviour
     private int page = 1;
     string maker_id;
     static int deleted_item_size = 0;
+
+    private string backendUrl = "http://127.0.0.1:80/";
     //LocalSlot ls = new LocalSlot();
     // Start is called before the first frame update
     void Start()
@@ -72,6 +77,7 @@ public class PageControl : MonoBehaviour
         deleted_item_size = 0;
     }
 
+    
     // Update is called once per frame
     void Update()
     {
@@ -249,8 +255,8 @@ public class PageControl : MonoBehaviour
     public async void thumbUpMap(int level_id)
     {
         HttpClient client = new HttpClient();
-        var responseString = await client.GetStringAsync(
-            "http://35.238.86.31/level?type=3&update=1&try=0&pass=0&thumb=1&level_id=" + level_id.ToString());
+        await client.PostAsync(backendUrl
+            + "level?type=1&try=0&pass=0&thumb=1&level_id=" + level_id.ToString(), null);
     }
 
     // public static PreviewManager Instance;
@@ -260,7 +266,9 @@ public class PageControl : MonoBehaviour
         page += offset;
         gameController.cur_community_maps_page = page;
         HttpClient client = new HttpClient();
-        var responseString = await client.GetStringAsync("http://35.238.86.31/level?type=2");
+        var responseString = await client.GetStringAsync(backendUrl + "level?type=2");
+        Debug.Log(responseString);
+        
         LevelData[] ldArr = convertToJson(responseString, page_size, page);
         if (ldArr == null) return;
         int i = 0;
@@ -272,17 +280,23 @@ public class PageControl : MonoBehaviour
             communityPanelsButton[i].onClick.AddListener(delegate() { OnClickCommunityPannels(ldArr[index]); });
             likeButtons[i].onClick.AddListener(delegate () { OnClickLikeButton(ldArr[index]); });
             communityPanels[i].gameObject.SetActive(true);
-            // communityPanels[i].GetComponentInChildren<Image>().sprite
 
-            // TODO: Give out a image of level: communityPanels[i].GetComponentsInChildren<Image>()[0];
+            if(ldArr[i].Pic != null)
+            {
+                Texture2D texture = new Texture2D(1024, 1024);
+                texture.LoadImage(ldArr[i].Pic);
+                Sprite prite = Sprite.Create(texture, new Rect(0, 0, 800, 531), new Vector2(0.5f, 0.5f));
+                communityPanels[i].GetComponentsInChildren<Image>()[1].sprite = prite;
+            }
+            else
+            {
+                communityPanels[i].GetComponentsInChildren<Image>()[1].sprite = Resources.Load<Sprite>("Image/default");
+            }
             i++;
         }
         while (i < 4)
         {
             communityPanels[i].gameObject.SetActive(false);
-            // communityPanels[i].GetComponentInChildren<Image>().sprite
-
-            // TODO: Give out a image of level: communityPanels[i].GetComponentsInChildren<Image>()[0];
             i++;
         }
     }
@@ -326,18 +340,8 @@ public class PageControl : MonoBehaviour
 
     public void getCurrentUserMap()
     {
-        //HttpClient client = new HttpClient();
-        //var responseString = await client.GetStringAsync(
-        //    "http://35.238.86.31/level?type=0&maker_id=" + maker_id.ToString());
-        //LevelData[] ldArr = JsonConvert.DeserializeObject<LevelData[]>(responseString);
-
-
-        // TODO: Get data from local playpref
+        
         LocalSlot ls = new LocalSlot();
-        //LevelData ld = new LevelData("testMap", maker_id, 20, 40, 60);
-        //ls.AddSlotMap(ld);
-        //ld = new LevelData("testMap2", maker_id, 20, 40, 60);
-        //ls.AddSlotMap(ld);
         LevelData[] ldArr = ls.GetAllSlotMap();
         int ldArrLen = ldArr.Length;
         Debug.Log(ldArrLen);
@@ -374,17 +378,33 @@ public class PageControl : MonoBehaviour
     {
         HttpClient client = new HttpClient();
         Debug.Log(maker_id);
-        var responseString = await client.GetStringAsync(
-            "http://35.238.86.31/level?type=3&try_num=0&pass_num=0&thumb_num=0" +
+
+        var fileAddress = Path.Combine(Application.streamingAssetsPath, "Screenshots/Screenshot.png");
+        FileInfo fInfo0 = new FileInfo(fileAddress);
+        if (fInfo0.Exists)
+        {
+            var content = new MultipartFormDataContent();
+            content.Add(new ByteArrayContent(File.ReadAllBytes(fileAddress)), "screenshot", "Screenshot.png");
+            //var sc = new StringContent("eeeee");
+            HttpResponseMessage response = await client.PostAsync(
+            backendUrl + "level?type=0&try_num=0&pass_num=0&thumb_num=0" +
             "&one_star_step=" + one_star_step.ToString() +
             "&two_star_step=" + two_star_step.ToString() +
             "&three_star_step=" + three_star_step.ToString() +
-            "&id_of_maker=" + maker_id + "&map_data=" + mapData + "&level_name=" + level_name);
-        LevelData ld = JsonConvert.DeserializeObject<LevelData>(responseString);
-        LocalSlot ls = new LocalSlot();
-        ls.UpdateSlotMap(index, ld);
-        curPanel.GetComponentInChildren<Text>().text = level_name;
-
+            "&id_of_maker=" + maker_id + "&map_data=" + mapData + "&level_name=" + level_name, content);
+            string responseString = await response.Content.ReadAsStringAsync();
+            // Debug.Log(responseString);
+            LevelData ld = JsonConvert.DeserializeObject<LevelData>(responseString);
+            LocalSlot ls = new LocalSlot();
+            ls.UpdateSlotMap(index, ld);
+            curPanel.GetComponentInChildren<Text>().text = level_name;
+        }
+        else
+        {
+            Debug.Log("No");
+            return;
+        }
+        
     }
 
     //public int level_id;
@@ -395,7 +415,7 @@ public class PageControl : MonoBehaviour
         if(level_id != -1)
         {
             HttpClient client = new HttpClient();
-            await client.GetStringAsync("http://35.238.86.31/level?type=3&delete=1&level_id=" + level_id.ToString());
+            await client.PostAsync(backendUrl + "level?type=2&level_id=" + level_id.ToString(), null);
         }
         LocalSlot ls = new LocalSlot();
         ls.DeleteSlotMap(index - deleted_item_size);
